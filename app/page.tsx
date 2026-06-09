@@ -216,6 +216,7 @@ export default function LandingPage() {
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
           <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
           <Link href="/pricing" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Pricing</Link>
+          <Link href="/roadmap" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Roadmap</Link>
           <Link href="/login" style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
             Get early access →
           </Link>
@@ -343,7 +344,7 @@ export default function LandingPage() {
           <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "2px" }} />
         </div>
         <div style={{ display: "flex", gap: "24px" }}>
-          {[["Pricing", "/pricing"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
+          {[["Pricing", "/pricing"], ["Roadmap", "/roadmap"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
             <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>
