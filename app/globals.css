@@ -122,6 +122,12 @@ body {
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+/* Streaming cursor blink */
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 /* scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
