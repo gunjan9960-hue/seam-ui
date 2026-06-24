@@ -12,16 +12,23 @@ const CONFETTI_COLORS = [
 
 const CONFETTI_COUNT = 36;
 
+type ConfettiPiece = { color: string; left: number; delay: number; duration: number; size: number; shape: string };
+
 function Confetti() {
-  const pieces = Array.from({ length: CONFETTI_COUNT }, (_, i) => {
-    const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
-    const left = Math.random() * 100;
-    const delay = Math.random() * 1.2;
-    const duration = 2.4 + Math.random() * 1.5;
-    const size = 6 + Math.random() * 8;
-    const shape = i % 3 === 0 ? "50%" : "2px";
-    return { color, left, delay, duration, size, shape };
-  });
+  const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
+
+  useEffect(() => {
+    setPieces(Array.from({ length: CONFETTI_COUNT }, (_, i) => ({
+      color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+      left: Math.random() * 100,
+      delay: Math.random() * 1.2,
+      duration: 2.4 + Math.random() * 1.5,
+      size: 6 + Math.random() * 8,
+      shape: i % 3 === 0 ? "50%" : "2px",
+    })));
+  }, []);
+
+  if (pieces.length === 0) return null;
 
   return (
     <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 60, overflow: "hidden" }}>
@@ -47,9 +54,11 @@ function Confetti() {
 export default function Celebration({
   connectedId,
   onDismiss,
+  progress,
 }: {
   connectedId: ConnectorId;
   onDismiss: () => void;
+  progress?: { connected: number; total: number };
 }) {
   const router = useRouter();
   const [show, setShow] = useState(false);
@@ -128,6 +137,41 @@ export default function Celebration({
           >
             {meta.label} connected 🎉
           </h2>
+
+          {progress && progress.total > 0 && (
+            <div style={{ marginBottom: "18px" }}>
+              <p
+                style={{
+                  fontSize: "12.5px",
+                  fontWeight: 600,
+                  color: "#6B7280",
+                  marginBottom: "6px",
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
+                {progress.connected} of {progress.total} sources you picked are connected
+              </p>
+              <div
+                style={{
+                  width: "100%",
+                  height: "6px",
+                  borderRadius: "999px",
+                  background: "#F0F1F5",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "999px",
+                    background: "#4F6BF5",
+                    width: `${Math.min(100, (progress.connected / progress.total) * 100)}%`,
+                    transition: "width 0.5s ease",
+                  }}
+                />
+              </div>
+            </div>
+          )}
 
           <p
             style={{
