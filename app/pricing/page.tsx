@@ -42,7 +42,7 @@ const FREE_FEATURES = [
 ];
 
 const PRO_FEATURES = [
-  "All 7 sources (Notion, Jira, Docs, Slack, Confluence, Calendar, Mixpanel)",
+  "All 6 sources (Notion, Jira, Docs, Slack, Confluence, Mixpanel)",
   "Unlimited searches",
   "PM Dashboard — morning briefing",
   "Stakeholder attribution in answers",
@@ -72,7 +72,7 @@ const FAQ = [
   },
   {
     q: "Can I connect Slack on the free plan?",
-    a: "No. Slack, Jira, Confluence, Calendar, and Mixpanel are Pro-only connectors.",
+    a: "No. Slack, Jira, Confluence, and Mixpanel are Pro-only connectors.",
   },
   {
     q: "Is my data safe?",

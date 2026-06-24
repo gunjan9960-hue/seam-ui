@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Shield, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+
+import { createClient } from "@/lib/supabase/client";
 
 function SeamLogo() {
   return (
@@ -41,12 +42,14 @@ const TRUST_ITEMS = [
 ];
 
 export default function LoginPage() {
-  const router = useRouter();
-
-  const handleGoogleLogin = () => {
-    // In production: trigger NextAuth signIn("google")
-    // For demo: skip to onboarding
-    router.push("/onboarding");
+  const handleGoogleLogin = async () => {
+    const supabase = createClient();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
   };
 
   return (
@@ -150,57 +153,6 @@ export default function LoginPage() {
             Continue with Google
           </button>
 
-          <div
-            className="flex items-center gap-3 w-full my-5"
-          >
-            <div style={{ flex: 1, height: "1px", background: "var(--border)" }} />
-            <span style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 500 }}>or</span>
-            <div style={{ flex: 1, height: "1px", background: "var(--border)" }} />
-          </div>
-
-          {/* Email input (for waitlist) */}
-          <div className="w-full flex flex-col gap-2">
-            <input
-              type="email"
-              placeholder="you@yourcompany.com"
-              className="w-full outline-none transition-all"
-              style={{
-                height: "44px",
-                padding: "0 14px",
-                fontSize: "13.5px",
-                color: "var(--text-primary)",
-                background: "var(--surface)",
-                border: "1.5px solid var(--border)",
-                borderRadius: "10px",
-                fontFamily: "Inter, sans-serif",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = "var(--blue)";
-                e.currentTarget.style.boxShadow = "0 0 0 3px rgba(79,107,245,0.10)";
-                e.currentTarget.style.background = "#FFFFFF";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.background = "var(--surface)";
-              }}
-            />
-            <button
-              className="w-full flex items-center justify-center py-3 rounded-xl font-semibold text-white transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--blue)",
-                border: "none",
-                fontSize: "13.5px",
-                cursor: "pointer",
-                fontFamily: "Inter, sans-serif",
-                boxShadow: "0 2px 8px rgba(79,107,245,0.30)",
-              }}
-              onClick={handleGoogleLogin}
-            >
-              Join waitlist
-            </button>
-          </div>
-
           <p
             style={{
               fontSize: "11.5px",
@@ -210,10 +162,7 @@ export default function LoginPage() {
               lineHeight: 1.6,
             }}
           >
-            By signing in, you agree to our{" "}
-            <Link href="#" style={{ color: "var(--blue)", textDecoration: "none" }}>Terms</Link>
-            {" "}and{" "}
-            <Link href="#" style={{ color: "var(--blue)", textDecoration: "none" }}>Privacy Policy</Link>.
+            By signing in, you agree to our Terms and Privacy Policy.
           </p>
         </div>
 

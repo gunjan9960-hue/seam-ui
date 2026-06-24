@@ -1,498 +1,768 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 import {
-  Search, X, MessageCircle, ArrowUpRight, ExternalLink,
-  Sparkles, Download, ThumbsUp, ThumbsDown, AlertCircle, Plug,
+  Search, ExternalLink, Sparkles,
+  ThumbsUp, ThumbsDown, AlertCircle,
+  Clock, Scale, FileText, User, FlaskConical, Map, Handshake, Compass, Plus,
 } from "lucide-react";
-import AppShell from "../../components/AppShell";
+import AppShell from "@/app/components/AppShell";
 
-// ── Constants ─────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
+interface SourceCard {
+  id: string;
+  source: string;
+  title: string;
+  excerpt: string;
+  author: string;
+  date: string;
+  url: string;
+}
 
+interface Exchange {
+  id: string;
+  question: string;
+  answer: string;
+  intent: string;
+  sources: SourceCard[];
+  isStale?: boolean;
+  suggestions?: string[];
+  isDemo?: boolean;
+}
+
+// ── localStorage thread utils ─────────────────────────────────────────────────
+interface ThreadEntry { id: string; query: string; ts: string; }
+
+function saveThread(query: string) {
+  if (typeof window === "undefined") return;
+  const prev: ThreadEntry[] = JSON.parse(localStorage.getItem("seam_threads") ?? "[]");
+  const deduped = prev.filter((t) => t.query !== query);
+  const next: ThreadEntry[] = [{ id: Date.now().toString(), query, ts: new Date().toISOString() }, ...deduped].slice(0, 10);
+  localStorage.setItem("seam_threads", JSON.stringify(next));
+}
+
+// ── Source colours ────────────────────────────────────────────────────────────
 const SOURCE_COLORS: Record<string, string> = {
-  notion: "#555866",
-  jira: "#0052CC",
-  "google docs": "#34A853",
-  slack: "#4A154B",
-  confluence: "#1868DB",
-  calendar: "#EA4335",
+  Notion:        "#888888",
+  Jira:          "#4C9AFF",
+  Slack:         "#E01E5A",
+  "Google Docs": "#4285F4",
 };
 
-interface SourceCard {
-  id: string; source: string; title: string;
-  excerpt: string; author: string; date: string; link: string;
-}
+const SOURCE_ICONS: Record<string, string> = {
+  Notion:        "N",
+  Jira:          "J",
+  Slack:         "#",
+  "Google Docs": "G",
+};
 
-const ANSWER_SEGMENTS = [
-  { text: "In Q3 2023, the team decided to ",                                                                                              bold: false, cite: null },
-  { text: "descope SSO (Single Sign-On)",                                                                                                  bold: true,  cite: null },
-  { text: " from the enterprise billing milestone after a cross-functional review on Sept 14.",                                            bold: false, cite: "1"  },
-  { text: "\n\nThree reasons drove the decision:",                                                                                         bold: false, cite: null },
-  { text: "\n\n1. Engineering bandwidth",                                                                                                  bold: true,  cite: null },
-  { text: " — the auth refactor required by SSO conflicted with the billing migration timeline. Priya (Eng Lead) estimated a 3-week slip.", bold: false, cite: "3"  },
-  { text: "\n\n2. Customer priority signal",                                                                                               bold: true,  cite: null },
-  { text: " — only 2 of 8 enterprise accounts flagged SSO as a blocker (Zepto and Meesho).",                                              bold: false, cite: "3"  },
-  { text: "\n\n3. Dependency risk",                                                                                                        bold: true,  cite: null },
-  { text: " — SAML 2.0 integration required a third-party library review that Legal hadn't cleared.",                                     bold: false, cite: "1"  },
-  { text: "\n\nRahul confirmed the descoping decision in the Jira epic on Sept 18.",                                                       bold: false, cite: "2"  },
-  { text: " SSO was re-queued for Q1 2024 roadmap with a dedicated 2-sprint allocation.",                                                  bold: false, cite: "1"  },
-];
+// ── Intent config ─────────────────────────────────────────────────────────────
+const INTENT_CONFIG: Record<string, { label: string; icon: React.ElementType; color: string }> = {
+  decision_recall:        { label: "Decision",    icon: Scale,        color: "#A78BFA" },
+  spec_lookup:            { label: "Spec Lookup", icon: FileText,     color: "#60A5FA" },
+  customer_request:       { label: "Customer",    icon: User,         color: "#FB923C" },
+  research_history:       { label: "Research",    icon: FlaskConical, color: "#34D399" },
+  roadmap_rationale:      { label: "Roadmap",     icon: Map,          color: "#4ADE80" },
+  stakeholder_commitment: { label: "Commitment",  icon: Handshake,    color: "#FCD34D" },
+  onboarding:             { label: "Onboarding",  icon: Compass,      color: "#818CF8" },
+};
 
-// Pre-compute segment start positions
-const SEG_STARTS: number[] = [];
-let _p = 0;
-for (const seg of ANSWER_SEGMENTS) { SEG_STARTS.push(_p); _p += seg.text.length; }
-const FULL_LENGTH = _p;
-
-const MOCK_SOURCES: SourceCard[] = [
-  { id: "1", source: "Confluence", title: "Q3 2023 Retrospective — Enterprise Billing",   excerpt: "SSO descoped due to auth refactor conflict. Re-queued for Q1 2024. Decision signed off by Priya, Arnav, and Rahul.", author: "Arnav Mehta",             date: "Sep 22, 2023", link: "#" },
-  { id: "2", source: "Jira",       title: "BILL-412: SSO Integration — Enterprise Tier",  excerpt: "Status changed to Deferred by Rahul Sharma. Comment: 'Moving to Q1 — bandwidth conflict confirmed in sync.'",         author: "Rahul Sharma",            date: "Sep 18, 2023", link: "#" },
-  { id: "3", source: "Slack",      title: "#product-enterprise · Sep 14, 2023",           excerpt: "Priya: 'Auth refactor will take 3 weeks minimum. We cannot ship SSO and billing migration together.' Arnav: 'Agreed.'", author: "Priya Nair, Arnav Mehta", date: "Sep 14, 2023", link: "#" },
-  { id: "4", source: "Google Docs",title: "Q3 Enterprise Roadmap Review — Meeting Notes", excerpt: "Attendees: Priya, Arnav, Rahul, Meera. SSO item discussed. 2/8 customers flagged as blocker.",                        author: "Meera Singh",             date: "Sep 14, 2023", link: "#" },
-];
-
-const FOLLOW_UPS = [
-  "Which customers flagged SSO as a blocker?",
-  "What is the current status of SSO in Q1 2024?",
-  "Who owns the SSO spec?",
-];
-
-// Keywords that Seam "knows about" in this demo
-const KNOWN_KEYWORDS = ["sso", "descope", "enterprise", "billing", "q3", "q1", "saml", "sprint", "auth"];
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function useTimestamp() {
-  const [ts, setTs] = useState("");
-  useEffect(() => {
-    setTs(new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }));
-  }, []);
-  return ts;
-}
-
-// ── Feedback buttons ──────────────────────────────────────────────────────────
-
-function FeedbackButtons() {
-  const [selected, setSelected] = useState<"up" | "down" | null>(null);
-  const [thanked, setThanked] = useState(false);
-
-  const pick = (v: "up" | "down") => {
-    if (selected) return;
-    setSelected(v);
-    setTimeout(() => setThanked(true), 600);
+// ── Skeleton loader ───────────────────────────────────────────────────────────
+function Skeleton() {
+  const shimmer = {
+    background: "linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%)",
+    backgroundSize: "200% 100%",
+    animation: "shimmer 1.6s infinite",
+    borderRadius: "5px",
   };
-
-  if (thanked) {
-    return (
-      <span style={{ fontSize: "11px", color: "var(--text-muted)", fontStyle: "italic", fontFamily: "Inter, sans-serif" }}>
-        Thanks — that helps us improve
-      </span>
-    );
-  }
-
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-      <span style={{ fontSize: "11px", color: "var(--text-muted)", marginRight: "4px", fontFamily: "Inter, sans-serif" }}>
-        Was this helpful?
-      </span>
-      <button
-        onClick={() => pick("up")}
-        title="Good answer"
-        style={{
-          display: "flex", alignItems: "center", justifyContent: "center",
-          width: "28px", height: "28px", borderRadius: "8px", border: "1px solid",
-          borderColor: selected === "up" ? "#10B981" : "var(--border)",
-          background: selected === "up" ? "#ECFDF5" : "#FFFFFF",
-          color: selected === "up" ? "#10B981" : "var(--text-muted)",
-          cursor: selected ? "default" : "pointer",
-          transition: "all 0.18s",
-        }}
-        onMouseEnter={(e) => { if (!selected) { (e.currentTarget as HTMLElement).style.borderColor = "#10B981"; (e.currentTarget as HTMLElement).style.color = "#10B981"; } }}
-        onMouseLeave={(e) => { if (!selected) { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; } }}
-      >
-        <ThumbsUp size={13} strokeWidth={2} />
-      </button>
-      <button
-        onClick={() => pick("down")}
-        title="Bad answer"
-        style={{
-          display: "flex", alignItems: "center", justifyContent: "center",
-          width: "28px", height: "28px", borderRadius: "8px", border: "1px solid",
-          borderColor: selected === "down" ? "#EF4444" : "var(--border)",
-          background: selected === "down" ? "#FEF2F2" : "#FFFFFF",
-          color: selected === "down" ? "#EF4444" : "var(--text-muted)",
-          cursor: selected ? "default" : "pointer",
-          transition: "all 0.18s",
-        }}
-        onMouseEnter={(e) => { if (!selected) { (e.currentTarget as HTMLElement).style.borderColor = "#EF4444"; (e.currentTarget as HTMLElement).style.color = "#EF4444"; } }}
-        onMouseLeave={(e) => { if (!selected) { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; } }}
-      >
-        <ThumbsDown size={13} strokeWidth={2} />
-      </button>
+    <div style={{ paddingTop: "4px" }}>
+      {/* fake question */}
+      <div style={{ ...shimmer, height: "26px", width: "70%", marginBottom: "20px" }} />
+      <div style={{ ...shimmer, height: "1px", marginBottom: "20px" }} />
+      {/* fake answer lines */}
+      {[90, 100, 85, 100, 60].map((w, i) => (
+        <div key={i} style={{ ...shimmer, height: "14px", width: `${w}%`, marginBottom: "10px" }} />
+      ))}
     </div>
   );
 }
 
-// ── Streaming answer ──────────────────────────────────────────────────────────
-
-function StreamingAnswer({ revealed, done }: { revealed: number; done: boolean }) {
+// ── Answer markdown renderer ──────────────────────────────────────────────────
+function AnswerText({ text }: { text: string }) {
   return (
-    <p style={{ fontSize: "14.5px", lineHeight: "1.85", color: "#111827", whiteSpace: "pre-wrap", margin: 0 }}>
-      {ANSWER_SEGMENTS.map((seg, i) => {
-        const start = SEG_STARTS[i];
-        const end = start + seg.text.length;
-        if (revealed <= start) return null;
-        const visible = seg.text.slice(0, revealed - start);
-        const full = revealed >= end;
-        return (
-          <span key={i}>
-            {seg.bold ? <strong>{visible}</strong> : visible}
-            {full && seg.cite && (
-              <sup style={{ fontSize: "9px", color: "#4F6BF5", fontWeight: 700, marginLeft: "1px", cursor: "pointer", verticalAlign: "super", lineHeight: 0 }}>
-                {seg.cite}
-              </sup>
-            )}
-          </span>
-        );
-      })}
-      {!done && (
-        <span style={{ display: "inline-block", width: "2px", height: "14px", background: "#4F6BF5", borderRadius: "1px", marginLeft: "2px", verticalAlign: "middle", animation: "cursorBlink 0.65s step-end infinite" }} />
-      )}
-    </p>
-  );
-}
-
-// ── Can't answer block ────────────────────────────────────────────────────────
-
-function CantAnswerBlock({ query }: { query: string }) {
-  const router = useRouter();
-  return (
-    <div style={{ borderRadius: "16px", overflow: "hidden", border: "1px solid #FDE68A" }}>
-      {/* Top band */}
-      <div style={{ background: "#FFFBEB", padding: "14px 18px 12px", borderBottom: "1px solid #FDE68A", display: "flex", alignItems: "center", gap: "8px" }}>
-        <AlertCircle size={15} color="#D97706" strokeWidth={2} />
-        <span style={{ fontSize: "12.5px", fontWeight: 700, color: "#92400E", fontFamily: "Inter, sans-serif" }}>
-          No answer found in your sources
-        </span>
-      </div>
-
-      {/* Body */}
-      <div style={{ background: "#FFFFFF", padding: "16px 18px 18px" }}>
-        <p style={{ fontSize: "13.5px", color: "#374151", lineHeight: 1.7, marginBottom: "16px", fontFamily: "Inter, sans-serif" }}>
-          Seam searched across <strong>Notion, Jira, Google Docs, Slack,</strong> and <strong>Confluence</strong> but couldn't find a reliable answer for:
-        </p>
-
-        {/* Query echo */}
-        <div style={{ padding: "10px 14px", borderRadius: "10px", background: "#F9FAFB", border: "1px solid var(--border)", marginBottom: "16px" }}>
-          <span style={{ fontSize: "13px", color: "#6B7280", fontStyle: "italic", fontFamily: "Inter, sans-serif" }}>
-            "{query}"
-          </span>
-        </div>
-
-        {/* Reasons */}
-        <p style={{ fontSize: "12px", fontWeight: 600, color: "#374151", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "Inter, sans-serif" }}>
-          Possible reasons
-        </p>
-        <ul style={{ margin: "0 0 18px", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "6px" }}>
-          {[
-            "This topic may not be documented in your connected sources",
-            "The relevant tool (e.g. Confluence or Slack) may not be connected",
-            "Try rephrasing — e.g. use the project or ticket name",
-          ].map((r) => (
-            <li key={r} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-              <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#D97706", marginTop: "6px", flexShrink: 0 }} />
-              <span style={{ fontSize: "12.5px", color: "#6B7280", lineHeight: 1.55, fontFamily: "Inter, sans-serif" }}>{r}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTAs */}
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          <button
-            onClick={() => router.push("/app/integrations")}
-            style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 14px", borderRadius: "9px", fontSize: "12.5px", fontWeight: 600, background: "#1C1E26", color: "white", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-            <Plug size={12} strokeWidth={2} />
-            Connect more sources
-          </button>
-          <button
-            onClick={() => router.push("/app")}
-            style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 14px", borderRadius: "9px", fontSize: "12.5px", fontWeight: 600, background: "none", color: "#374151", border: "1px solid var(--border)", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-            <Search size={12} strokeWidth={2} />
-            Try a new search
-          </button>
-        </div>
-      </div>
+    <div
+      style={{
+        fontSize: "15px",
+        color: "rgba(255,255,255,0.85)",
+        lineHeight: 1.85,
+      }}
+    >
+      <ReactMarkdown
+        components={{
+          p: ({ children }) => (
+            <p style={{ margin: "0 0 14px" }}>{children}</p>
+          ),
+          strong: ({ children }) => (
+            <strong style={{ color: "rgba(255,255,255,0.95)", fontWeight: 600 }}>{children}</strong>
+          ),
+          em: ({ children }) => (
+            <em style={{ color: "rgba(255,255,255,0.7)" }}>{children}</em>
+          ),
+          ul: ({ children }) => (
+            <ul style={{ paddingLeft: "18px", margin: "0 0 14px", listStyleType: "disc" }}>{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol style={{ paddingLeft: "18px", margin: "0 0 14px" }}>{children}</ol>
+          ),
+          li: ({ children }) => (
+            <li style={{ marginBottom: "5px", color: "rgba(255,255,255,0.82)" }}>{children}</li>
+          ),
+          h1: ({ children }) => (
+            <h1 style={{ fontSize: "17px", fontWeight: 700, color: "rgba(255,255,255,0.95)", margin: "0 0 10px", letterSpacing: "-0.3px" }}>{children}</h1>
+          ),
+          h2: ({ children }) => (
+            <h2 style={{ fontSize: "16px", fontWeight: 700, color: "rgba(255,255,255,0.92)", margin: "18px 0 8px", letterSpacing: "-0.2px" }}>{children}</h2>
+          ),
+          h3: ({ children }) => (
+            <h3 style={{ fontSize: "14px", fontWeight: 600, color: "rgba(255,255,255,0.88)", margin: "14px 0 6px" }}>{children}</h3>
+          ),
+          code: ({ children }) => (
+            <code style={{ fontSize: "12.5px", fontFamily: "monospace", color: "#818CF8", background: "rgba(129,140,248,0.1)", borderRadius: "4px", padding: "1px 5px" }}>
+              {children}
+            </code>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote style={{ borderLeft: "2px solid rgba(255,255,255,0.15)", paddingLeft: "14px", margin: "0 0 14px", color: "rgba(255,255,255,0.55)" }}>
+              {children}
+            </blockquote>
+          ),
+          a: ({ href, children }) => (
+            <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#60A5FA", textDecoration: "underline", textUnderlineOffset: "2px" }}>
+              {children}
+            </a>
+          ),
+        }}
+      >
+        {text}
+      </ReactMarkdown>
     </div>
   );
 }
 
-// ── Right panel source card ───────────────────────────────────────────────────
-
-function SourceCardRight({ card, idx }: { card: SourceCard; idx: number }) {
-  const color = SOURCE_COLORS[card.source.toLowerCase()] ?? "#9CA3AF";
+// ── Source card ───────────────────────────────────────────────────────────────
+function SourceGridCard({ s, index }: { s: SourceCard; index: number }) {
+  const color = SOURCE_COLORS[s.source] ?? "#4F6BF5";
+  const icon = SOURCE_ICONS[s.source] ?? "·";
   return (
-    <a href={card.link}
-      style={{ display: "flex", borderRadius: "12px", overflow: "hidden", border: "1px solid var(--border)", textDecoration: "none", background: "#FFFFFF", boxShadow: "var(--shadow-card)", transition: "box-shadow 0.15s, border-color 0.15s" }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-card-hover)"; (e.currentTarget as HTMLElement).style.borderColor = "#D1D5DB"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-card)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}>
-      <div style={{ width: "3px", background: color, flexShrink: 0 }} />
-      <div style={{ flex: 1, padding: "12px 14px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px" }}>
-          <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "16px", height: "16px", borderRadius: "4px", background: color, fontSize: "8px", fontWeight: 800, color: "white", flexShrink: 0 }}>{idx + 1}</span>
-          <span style={{ fontSize: "10px", fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.06em" }}>{card.source}</span>
-          <span style={{ fontSize: "10.5px", color: "var(--text-muted)", marginLeft: "auto" }}>{card.date}</span>
+    <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "10px",
+          padding: "11px 13px",
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: "10px",
+          cursor: "pointer",
+          transition: "background 0.15s, border-color 0.15s",
+          height: "100%",
+          boxSizing: "border-box",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.055)";
+          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.11)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+          (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
+        }}
+      >
+        <div
+          style={{
+            width: "26px",
+            height: "26px",
+            borderRadius: "6px",
+            background: `${color}18`,
+            border: `1px solid ${color}28`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "10px",
+            fontWeight: 800,
+            color,
+            flexShrink: 0,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {icon}
         </div>
-        <p style={{ fontSize: "12.5px", fontWeight: 600, color: "var(--text-primary)", marginBottom: "4px", lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-          {card.title}
-        </p>
-        <p style={{ fontSize: "11.5px", color: "var(--text-secondary)", lineHeight: 1.55, marginBottom: "6px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-          {card.excerpt}
-        </p>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: "10.5px", color: "var(--text-muted)" }}>{card.author}</span>
-          <ExternalLink size={10} color="var(--text-muted)" strokeWidth={2} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "3px" }}>
+            <span style={{ fontSize: "9px", fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.07em" }}>
+              {s.source}
+            </span>
+            <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.18)", marginLeft: "auto" }}>
+              {index + 1}
+            </span>
+            <ExternalLink size={8} style={{ color: "rgba(255,255,255,0.18)", flexShrink: 0 }} />
+          </div>
+          <div
+            style={{
+              fontSize: "12px",
+              fontWeight: 500,
+              color: "rgba(255,255,255,0.75)",
+              lineHeight: 1.4,
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical" as const,
+            }}
+          >
+            {s.title}
+          </div>
+          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", marginTop: "4px" }}>
+            {s.author} · {s.date}
+          </div>
         </div>
       </div>
     </a>
   );
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────────
+// ── Inline feedback ───────────────────────────────────────────────────────────
+function InlineFeedback() {
+  const [val, setVal] = useState<null | "up" | "down">(null);
+  if (val)
+    return <span style={{ fontSize: "11px", color: "#34D399" }}>✓ Thanks</span>;
+  return (
+    <span style={{ display: "inline-flex", gap: "8px" }}>
+      <button
+        onClick={() => setVal("up")}
+        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.22)", padding: 0, display: "flex", transition: "color 0.15s" }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)")}
+      >
+        <ThumbsUp size={13} />
+      </button>
+      <button
+        onClick={() => setVal("down")}
+        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.22)", padding: 0, display: "flex", transition: "color 0.15s" }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)")}
+      >
+        <ThumbsDown size={13} />
+      </button>
+    </span>
+  );
+}
 
+// ── One completed exchange ────────────────────────────────────────────────────
+function CompletedExchange({ exchange }: { exchange: Exchange }) {
+  const intentCfg = INTENT_CONFIG[exchange.intent];
+  const Icon = intentCfg?.icon ?? Search;
+
+  return (
+    <div style={{ marginBottom: "52px", animation: "fadeSlideIn 0.3s ease" }}>
+
+      {/* Question */}
+      <h2
+        style={{
+          fontSize: "21px",
+          fontWeight: 700,
+          color: "rgba(255,255,255,0.96)",
+          letterSpacing: "-0.5px",
+          lineHeight: 1.3,
+          margin: "0 0 14px",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {exchange.question}
+      </h2>
+
+      {/* Meta: intent · sources · stale */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "18px", flexWrap: "wrap" }}>
+        {intentCfg && (
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "5px",
+              fontSize: "11px",
+              fontWeight: 600,
+              color: intentCfg.color,
+              background: `${intentCfg.color}14`,
+              border: `1px solid ${intentCfg.color}28`,
+              borderRadius: "20px",
+              padding: "3px 9px",
+            }}
+          >
+            <Icon size={10} strokeWidth={2.2} />
+            {intentCfg.label}
+          </span>
+        )}
+        {exchange.sources.length > 0 && (
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", display: "flex", alignItems: "center", gap: "4px" }}>
+            <Sparkles size={9} style={{ color: "#4F6BF5" }} />
+            {exchange.sources.length} source{exchange.sources.length !== 1 ? "s" : ""}
+          </span>
+        )}
+        {exchange.isStale && (
+          <span style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", color: "#FCD34D" }}>
+            <Clock size={9} />
+            Sources may be outdated
+          </span>
+        )}
+      </div>
+
+      {/* Hairline divider */}
+      <div style={{ height: "1px", background: "rgba(255,255,255,0.055)", marginBottom: "22px" }} />
+
+      {/* Answer — clean, no box */}
+      <AnswerText text={exchange.answer} />
+
+      {/* Ambiguity suggestions */}
+      {exchange.suggestions && exchange.suggestions.length > 0 && (
+        <div style={{ marginTop: "4px", marginBottom: "20px" }}>
+          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", marginBottom: "7px" }}>Did you mean:</div>
+          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+            {exchange.suggestions.map((s) => (
+              <span
+                key={s}
+                style={{
+                  fontSize: "11.5px",
+                  color: "#818CF8",
+                  background: "rgba(129,140,248,0.08)",
+                  border: "1px solid rgba(129,140,248,0.17)",
+                  borderRadius: "20px",
+                  padding: "3px 11px",
+                  cursor: "pointer",
+                }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Sources grid */}
+      {exchange.sources.length > 0 && (
+        <div style={{ marginTop: "20px", marginBottom: "16px" }}>
+          <div
+            style={{
+              fontSize: "10px",
+              fontWeight: 700,
+              color: "rgba(255,255,255,0.2)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              marginBottom: "10px",
+            }}
+          >
+            Sources
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))",
+              gap: "7px",
+            }}
+          >
+            {exchange.sources.map((s, i) => (
+              <SourceGridCard key={s.id} s={s} index={i} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Feedback — minimal, no label */}
+      <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "16px" }}>
+        <InlineFeedback />
+      </div>
+    </div>
+  );
+}
+
+// ── Follow-up suggestions ─────────────────────────────────────────────────────
+const FOLLOW_UPS: Record<string, string[]> = {
+  decision_recall:        ["Who made this decision?", "What's the rationale?", "Any customer impact?"],
+  spec_lookup:            ["What's the current status?", "Who owns this spec?", "Any open blockers?"],
+  customer_request:       ["Which customers asked for this?", "What's the priority?", "Is this on the roadmap?"],
+  research_history:       ["What were the key findings?", "Who ran this research?", "What was decided?"],
+  roadmap_rationale:      ["What's the timeline?", "What are the dependencies?", "Why this priority?"],
+  stakeholder_commitment: ["Who committed to this?", "What's the deadline?", "Any risks?"],
+  onboarding:             ["What are the steps?", "Who is responsible?", "What tools are involved?"],
+};
+const DEFAULT_FOLLOW_UPS = ["Tell me more", "Who is the owner?", "What's the timeline?"];
+
+// ── Main search component ─────────────────────────────────────────────────────
 function SearchContent() {
-  const searchParams = useSearchParams();
+  const params = useSearchParams();
   const router = useRouter();
-  const query = searchParams.get("q") || "";
-  const ts = useTimestamp();
+  const query = params.get("q") ?? "";
 
-  const canAnswer = KNOWN_KEYWORDS.some((kw) => query.toLowerCase().includes(kw));
+  const chatRef = useRef<HTMLDivElement>(null);
+  const followUpRef = useRef<HTMLInputElement>(null);
+  const hasRun = useRef(false);
+  const [inputFocused, setInputFocused] = useState(false);
 
+  const [exchanges, setExchanges] = useState<Exchange[]>([]);
+  const [activeQuery, setActiveQuery] = useState<string>("");
+  const [streaming, setStreaming] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const [followUp, setFollowUp] = useState("");
-  const [followupFocused, setFollowupFocused] = useState(false);
-  const [revealed, setRevealed] = useState(0);
-  const done = revealed >= FULL_LENGTH;
-
-  useEffect(() => { setRevealed(0); }, [query]);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!canAnswer || revealed >= FULL_LENGTH) return;
-    const t = setTimeout(() => setRevealed((r) => Math.min(r + 5, FULL_LENGTH)), 16);
-    return () => clearTimeout(t);
-  }, [revealed, canAnswer]);
+    if (query && !hasRun.current) {
+      hasRun.current = true;
+      saveThread(query);
+      runQuery(query, []);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
-  const handleFollowUp = (q?: string) => {
-    const fq = q ?? followUp;
-    if (!fq.trim()) return;
-    router.push(`/app/search?q=${encodeURIComponent(fq)}`);
+  async function runQuery(q: string, history: { question: string; answer: string }[]) {
+    setActiveQuery(q);
+    setIsLoading(true);
+    setStreaming("");
+    setApiError(null);
+
+    try {
+      const res = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: q, history }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error((err as { error: string }).error ?? `HTTP ${res.status}`);
+      }
+
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
+
+        const sepIdx = buffer.indexOf("\n\n__SOURCES__");
+        if (sepIdx !== -1) {
+          const answerText = buffer.slice(0, sepIdx);
+          const metaJson = buffer.slice(sepIdx + 13);
+          setStreaming(answerText);
+
+          try {
+            const meta = JSON.parse(metaJson) as { intent: string; sources: SourceCard[]; isStale?: boolean; suggestions?: string[]; isDemo?: boolean };
+            const newExchange: Exchange = {
+              id: Date.now().toString(),
+              question: q,
+              answer: answerText,
+              intent: meta.intent,
+              sources: meta.sources,
+              isStale: meta.isStale,
+              suggestions: meta.suggestions ?? [],
+              isDemo: meta.isDemo,
+            };
+            setExchanges((prev) => [...prev, newExchange]);
+            setStreaming("");
+            setIsLoading(false);
+          } catch {
+            setIsLoading(false);
+          }
+          break;
+        } else {
+          setStreaming(buffer);
+          requestAnimationFrame(() => {
+            chatRef.current?.scrollTo({ top: chatRef.current!.scrollHeight, behavior: "smooth" });
+          });
+        }
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setApiError(msg);
+      setIsLoading(false);
+    }
+  }
+
+  const handleFollowUp = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!followUp.trim() || isLoading) return;
+    const q = followUp.trim();
     setFollowUp("");
+    saveThread(q);
+    const history = exchanges.map((ex) => ({ question: ex.question, answer: ex.answer }));
+    runQuery(q, history);
+    setTimeout(() => chatRef.current?.scrollTo({ top: chatRef.current!.scrollHeight, behavior: "smooth" }), 80);
   };
 
-  const handleExport = () => {
-    const md = `# Seam — Research Session\n**Query:** ${query}\n\n---\n\n${ANSWER_SEGMENTS.map((s) => s.text).join("")}\n\n---\n\n## Sources\n${MOCK_SOURCES.map((s, i) => `[${i + 1}] **${s.source}** — ${s.title} · ${s.date} · ${s.author}`).join("\n")}`;
-    const blob = new Blob([md], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url; a.download = "seam-session.md"; a.click();
-    URL.revokeObjectURL(url);
-  };
+  const isStreamingNow = isLoading || streaming.length > 0;
+  const lastIntent = exchanges[exchanges.length - 1]?.intent;
 
   return (
     <AppShell>
-      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#F8F9FB", overflow: "hidden" }}>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden", background: "#0F1117" }}>
 
         {/* ── Top bar ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "0 16px", height: "52px", borderBottom: "1px solid var(--border)", flexShrink: 0, background: "#FFFFFF" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flex: 1, maxWidth: "640px", height: "34px", padding: "0 12px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "8px" }}>
-            <Search size={13} color="var(--text-muted)" strokeWidth={2} />
-            <input
-              type="text"
-              defaultValue={query}
-              onKeyDown={(e) => { if (e.key === "Enter") router.push(`/app/search?q=${encodeURIComponent((e.target as HTMLInputElement).value)}`); }}
-              style={{ flex: 1, outline: "none", background: "transparent", fontSize: "13px", color: "var(--text-primary)", fontFamily: "Inter, sans-serif", border: "none" }}
-            />
-          </div>
-          <button onClick={handleExport}
-            style={{ display: "flex", alignItems: "center", gap: "5px", padding: "5px 10px", borderRadius: "7px", fontSize: "11.5px", fontWeight: 500, color: "var(--text-secondary)", background: "none", border: "1px solid var(--border)", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-            <Download size={11} strokeWidth={2} /> Export
+        <div
+          style={{
+            height: "52px",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            background: "#0F1117",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 20px",
+            gap: "8px",
+            flexShrink: 0,
+          }}
+        >
+          {/* Logo — clickable to home */}
+          <button
+            onClick={() => router.push("/app")}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "baseline", gap: "2px" }}
+          >
+            <span style={{ fontWeight: 900, fontSize: "16px", color: "white", letterSpacing: "-1px", fontFamily: "Inter, sans-serif" }}>seam</span>
+            <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block" }} />
           </button>
-          <button onClick={() => router.push("/app")}
-            style={{ display: "flex", alignItems: "center", gap: "5px", padding: "5px 8px", fontSize: "11.5px", color: "var(--text-muted)", background: "none", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-            <X size={12} strokeWidth={2} /> New search
+
+          <div style={{ width: "1px", height: "13px", background: "rgba(255,255,255,0.08)", margin: "0 4px" }} />
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>AI search layer for PMs</span>
+
+          <div style={{ flex: 1 }} />
+
+          {/* New search */}
+          <button
+            onClick={() => router.push("/app")}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              fontSize: "11.5px",
+              fontWeight: 600,
+              color: "rgba(255,255,255,0.45)",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.09)",
+              borderRadius: "8px",
+              padding: "5px 11px",
+              cursor: "pointer",
+              transition: "all 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+            }}
+          >
+            <Plus size={11} />
+            New search
           </button>
         </div>
 
-        {/* ── Two-column body ── */}
-        <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+        {/* ── Scrollable content ── */}
+        <div ref={chatRef} style={{ flex: 1, overflowY: "auto", padding: "44px 24px 0" }}>
+          <div style={{ maxWidth: "720px", margin: "0 auto" }}>
 
-          {/* ── LEFT: Chat thread ── */}
-          <div style={{ flex: 1, overflowY: "auto", padding: "28px 32px 24px", display: "flex", flexDirection: "column", gap: "20px", minWidth: 0 }}>
-
-            {/* Question bubble — right */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px" }}>
-              <div style={{
-                maxWidth: "72%", padding: "12px 18px",
-                borderRadius: "20px 20px 4px 20px",
-                background: "#1C1E26", color: "#FFFFFF",
-                fontSize: "15px", fontWeight: 500, lineHeight: 1.55,
-                letterSpacing: "-0.1px", fontFamily: "Inter, sans-serif",
-                boxShadow: "0 2px 12px rgba(28,30,38,0.18)",
-              }}>
-                {query || "Why did we descope SSO from the enterprise milestone?"}
-              </div>
-              {/* Timestamp */}
-              {ts && (
-                <span style={{ fontSize: "10.5px", color: "var(--text-muted)", fontFamily: "Inter, sans-serif", paddingRight: "4px" }}>
-                  {ts}
-                </span>
-              )}
-            </div>
-
-            {/* Seam response — left */}
-            <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-
-              {/* Avatar */}
-              <div style={{ width: "30px", height: "30px", borderRadius: "10px", background: "#4F6BF5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px", boxShadow: "0 2px 8px rgba(79,107,245,0.35)" }}>
-                <Sparkles size={14} color="white" strokeWidth={2} />
-              </div>
-
-              <div style={{ flex: 1, minWidth: 0 }}>
-
-                {/* Meta row */}
-                <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "10px", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#1C1E26", fontFamily: "Inter, sans-serif" }}>Seam</span>
-                  {ts && <span style={{ fontSize: "10.5px", color: "var(--text-muted)", fontFamily: "Inter, sans-serif" }}>{ts}</span>}
-                  {canAnswer && (
-                    <span style={{ padding: "2px 8px", borderRadius: "100px", fontSize: "10.5px", fontWeight: 600, color: "#4F6BF5", background: "rgba(79,107,245,0.09)", border: "1px solid rgba(79,107,245,0.18)" }}>
-                      Decision Recall
-                    </span>
-                  )}
-                  {canAnswer && done && (
-                    <span style={{ padding: "2px 8px", borderRadius: "100px", fontSize: "10px", fontWeight: 600, color: "#065F46", background: "#ECFDF5", border: "1px solid #A7F3D0" }}>
-                      {MOCK_SOURCES.length} sources
-                    </span>
-                  )}
-                  {canAnswer && !done && (
-                    <span style={{ fontSize: "11px", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "4px", fontFamily: "Inter, sans-serif" }}>
-                      <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#4F6BF5", animation: "cursorBlink 0.9s ease infinite" }} />
-                      Searching…
-                    </span>
+            {/* API error */}
+            {apiError && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                  background: "rgba(185,28,28,0.1)",
+                  border: "1px solid rgba(239,68,68,0.2)",
+                  borderRadius: "12px",
+                  padding: "14px 16px",
+                  marginBottom: "28px",
+                  fontSize: "13px",
+                  color: "#FCA5A5",
+                }}
+              >
+                <AlertCircle size={15} style={{ flexShrink: 0, marginTop: "1px" }} />
+                <div>
+                  <strong>Search error:</strong> {apiError}
+                  {apiError.includes("ANTHROPIC_API_KEY") && (
+                    <div style={{ marginTop: "4px", fontSize: "12px", color: "rgba(252,165,165,0.6)" }}>
+                      Add ANTHROPIC_API_KEY in Vercel → Project → Settings → Environment Variables.
+                    </div>
                   )}
                 </div>
-
-                {/* Answer or can't-answer */}
-                {canAnswer
-                  ? <StreamingAnswer revealed={revealed} done={done} />
-                  : <CantAnswerBlock query={query} />
-                }
-
-                {/* Post-stream: feedback + follow-ups */}
-                {canAnswer && done && (
-                  <>
-                    {/* Feedback row */}
-                    <div style={{ display: "flex", alignItems: "center", marginTop: "16px", paddingTop: "14px", borderTop: "1px solid var(--border)" }}>
-                      <FeedbackButtons />
-                    </div>
-
-                    {/* Follow-up chips */}
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginTop: "12px" }}>
-                      {FOLLOW_UPS.map((s) => (
-                        <button key={s} onClick={() => handleFollowUp(s)}
-                          style={{ display: "flex", alignItems: "center", gap: "5px", padding: "6px 12px", borderRadius: "100px", fontSize: "12px", fontWeight: 500, color: "var(--text-secondary)", background: "#FFFFFF", border: "1px solid var(--border)", cursor: "pointer", fontFamily: "Inter, sans-serif", transition: "border-color 0.15s, color 0.15s" }}
-                          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#4F6BF5"; (e.currentTarget as HTMLElement).style.color = "#4F6BF5"; }}
-                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}>
-                          <ArrowUpRight size={11} strokeWidth={2} />
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-
-                {/* Feedback for can't-answer too */}
-                {!canAnswer && (
-                  <div style={{ marginTop: "16px" }}>
-                    <FeedbackButtons />
-                  </div>
-                )}
-
               </div>
-            </div>
-          </div>
-
-          {/* ── RIGHT: Sources ── */}
-          <div style={{ width: "360px", minWidth: "320px", flexShrink: 0, borderLeft: "1px solid var(--border)", overflowY: "auto", background: "var(--surface)", display: "flex", flexDirection: "column" }}>
-            <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border)", background: "#FFFFFF", position: "sticky", top: 0, zIndex: 1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)" }}>Sources</span>
-                {canAnswer && (
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "18px", height: "18px", borderRadius: "6px", background: "#4F6BF5", fontSize: "10px", fontWeight: 700, color: "white" }}>
-                    {MOCK_SOURCES.length}
-                  </span>
-                )}
-              </div>
-              <p style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>
-                {canAnswer ? "Ranked by relevance · click to open" : "No matching sources found"}
-              </p>
-            </div>
-
-            <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
-              {canAnswer
-                ? MOCK_SOURCES.map((card, idx) => <SourceCardRight key={card.id} card={card} idx={idx} />)
-                : (
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flex: 1, gap: "10px", padding: "32px 20px", textAlign: "center" }}>
-                    <div style={{ width: "44px", height: "44px", borderRadius: "14px", background: "#FEF3C7", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <Search size={20} color="#D97706" strokeWidth={1.5} />
-                    </div>
-                    <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--text-primary)", fontFamily: "Inter, sans-serif" }}>No sources found</p>
-                    <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.6, fontFamily: "Inter, sans-serif" }}>
-                      Connect more tools so Seam has more to search across.
-                    </p>
-                    <button
-                      onClick={() => router.push("/app/integrations")}
-                      style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 14px", borderRadius: "9px", fontSize: "12px", fontWeight: 600, background: "#1C1E26", color: "white", border: "none", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-                      <Plug size={12} strokeWidth={2} /> Connect sources
-                    </button>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        </div>
-
-        {/* ── Pinned follow-up ── */}
-        <div style={{ padding: "11px 32px 13px", borderTop: "1px solid var(--border)", background: "#FFFFFF", flexShrink: 0 }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "10px", maxWidth: "720px",
-            height: "42px", padding: "0 14px", background: "var(--surface)",
-            border: `1.5px solid ${followupFocused ? "#4F6BF5" : "var(--border)"}`,
-            borderRadius: "10px",
-            boxShadow: followupFocused ? "0 0 0 3px rgba(79,107,245,0.10)" : "none",
-            transition: "border-color 0.15s, box-shadow 0.15s",
-          }}>
-            <MessageCircle size={14} color="var(--text-muted)" strokeWidth={2} />
-            <input
-              type="text"
-              value={followUp}
-              onChange={(e) => setFollowUp(e.target.value)}
-              onFocus={() => setFollowupFocused(true)}
-              onBlur={() => setFollowupFocused(false)}
-              onKeyDown={(e) => e.key === "Enter" && handleFollowUp()}
-              placeholder="Ask a follow-up..."
-              style={{ flex: 1, outline: "none", background: "transparent", fontSize: "13px", color: "var(--text-primary)", fontFamily: "Inter, sans-serif", border: "none" }}
-            />
-            {followUp && (
-              <button onClick={() => handleFollowUp()}
-                style={{ background: "#4F6BF5", color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "11px", fontWeight: 600, cursor: "pointer", fontFamily: "Inter, sans-serif" }}>
-                Ask ↵
-              </button>
             )}
-          </div>
-          <p style={{ fontSize: "10px", color: "var(--text-muted)", marginTop: "5px", maxWidth: "720px" }}>
-            Every answer is cited — click any source card to open the original document.
-          </p>
-        </div>
 
+            {/* Completed exchanges */}
+            {exchanges.map((ex) => (
+              <CompletedExchange key={ex.id} exchange={ex} />
+            ))}
+
+            {/* In-progress: question heading + skeleton/streaming */}
+            {isStreamingNow && activeQuery && (
+              <div style={{ marginBottom: "28px" }}>
+                {/* Question visible immediately */}
+                <h2
+                  style={{
+                    fontSize: "21px",
+                    fontWeight: 700,
+                    color: "rgba(255,255,255,0.96)",
+                    letterSpacing: "-0.5px",
+                    lineHeight: 1.3,
+                    margin: "0 0 14px",
+                    fontFamily: "Inter, sans-serif",
+                    animation: "fadeSlideIn 0.25s ease",
+                  }}
+                >
+                  {activeQuery}
+                </h2>
+
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.055)", marginBottom: "22px" }} />
+
+                {/* Skeleton while retrieving */}
+                {isLoading && streaming.length === 0 && <Skeleton />}
+
+                {/* Streaming answer */}
+                {streaming.length > 0 && (
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px" }}>
+                      <Sparkles size={11} style={{ color: "#4F6BF5" }} />
+                      <span style={{ fontSize: "11px", fontWeight: 600, color: "#818CF8", letterSpacing: "0.03em" }}>
+                        Generating
+                      </span>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "2px",
+                          height: "13px",
+                          background: "#4F6BF5",
+                          verticalAlign: "text-bottom",
+                          animation: "cursorBlink 0.9s infinite",
+                          marginLeft: "2px",
+                          borderRadius: "1px",
+                        }}
+                      />
+                    </div>
+                    <AnswerText text={streaming} />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Follow-up bar */}
+            {!isStreamingNow && (exchanges.length > 0 || apiError) && (
+              <form
+                onSubmit={handleFollowUp}
+                style={{
+                  position: "sticky",
+                  bottom: 0,
+                  paddingTop: "20px",
+                  paddingBottom: "24px",
+                  background: "linear-gradient(to bottom, transparent, #0F1117 30%)",
+                }}
+              >
+                {/* Suggestion chips */}
+                <div style={{ display: "flex", gap: "6px", marginBottom: "10px", flexWrap: "wrap" }}>
+                  {(FOLLOW_UPS[lastIntent] ?? DEFAULT_FOLLOW_UPS).map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => { setFollowUp(s); setTimeout(() => followUpRef.current?.focus(), 0); }}
+                      style={{
+                        fontSize: "11.5px",
+                        color: "rgba(255,255,255,0.42)",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.09)",
+                        borderRadius: "20px",
+                        padding: "4px 12px",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)";
+                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.14)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.42)";
+                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.09)";
+                      }}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Input with focus glow */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    background: "rgba(255,255,255,0.05)",
+                    border: `1px solid ${inputFocused ? "rgba(79,107,245,0.5)" : "rgba(255,255,255,0.1)"}`,
+                    borderRadius: "14px",
+                    padding: "12px 16px",
+                    transition: "border-color 0.2s",
+                    boxShadow: inputFocused ? "0 0 0 3px rgba(79,107,245,0.1)" : "none",
+                  }}
+                  onClick={() => followUpRef.current?.focus()}
+                >
+                  <Search size={14} style={{ color: inputFocused ? "rgba(79,107,245,0.7)" : "rgba(255,255,255,0.22)", flexShrink: 0, transition: "color 0.2s" }} />
+                  <input
+                    ref={followUpRef}
+                    value={followUp}
+                    onChange={(e) => setFollowUp(e.target.value)}
+                    onFocus={() => setInputFocused(true)}
+                    onBlur={() => setInputFocused(false)}
+                    placeholder="Ask a follow-up…"
+                    disabled={isLoading}
+                    style={{
+                      flex: 1,
+                      fontSize: "14px",
+                      color: "rgba(255,255,255,0.88)",
+                      border: "none",
+                      outline: "none",
+                      background: "transparent",
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  />
+                  {followUp.trim() && (
+                    <button
+                      type="submit"
+                      style={{
+                        padding: "6px 14px",
+                        borderRadius: "9px",
+                        background: "#4F6BF5",
+                        color: "white",
+                        border: "none",
+                        cursor: "pointer",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        letterSpacing: "0.01em",
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      Ask
+                    </button>
+                  )}
+                </div>
+              </form>
+            )}
+
+            <div style={{ height: "32px" }} />
+          </div>
+        </div>
       </div>
     </AppShell>
   );
@@ -500,7 +770,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", fontSize: "13px", color: "var(--text-muted)" }}>Loading…</div>}>
+    <Suspense>
       <SearchContent />
     </Suspense>
   );

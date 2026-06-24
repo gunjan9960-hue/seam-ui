@@ -5,9 +5,9 @@ type ConnectorId =
   | "jira"
   | "google-docs"
   | "google-sheets"
+  | "google-slides"
   | "slack"
   | "confluence"
-  | "calendar"
   | "mixpanel";
 
 interface ConnectorMeta {
@@ -72,17 +72,6 @@ const ConfluenceIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-const CalendarIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="4" fill="#EA4335"/>
-    <rect x="5" y="7" width="14" height="12" rx="1.5" fill="white"/>
-    <rect x="5" y="7" width="14" height="4" rx="1.5" fill="#EA4335"/>
-    <line x1="9" y1="5" x2="9" y2="9" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-    <line x1="15" y1="5" x2="15" y2="9" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-    <rect x="8" y="13" width="2.5" height="2.5" rx="0.5" fill="#EA4335"/>
-    <rect x="12" y="13" width="2.5" height="2.5" rx="0.5" fill="#EA4335"/>
-  </svg>
-);
 
 const MixpanelIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -130,12 +119,6 @@ export const CONNECTORS: Record<ConnectorId, ConnectorMeta> = {
     color: "#1868DB",
     bg: "#EBF2FF",
     Icon: ConfluenceIcon,
-  },
-  calendar: {
-    label: "Calendar",
-    color: "#EA4335",
-    bg: "#FEECEB",
-    Icon: CalendarIcon,
   },
   mixpanel: {
     label: "Mixpanel",

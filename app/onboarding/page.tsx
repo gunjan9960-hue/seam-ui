@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
 import ConnectorIcon, { CONNECTORS, type ConnectorId } from "../components/ConnectorIcon";
+import { createClient } from "@/lib/supabase/client";
 
 interface FormData {
   name: string;
@@ -19,9 +20,7 @@ const STAGES = [
   { id: "scale", label: "Scale", sub: "Series D+ · 500+" },
 ];
 
-const SOURCE_IDS: ConnectorId[] = [
-  "notion", "jira", "google-docs", "slack", "confluence", "calendar", "mixpanel", "google-sheets",
-];
+const SOURCE_IDS: ConnectorId[] = ["notion", "jira", "slack"];
 
 const TOTAL_STEPS = 3;
 
@@ -39,7 +38,6 @@ const TRANSITION_ICONS = [
   { id: "jira",        cx: 406, cy: 160 },   // top-right
   { id: "slack",       cx: 406, cy: 340 },   // bottom-right
   { id: "google-docs", cx: 250, cy: 430 },   // bottom
-  { id: "calendar",    cx: 94,  cy: 340 },   // bottom-left
   { id: "confluence",  cx: 94,  cy: 160 },   // top-left
 ];
 const TCX = 250, TCY = 250;
@@ -474,18 +472,57 @@ export default function OnboardingPage() {
   const onChange = (patch: Partial<FormData>) =>
     setData((prev) => ({ ...prev, ...patch }));
 
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return;
+
+      // Redirect existing users — they already have a workspace
+      const { data: existing } = await supabase
+        .from("users")
+        .select("workspace_id")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (existing?.workspace_id) {
+        router.replace("/app");
+        return;
+      }
+
+      const fullName: string = user.user_metadata?.full_name ?? "";
+      if (fullName) setData((prev) => ({ ...prev, name: prev.name || fullName }));
+    });
+  }, [router]);
+
   const canAdvance = () => {
     if (step === 0) return data.name.trim().length > 0 && data.productName.trim().length > 0;
     if (step === 1) return data.sources.length > 0;
     return true;
   };
 
-  const next = () => {
+  const saveProfile = async () => {
+    const res = await fetch("/api/onboarding/complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: data.name,
+        productName: data.productName,
+        company: data.company,
+        stage: data.stage,
+      }),
+    });
+    if (!res.ok) {
+      const { error } = await res.json().catch(() => ({ error: "Unknown error" }));
+      console.error("Failed to complete onboarding:", error);
+    }
+  };
+
+  const next = async () => {
     if (step < TOTAL_STEPS - 1) {
       setStep((s) => s + 1);
     } else {
-      // Trigger Seam transition animation, navigate after it plays
       setTransitioning(true);
+      await saveProfile();
+      sessionStorage.setItem("seam_pending_sources", JSON.stringify(data.sources));
       setTimeout(() => {
         router.push("/app/integrations?from=onboarding");
       }, 2100);

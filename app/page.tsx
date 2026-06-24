@@ -3,6 +3,110 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactElement } from "react";
 import { ArrowRight } from "lucide-react";
+import AppShell from "@/app/components/AppShell";
+import { createClient } from "@/lib/supabase/client";
+
+// ── Auth Card (right side of hero) ────────────────────────────────────────────
+
+const TRUST_ITEMS = [
+  { icon: "🔒", text: "Read-only OAuth — never writes to your tools" },
+  { icon: "🇮🇳", text: "Data processed in India (Mumbai)" },
+  { icon: "✦",  text: "Private workspace — no sharing" },
+];
+
+function AuthCard({ loggedIn }: { loggedIn: boolean }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    const supabase = createClient();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+  };
+
+  return (
+    <div style={{
+      width: "360px",
+      flexShrink: 0,
+      background: "#FFFFFF",
+      borderRadius: "20px",
+      padding: "28px 28px 24px",
+      boxShadow: "0 8px 48px rgba(0,0,0,0.35), 0 2px 12px rgba(0,0,0,0.2)",
+      display: "flex",
+      flexDirection: "column",
+      gap: "0",
+    }}>
+      {/* Logo */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "16px" }}>
+        <span style={{ fontWeight: 900, fontSize: "22px", color: "#0F1117", letterSpacing: "-1px", fontFamily: "Inter, sans-serif", lineHeight: 1 }}>seam</span>
+        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "3px" }} />
+      </div>
+
+      {loggedIn ? (
+        <>
+          <p style={{ fontSize: "17px", fontWeight: 800, color: "#111827", letterSpacing: "-0.4px", marginBottom: "6px" }}>Welcome back</p>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "20px" }}>Your workspace is ready.</p>
+          <Link href="/app" style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+            height: "46px", borderRadius: "12px", background: "#4F6BF5", color: "white",
+            textDecoration: "none", fontSize: "14px", fontWeight: 700, fontFamily: "Inter, sans-serif",
+            boxShadow: "0 4px 16px rgba(79,107,245,0.35)",
+          }}>
+            Go to your workspace <ArrowRight size={15} strokeWidth={2.5} />
+          </Link>
+        </>
+      ) : (
+        <>
+          <p style={{ fontSize: "17px", fontWeight: 800, color: "#111827", letterSpacing: "-0.4px", marginBottom: "4px" }}>Start your free trial</p>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "20px" }}>14-day free · ₹800/user/month after</p>
+
+          {/* Google button */}
+          <button
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+              height: "46px", borderRadius: "12px",
+              background: loading ? "#F3F4F6" : "#FFFFFF",
+              border: "1.5px solid #E5E7EB",
+              fontSize: "14px", fontWeight: 600, color: "#111827",
+              cursor: loading ? "default" : "pointer", fontFamily: "Inter, sans-serif",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+              width: "100%", marginBottom: "16px",
+              transition: "border-color 0.15s, box-shadow 0.15s",
+            }}
+            onMouseEnter={(e) => { if (!loading) { (e.currentTarget as HTMLElement).style.borderColor = "#4F6BF5"; (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 3px rgba(79,107,245,0.10)"; } }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB"; (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 4px rgba(0,0,0,0.08)"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+              <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+              <path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+              <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
+            </svg>
+            {loading ? "Redirecting…" : "Continue with Google"}
+          </button>
+
+          {/* Trust items */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "7px", marginBottom: "14px" }}>
+            {TRUST_ITEMS.map((item, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "13px", lineHeight: 1, flexShrink: 0 }}>{item.icon}</span>
+                <span style={{ fontSize: "11.5px", color: "#6B7280" }}>{item.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ fontSize: "11px", color: "#9CA3AF", lineHeight: 1.55, textAlign: "center" }}>
+            By signing in, you agree to our Terms and Privacy Policy.
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
 
 // ── Brand icons (inline SVG, no imports needed) ───────────────────────────────
 
@@ -43,17 +147,6 @@ function BrandIcon({ id, size }: { id: string; size: number }) {
         <line x1="17" y1="30" x2="25" y2="30" stroke="#4285F4" strokeWidth="2.2" strokeLinecap="round"/>
       </svg>
     ),
-    calendar: (
-      <svg width={s} height={s} viewBox="0 0 48 48" fill="none">
-        <rect width="48" height="48" rx="10" fill="#EA4335"/>
-        <rect x="10" y="14" width="28" height="24" rx="3" fill="white"/>
-        <rect x="10" y="14" width="28" height="8" rx="3" fill="#EA4335"/>
-        <line x1="18" y1="10" x2="18" y2="18" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-        <line x1="30" y1="10" x2="30" y2="18" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-        <rect x="16" y="26" width="5" height="5" rx="1" fill="#EA4335"/>
-        <rect x="24" y="26" width="5" height="5" rx="1" fill="#EA4335"/>
-      </svg>
-    ),
     confluence: (
       <svg width={s} height={s} viewBox="0 0 48 48" fill="none">
         <rect width="48" height="48" rx="10" fill="#1868DB"/>
@@ -80,7 +173,6 @@ const ICONS = [
   { id: "jira",        cx: 205, cy: 22,  cpx: 220, cpy: 122 },
   { id: "slack",       cx: 365, cy: 58,  cpx: 315, cpy: 145 },
   { id: "google-docs", cx: 438, cy: 200, cpx: 346, cpy: 218 },
-  { id: "calendar",    cx: 408, cy: 360, cpx: 330, cpy: 298 },
   { id: "confluence",  cx: 240, cy: 432, cpx: 240, cpy: 338 },
   { id: "mixpanel",    cx: 72,  cy: 360, cpx: 148, cpy: 298 },
 ];
@@ -188,12 +280,12 @@ function ThreadViz() {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 const FEATURES = [
-  { icon: "🔍", title: "One question, cited answer", body: "Ask anything. Seam searches across all connected tools and returns one answer with every source linked.", color: "rgba(79,107,245,0.14)" },
-  { icon: "🧵", title: "Pull any thread", body: "\"What did we decide on SSO?\" — Seam finds the Confluence page, the Jira comment, and the Slack thread.", color: "rgba(249,115,22,0.12)" },
-  { icon: "📅", title: "PM Morning Briefing", body: "Meetings, @mentions, Jira blockers, and docs needing review — one screen, every CTA.", color: "rgba(52,168,83,0.12)" },
-  { icon: "⚡", title: "Webhook-first, always fresh", body: "Answers reflect what happened this morning — not last week's index.", color: "rgba(234,179,8,0.12)" },
-  { icon: "🎯", title: "Built for B2B SaaS PMs", body: "Understands Jira ticket types, CFR clients, and stakeholder attribution.", color: "rgba(236,72,153,0.12)" },
-  { icon: "🔒", title: "Read-only. Always.", body: "OAuth read permissions only. Seam never writes to your tools.", color: "rgba(99,102,241,0.12)" },
+  { icon: "🔍", title: "Knowledge Search", body: "Ask anything. Seam searches Notion, Jira, Docs, and Slack — one cited answer, every source linked.", color: "rgba(79,107,245,0.14)", badge: "Live" },
+  { icon: "📅", title: "PM Morning Briefing", body: "Meetings, @mentions, Jira blockers, and docs needing review — one screen, every CTA.", color: "rgba(52,168,83,0.12)", badge: "Live" },
+  { icon: "📄", title: "PRD Creator", body: "Brief → full structured PRD in under 2 minutes. Exports to Notion or Google Docs.", color: "rgba(249,115,22,0.12)", badge: "P1" },
+  { icon: "💡", title: "Insight Generator", body: "Turn interviews, support tickets, and Mixpanel data into ranked, actionable insights.", color: "rgba(234,179,8,0.12)", badge: "P1" },
+  { icon: "🗺️", title: "Roadmap Builder", body: "AI-scored RICE and MoSCoW prioritisation pulled from Jira, feedback, and usage data.", color: "rgba(236,72,153,0.12)", badge: "Coming" },
+  { icon: "🔒", title: "Read-only. Always.", body: "OAuth read permissions only. Your data never leaves India. Seam never writes to your tools.", color: "rgba(99,102,241,0.12)", badge: null },
 ];
 
 const STATS = [
@@ -204,21 +296,23 @@ const STATS = [
 ];
 
 export default function LandingPage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => setLoggedIn(!!user));
+  }, []);
+
   return (
-    <div style={{ background: "#0F1117", minHeight: "100vh", fontFamily: "Inter, -apple-system, sans-serif", color: "white" }}>
+    <AppShell>
+    <div style={{ background: "#0F1117", minHeight: "100%", fontFamily: "Inter, -apple-system, sans-serif", color: "white", overflowY: "auto" }}>
 
       {/* ── Navbar ── */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 48px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-          <span style={{ fontWeight: 900, fontSize: "22px", color: "white", letterSpacing: "-1.2px", fontFamily: "Inter, sans-serif" }}>seam</span>
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "3px" }} />
-        </div>
+      <nav style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", padding: "16px 40px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
           <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
-          <Link href="/pricing" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Pricing</Link>
-          <Link href="/roadmap" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Roadmap</Link>
-          <Link href="/login" style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
-            Get early access →
+          <Link href={loggedIn ? "/app" : "/login"} style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
+            {loggedIn ? "Go to app →" : "Get early access →"}
           </Link>
         </div>
       </nav>
@@ -248,25 +342,10 @@ export default function LandingPage() {
             <strong style={{ color: "rgba(255,255,255,0.8)" }}> One question. All your tools. One answer.</strong>
           </p>
 
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            <Link href="/login"
-              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "14px 22px", borderRadius: "12px", background: "#4F6BF5", color: "white", textDecoration: "none", fontSize: "14.5px", fontWeight: 700, boxShadow: "0 4px 24px rgba(79,107,245,0.4)" }}>
-              Start free — no credit card
-              <ArrowRight size={16} strokeWidth={2.5} />
-            </Link>
-            <Link href="/app"
-              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "14px 18px", borderRadius: "12px", color: "rgba(255,255,255,0.6)", textDecoration: "none", fontSize: "14px", fontWeight: 500, border: "1px solid rgba(255,255,255,0.13)" }}>
-              See demo →
-            </Link>
-          </div>
-
-          <p style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.22)", marginTop: "14px" }}>
-            14-day free trial · ₹800/user/month · Cancel anytime
-          </p>
         </div>
 
-        {/* Right — Animated thread viz */}
-        <ThreadViz />
+        {/* Right — Auth card */}
+        <AuthCard loggedIn={loggedIn} />
       </section>
 
       {/* ── Stats bar ── */}
@@ -311,7 +390,23 @@ export default function LandingPage() {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
           {FEATURES.map((f, i) => (
-            <div key={i} style={{ padding: "20px", borderRadius: "16px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+            <div key={i} style={{ padding: "20px", borderRadius: "16px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", position: "relative" }}>
+              {f.badge && (
+                <span style={{
+                  position: "absolute",
+                  top: "14px",
+                  right: "14px",
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "2px 7px",
+                  borderRadius: "20px",
+                  background: f.badge === "Live" ? "rgba(16,185,129,0.15)" : f.badge === "P1" ? "rgba(79,107,245,0.2)" : "rgba(255,255,255,0.07)",
+                  color: f.badge === "Live" ? "#6EE7B7" : f.badge === "P1" ? "#93A8F8" : "rgba(255,255,255,0.35)",
+                  border: f.badge === "Live" ? "1px solid rgba(16,185,129,0.3)" : f.badge === "P1" ? "1px solid rgba(79,107,245,0.3)" : "1px solid rgba(255,255,255,0.1)",
+                }}>{f.badge}</span>
+              )}
               <div style={{ width: "44px", height: "44px", borderRadius: "12px", background: f.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", marginBottom: "12px" }}>{f.icon}</div>
               <h3 style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "7px", letterSpacing: "-0.2px" }}>{f.title}</h3>
               <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.42)", lineHeight: 1.65 }}>{f.body}</p>
@@ -330,9 +425,9 @@ export default function LandingPage() {
           Stop switching tabs.<br /><span style={{ color: "#4F6BF5" }}>Pull the thread.</span>
         </h2>
         <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.38)", marginBottom: "28px" }}>14-day free trial · ₹800/user/month · Cancel anytime</p>
-        <Link href="/login"
+        <Link href={loggedIn ? "/app" : "/login"}
           style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "15px 28px", borderRadius: "14px", background: "#4F6BF5", color: "white", textDecoration: "none", fontSize: "15px", fontWeight: 700, boxShadow: "0 4px 32px rgba(79,107,245,0.45)" }}>
-          Get early access — it's free
+          {loggedIn ? "Go to your workspace" : "Get early access — it's free"}
           <ArrowRight size={17} strokeWidth={2.5} />
         </Link>
       </section>
@@ -351,5 +446,6 @@ export default function LandingPage() {
         <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
+    </AppShell>
   );
 }

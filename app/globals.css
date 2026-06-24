@@ -128,6 +128,22 @@ body {
   50%, 100% { opacity: 0; }
 }
 
+/* Ellipsis opacity pulse (used on <span> in onboarding transition) */
+@keyframes ellipsisDots {
+  0%, 100% { opacity: 0; }
+  40%, 60% { opacity: 1; }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
 /* scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }

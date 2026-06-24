@@ -17,7 +17,7 @@ interface RoadmapItem {
 const MODULES: RoadmapItem[] = [
   {
     title: "Knowledge Search",
-    description: "Cross-source cited answers across Notion, Jira, Google Docs, Slack, and Calendar.",
+    description: "Cross-source cited answers across Notion, Jira, Google Docs, and Slack.",
     phase: "live",
     tag: "Core",
   },
@@ -42,7 +42,7 @@ const MODULES: RoadmapItem[] = [
   {
     title: "PRD Creator",
     description: "Generate structured PRDs from a brief or a set of Jira tickets. Exports directly to Notion or Google Docs.",
-    phase: "building",
+    phase: "next",
     tag: "Creation",
   },
   {
@@ -66,7 +66,7 @@ const MODULES: RoadmapItem[] = [
   {
     title: "Insight Generator",
     description: "Turn user interviews, support tickets, and Mixpanel data into structured insights ranked by frequency and impact.",
-    phase: "planned",
+    phase: "next",
     tag: "Insights",
   },
   {
@@ -99,7 +99,6 @@ const CONNECTORS: RoadmapItem[] = [
   { title: "Notion",         description: "Pages, databases, comments",                            phase: "live",     tag: "P0" },
   { title: "Jira",           description: "Tickets, sprints, comments, custom fields",             phase: "live",     tag: "P0" },
   { title: "Google Docs",    description: "Docs, Sheets, Slides — full content + comments",       phase: "live",     tag: "P0" },
-  { title: "Google Calendar",description: "Meetings, attendees, recurring events",                 phase: "live",     tag: "P0" },
   { title: "Slack",          description: "Public channels, threads, @mentions",                   phase: "live",     tag: "P0" },
   { title: "Mixpanel",       description: "Event trends, funnels, retention",                      phase: "building", tag: "P0" },
   { title: "Confluence",     description: "Spaces, pages, inline comments",                        phase: "next",     tag: "P1" },

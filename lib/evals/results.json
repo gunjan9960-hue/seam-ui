@@ -1,0 +1,644 @@
+[
+  {
+    "version": "v1",
+    "runAt": "2026-06-11T11:57:30.524Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did Apex decide to build SAML 2.0 SSO?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "Apex decided to build SAML 2.0 SSO because the lack of it directly caused the loss or delay of three enterprise deals in Q2 2025 — Kroger ($220K), Estée Lauder ($190K), and Carrefour ($175K) — totalling $585K in pipeline impact. Enterprise IT security teams were blocking vendor approvals without SAML in place, and Kavitha Suresh escalated the issue to CPO Priya Sharma in July 2025. The decision (PROD-1623) was owned by Ananya Singh and approved by Priya Sharma on August 22, 2025, with the rationale that SAML SSO was table-stakes for enterprise deals, not an optional feature.\n\nDecision confirme",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "SSO & Enterprise Security — SAML 2.0 Decision",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Freemium vs Enterprise-Only Pricing Analysis",
+          "Key Stakeholders & Decision Makers",
+          "Company Overview — Apex Platform"
+        ],
+        "isStale": false,
+        "retrievalMs": 3607,
+        "generationMs": 5640,
+        "totalMs": 9256,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with comprehensive, well-sourced information from the NOTION document on SSO & Enterprise Security, including specific deal names, amounts, decision owners, and approval dates."
+        },
+        "flags": [],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 2,
+        "query": "What are the acceptance criteria in the Permissions redesign PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Slack and could not find this in your connected sources. Acceptance criteria for the Permissions & Role Management Redesign PRD are not explicitly listed in the document — this information likely lives in a more detailed spec or ticket associated with PROD work tracked by Ananya Singh.\n\nOwner: Ananya Singh · Last updated: October 25, 2025.",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Permissions & Role Management — Redesign PRD",
+          "Review Engine PRD v3.0 — Bulk Moderation & AI Assist",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Q2 2026 OKRs — Product & Engineering",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based"
+        ],
+        "isStale": false,
+        "retrievalMs": 1672,
+        "generationMs": 3819,
+        "totalMs": 5492,
+        "llmScores": {
+          "relevance": 1,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "The answer correctly identifies that acceptance criteria are not explicitly listed in the source documents, but this makes it fundamentally non-responsive to the user's query - the user asked 'what are' the criteria, implying they expected to find them, and the answer provides no substantive information about the redesign beyond referring them elsewhere."
+        },
+        "flags": [
+          "low_relevance:1"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 3,
+        "query": "What did Walmart request and what was the escalation about?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Walmart made two distinct requests or escalations captured in your sources. First, in **November 2025**, Walmart requested **brand-level permission isolation**, escalated by **Arjun Mehta**, because their legal team flagged a potential data exposure risk between competing brand teams sharing the Apex platform — this is being addressed via the Permissions & Role Management redesign (target Walmart pilot: **May 2026**). Second, on **March 12, 2026**, during the Syndication Outage, **Walmart's Mike Chen** sent a formal escalation email to **Vikram Nair** at 11:30am after 12,400 approved reviews w",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Post-mortem: Syndication Outage — March 12, 2026",
+          "#sales: Home Depot EU pilot results",
+          "Enterprise Tier Expansion — Unlimited SKU Decision",
+          "Permissions & Role Management — Redesign PRD",
+          "SSO & Enterprise Security — SAML 2.0 Decision"
+        ],
+        "isStale": false,
+        "retrievalMs": 963,
+        "generationMs": 6632,
+        "totalMs": 7596,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses both Walmart requests with specific dates, names, and details fully supported by source documents."
+        },
+        "flags": [
+          "generation_slow:6632ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 4,
+        "query": "What did the build vs buy AI analysis conclude?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "**Yes, this research exists.** Rahul Verma (CTO) authored the Build vs Buy analysis on **February 28, 2026**, with a decision required by April 30, 2026 (Priya Sharma to approve) — it lives in Google Docs titled *\"Build vs Buy — AI Sentiment Analysis for Apex Insights v2.\"* The analysis evaluated three options — building in-house, buying a specialist NLP vendor, and using an LLM API — and recommended **Option 3: Claude API**, based on a validated accuracy of **94.2%** (from spike PROD-1589), a cost of **$0.0018/review (~$18,000/month at 10M reviews)**, and a 4–6 week build timeline versus 12–1",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Build vs Buy — AI Sentiment Analysis for Apex Insights v2",
+          "Apex Insights v2 — AI Sentiment Analysis PRD",
+          "Product Portfolio & ICP Definition",
+          "H1 2026 Product Roadmap",
+          "H1 2026 Product Roadmap"
+        ],
+        "isStale": true,
+        "retrievalMs": 1516,
+        "generationMs": 7269,
+        "totalMs": 8785,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer comprehensively addresses the query by directly citing the Build vs Buy analysis conclusion (Option 3: Claude API) with all supporting metrics, costs, and rationale from the source document."
+        },
+        "flags": [
+          "generation_slow:7269ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile app deprioritised in H1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The native mobile app was deprioritised by **Priya Sharma (CPO)** in a decision dated **October 8, 2025** (documented in PROD-1834 and confirmed in the H1 2026 roadmap). The core reasons were: no churn risk (0 of 14 requesting customers said they would churn without it, per a survey by **Arjun Mehta, Head of CS**), high engineering cost (6–8 months for a 3-person team for iOS + Android), and opportunity cost — those same engineers were needed for **Visual UGC video (PROD-1456)** and **Walmart real-time API (PROD-1342)**, both carrying direct ARR impact. Instead, **PWA improvements** (push noti",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "H1 2026 Product Roadmap",
+          "Mobile App for Brand Managers — Deprioritisation Decision",
+          "FY 2026 Annual Strategy — Apex",
+          "PROD-1834: Mobile SDK for Review Collection",
+          "H1 2026 Product Roadmap"
+        ],
+        "isStale": false,
+        "retrievalMs": 1509,
+        "generationMs": 5313,
+        "totalMs": 6823,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with comprehensive, well-sourced information covering decision owner, date, rationale, and alternative approach. All claims are traceable to source documents."
+        },
+        "flags": [],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 6,
+        "query": "Who signed off on the Stripe migration?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "The decision to migrate from Chargebee to Stripe was owned by **Rahul Verma (CTO)**, as documented in the Billing Migration to Stripe — Decision Log dated **April 5, 2025**. The migration covered 240 enterprise customer subscriptions and was completed on schedule by **August 31, 2025**. No additional sign-off from other stakeholders is explicitly recorded in the decision log.",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Billing Migration to Stripe — Decision Log",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "Key Stakeholders & Decision Makers",
+          "API v2 — Launch Plan & v1 Deprecation"
+        ],
+        "isStale": false,
+        "retrievalMs": 1670,
+        "generationMs": 3106,
+        "totalMs": 4776,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly and completely addresses the query with specific, well-sourced information from the Decision Log document."
+        },
+        "flags": [],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 7,
+        "query": "Tell me about Apex — revenue, products, and key stakeholders",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## Apex — Company Overview\n\n*Note: The most recent source is dated **February 1, 2026**. Some details may have changed since then.*\n\n---\n\n### 💰 Revenue & Financials\n\n- **ARR: $19.2M** (FY 2025 actuals) — up from $13.7M in FY 2024 (**40% YoY growth**)\n- **Net Revenue Retention: 118%**\n- **Gross Margin: 74%**\n- **Headcount: 130** across Bangalore (HQ), New York, and London\n- **Series B: $42M raised** — led by Accel Partners, co-led by Sequoia India (closed March 2024)\n- **Runway: 28 months** at current burn\n- **FY 2026 ARR target: $27M** (40% growth)\n\n---\n\n### 🛍️ Products\n\n| Product | ARR Shar",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Key Stakeholders & Decision Makers",
+          "Company Overview — Apex Platform",
+          "FY 2026 Annual Strategy — Apex",
+          "Competitive Landscape — Q1 2026",
+          "Product Portfolio & ICP Definition"
+        ],
+        "isStale": true,
+        "retrievalMs": 947,
+        "generationMs": 15159,
+        "totalMs": 16106,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer comprehensively addresses all three query dimensions (revenue, products, key stakeholders) with specific, well-organized details directly sourced from the documents."
+        },
+        "flags": [
+          "generation_slow:15159ms",
+          "total_slow:16106ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 8,
+        "query": "What is Apex's FY 2026 strategy and how do the Q2 OKRs connect to it?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "onboarding",
+        "intentCorrect": false,
+        "answer": "Apex's FY 2026 strategy, authored by Vikram Nair, targets growth from $19.2M to $27M ARR (40%) by pursuing three bets: winning the Top 50 Global Retailers, launching AI-Powered Review Intelligence (Apex Insights v2), and closing the feature gap on Visual UGC within 6 months to defend against Yotpo, Bazaarvoice, and PowerReviews. The Q2 OKRs map directly to these bets: O1 (win 8 new retailer logos, including Kroger at $240K ACV and Costco at $280K ACV) executes Bet 1; O2 (launch video reviews via PROD-1456 by April 30 for L'Oréal's pilot at $180K ACV contingent) executes Bet 3; and O4 (maintain",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q2 2026 OKRs — Product & Engineering",
+          "FY 2026 Annual Strategy — Apex",
+          "#roadmap-review: Q1 2026 outcomes",
+          "FY 2026 Go-to-Market Strategy — Apex",
+          "Key Stakeholders & Decision Makers"
+        ],
+        "isStale": false,
+        "retrievalMs": 1710,
+        "generationMs": 7332,
+        "totalMs": 9042,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "notes": "The answer is comprehensive and directly addresses the query with strong document support. Minor concern: 'GTM Motion 3 expansion target' phrasing is inferred rather than explicitly stated as such in the documents, though the underlying facts are accurate."
+        },
+        "flags": [
+          "generation_slow:7332ms",
+          "intent_mismatch:expected_roadmap_rationale_got_onboarding"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 9,
+        "query": "What happened during the Syndication outage and what decisions came out of it?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "On March 12, 2026, a Kafka partition count increase from 12 to 24 triggered a consumer group rebalance that lasted 4 hours 22 minutes (09:14–13:36 IST), causing real-time syndication to go fully down for Walmart, Target, and Home Depot — delaying 23,700 reviews in total with no data loss. The incident was owned by Rajan Krishnamurthy (Head of Engineering), and the root cause was that the change management process did not require an off-hours window for Kafka partition changes. Two immediate action items were completed by March 25: adding Kafka partition changes to the high-risk change list (re",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Post-mortem: Syndication Outage — March 12, 2026",
+          "Q2 2026 OKRs — Product & Engineering",
+          "SSO & Enterprise Security — SAML 2.0 Decision",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "Review Engine PRD v3.0 — Bulk Moderation & AI Assist"
+        ],
+        "isStale": false,
+        "retrievalMs": 921,
+        "generationMs": 6124,
+        "totalMs": 7046,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer comprehensively addresses both parts of the query (what happened and decisions) with specific details directly supported by the post-mortem document."
+        },
+        "flags": [
+          "generation_slow:6124ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 10,
+        "query": "Compare Review Engine and Visual UGC — what are they, who are the ICPs, and what is the roadmap?",
+        "category": "B-complex",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## Review Engine vs. Visual UGC — Comparison\n\n---\n\n### 🔧 Review Engine\n\n**What it is**\n- A moderation platform for enterprise brand managers and CS teams managing high-volume review queues\n- Current moderation is one-at-a-time; v3 introduces bulk moderation and AI-assisted decision-making\n- AI Assist engine is trained on **40M moderated reviews** from Apex's own network (no external LLM)\n\n**ICP (Ideal Customer Profile)**\n- The context does not explicitly name a defined ICP segment for Review Engine\n- Implicitly: enterprise brand managers and CS teams at large retail/CPG accounts (e.g., **Walm",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q2 2026 OKRs — Product & Engineering",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Visual UGC — Strategic Decision & Launch Plan",
+          "Review Engine PRD v3.0 — Bulk Moderation & AI Assist",
+          "H1 2026 Product Roadmap"
+        ],
+        "isStale": false,
+        "retrievalMs": 1681,
+        "generationMs": 16096,
+        "totalMs": 17778,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "notes": "Answer is comprehensive and well-sourced; minor issue: the answer states 'Bulk Moderation GA launch | April 15, 2026' but source documents show it slipped from March 31 to April 15 with a Q2 OKR target of May 15, creating slight ambiguity about the actual GA date."
+        },
+        "flags": [
+          "generation_slow:16096ms",
+          "total_slow:17778ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 11,
+        "query": "What enterprise customer feedback drove the most roadmap decisions in 2025?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "decision_recall",
+        "intentCorrect": false,
+        "answer": "Based on the connected sources, the most impactful enterprise customer feedback driving roadmap decisions came from the **Q4 2025 Enterprise Customer Feedback Synthesis** (authored by Arjun Mehta, January 8, 2026). The top complaint, cited by **16 of 24 enterprise accounts** (including L'Oréal, Nykaa, and boAt), was the lack of **video review support** — flagging that Apex was losing Gen Z review content as a result. The second most-cited complaint, from **14 of 24 accounts** (including P&G), was **moderation inefficiency**, with brand managers reporting 3 hours per day spent in the moderation",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Enterprise Customer Feedback Synthesis — Q4 2025",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "SSO & Enterprise Security — SAML 2.0 Decision",
+          "Billing Migration to Stripe — Decision Log",
+          "Key Stakeholders & Decision Makers"
+        ],
+        "isStale": true,
+        "retrievalMs": 966,
+        "generationMs": 7916,
+        "totalMs": 8883,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with specific, well-sourced evidence from the Q4 2025 Enterprise Customer Feedback Synthesis document, providing exact customer counts and named accounts."
+        },
+        "flags": [
+          "generation_slow:7916ms",
+          "intent_mismatch:expected_customer_request_got_decision_recall"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 12,
+        "query": "billing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The relevant document is **\"Billing Migration to Stripe — Decision Log\"**. Apex migrated from Chargebee to Stripe Billing, completing the migration on **August 31, 2025**, covering **240 enterprise customer subscriptions**. Key outcomes included invoice sync errors dropping from **20% to 0.3%**, billing incident response improving from **4–6 days to same-day**, and a **60% reduction in manual billing reconciliation time** for the Finance team. The migration was driven by Chargebee's inability to support the new module-based pricing model, unreliable Salesforce sync, and slow support response t",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Billing Migration to Stripe — Decision Log",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "Enterprise Tier Expansion — Unlimited SKU Decision",
+          "#sales: Home Depot EU pilot results"
+        ],
+        "isStale": false,
+        "retrievalMs": 1523,
+        "generationMs": 5548,
+        "totalMs": 7071,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the billing query with comprehensive, well-sourced information from the primary decision log document."
+        },
+        "flags": [
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The most relevant document is **\"API v2 — Launch Plan & v1 Deprecation\"**. API v2 is currently in development, delayed from Q1 to Q3 2026 due to engineering resources being reallocated to Visual UGC video (PROD-1456), which is tied to a $180K L'Oréal contract. Key v2 features include GraphQL + REST support, webhooks, bulk endpoints (up to 10,000 reviews per request), OAuth 2.0 authentication, and raised rate limits (1,000 req/min standard; 10,000 req/min enterprise). v1 sunset is set for December 31, 2026, with 87 customers currently on v1.\n\nOwner: Rahul Verma · Last updated: December 20, 2025",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API v2 — Launch Plan & v1 Deprecation",
+          "Syndication Network — Architecture & Scope Decision",
+          "#roadmap-review: Q1 2026 outcomes",
+          "H1 2026 Product Roadmap",
+          "Apex Insights v2 — AI Sentiment Analysis PRD"
+        ],
+        "isStale": false,
+        "retrievalMs": 1309,
+        "generationMs": 6074,
+        "totalMs": 7383,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query 'api' by identifying the most relevant document and providing comprehensive, well-sourced information about API v2 with all key details traceable to the source material."
+        },
+        "flags": [
+          "generation_slow:6074ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 14,
+        "query": "permissions",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The **Permissions & Role Management Redesign PRD** covers a full overhaul of the current 3-role system (Admin, Editor, Viewer) into five new roles: Super Admin, Brand Admin, Moderator, Analyst, and Integration. A key driver was Walmart's legal team flagging a data exposure risk between competing brand teams, escalated by Arjun Mehta in November 2025; the solution enforces brand and retailer isolation at the **database query level** with a full audit log for compliance. The timeline shows design and backend data model complete (December 2025 and January 2026 respectively), frontend in developme",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Permissions & Role Management — Redesign PRD",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Review Engine PRD v3.0 — Bulk Moderation & AI Assist",
+          "PROD-1834: Mobile SDK for Review Collection",
+          "#sales: Home Depot EU pilot results"
+        ],
+        "isStale": false,
+        "retrievalMs": 1009,
+        "generationMs": 7156,
+        "totalMs": 8165,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the 'permissions' query with comprehensive details from the PRD, including the 5 new roles, the Walmart data exposure risk, database-level isolation, timeline, and the connection to the Bulk Moderation slip—all fully supported by source documents."
+        },
+        "flags": [
+          "generation_slow:7156ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the Home Depot pilot?",
+        "category": "D-freshness",
+        "intentExpected": "customer_request",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "Based on the **H1 2026 Product Roadmap** and **Q1 2026 Roadmap Wrap-Up** (#roadmap-review), Home Depot GDPR compliance (CFR-804) was marked as on track for an **April 15** delivery date. As of the April 2 Slack update from Priya Sharma, it had not yet shipped but remained on schedule. Per the **Q2 2026 OKRs**, closing the Home Depot Enterprise upgrade (post-GDPR delivery) is part of Arjun Mehta's expansion pipeline, representing one of three deals expected to push NRR from 119% to 121%.\n\nOwner: Priya Sharma · Last updated: March 28, 2026.",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Key Stakeholders & Decision Makers",
+          "Q2 2026 OKRs — Product & Engineering",
+          "#roadmap-review: Q1 2026 outcomes",
+          "H1 2026 Product Roadmap",
+          "Key Stakeholders & Decision Makers"
+        ],
+        "isStale": false,
+        "retrievalMs": 936,
+        "generationMs": 5324,
+        "totalMs": 6260,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with specific, well-sourced information about Home Depot pilot status, including delivery date, timeline, and business context."
+        },
+        "flags": [
+          "intent_mismatch:expected_customer_request_got_spec_lookup"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the API v1 deprecation timeline?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "According to the **API v2 — Launch Plan & v1 Deprecation** document, v1 is set to be sunset on **December 31, 2026**, approximately 12 months after the v2 launch. Migration support will include a dedicated API migration guide and 1:1 sessions for the Top 20 API customers, with **87 customers** currently on v1 (Rajan is tasked with segmenting them by usage volume). Note that this document was last updated **December 20, 2025** — over 90 days ago — so details may have changed, particularly given the API v2 launch was delayed from Q1 to Q3 2026, which could affect the sunset date.\n\nOwner: Rahul V",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API v2 — Launch Plan & v1 Deprecation",
+          "H1 2026 Product Roadmap",
+          "H1 2026 Product Roadmap",
+          "Build vs Buy — AI Sentiment Analysis for Apex Insights v2",
+          "Permissions & Role Management — Redesign PRD"
+        ],
+        "isStale": true,
+        "retrievalMs": 1095,
+        "generationMs": 5078,
+        "totalMs": 6174,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with specific facts about the v1 deprecation timeline, all claims are traceable to the source documents, and no invented information is present."
+        },
+        "flags": [],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 17,
+        "query": "What are Apex current pricing tiers?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "**Document: Pricing Model Decision — Seat-based vs Usage-based vs Module-based**\n\nApex uses a **module-based subscription model** (live since April 1, 2025) with three tiers: **Base** (up to 5,000 SKUs, 50K reviews/month — $80K ACV), **Growth** (up to 25,000 SKUs, 250K reviews/month — $160K ACV), and **Enterprise** (unlimited SKUs, unlimited reviews, custom SLA — $250K–$420K ACV). Enterprise customers pay for the Review Engine as a foundation, with optional add-ons including Syndication, Visual UGC, and Insights. Any deal above $250K uses custom enterprise pricing, and 12 existing customers ne",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Freemium vs Enterprise-Only Pricing Analysis",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "#sales: Home Depot EU pilot results",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "Key Stakeholders & Decision Makers"
+        ],
+        "isStale": false,
+        "retrievalMs": 2041,
+        "generationMs": 4646,
+        "totalMs": 6688,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with complete and accurate pricing tier information extracted verbatim from the source documents."
+        },
+        "flags": [
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 18,
+        "query": "What revenue did Apex lose before building SSO and which deals were affected?",
+        "category": "E-nuanced",
+        "intentExpected": "decision_recall",
+        "intentDetected": "research_history",
+        "intentCorrect": false,
+        "answer": "Prior to building SAML 2.0 SSO, Apex lost or pushed **$585K in combined pipeline** across three deals in Q2 2025: Kroger ($220K, blocked by IT security), Estée Lauder ($190K, security review failed and deal pushed to Q3), and Carrefour ($175K, lost to PowerReviews who already had SAML). This analysis was documented by **Ananya Singh** in the **SSO & Enterprise Security — SAML 2.0 Decision** Notion doc dated **August 22, 2025**, and the decision to build SAML (PROD-1623) was approved by CPO Priya Sharma following an escalation from Kavitha Suresh in July 2025.",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Post-mortem: Syndication Outage — March 12, 2026",
+          "Q2 2026 OKRs — Product & Engineering",
+          "SSO & Enterprise Security — SAML 2.0 Decision",
+          "#roadmap-review: Q1 2026 outcomes",
+          "Company Overview — Apex Platform"
+        ],
+        "isStale": false,
+        "retrievalMs": 916,
+        "generationMs": 4103,
+        "totalMs": 5020,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses both parts of the query with specific revenue figures and affected deals, all claims are supported by the SSO & Enterprise Security document dated August 22, 2025, and no facts beyond the source documents are present."
+        },
+        "flags": [
+          "intent_mismatch:expected_decision_recall_got_research_history"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 19,
+        "query": "As a new PM at Apex, what are the top 3 strategic bets for this year?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## Apex FY 2026 — Top 3 Strategic Bets\n\n> ⚠️ **Heads up:** The most recent source is dated **January 20, 2026**. Some details may have changed since then.\n\n---\n\n### Bet 1: Win the Top 50 Global Retailers (Q1–Q2 2026)\n\n- **Goal:** Expand retailer footprint from the current **22 live retailers** to win **8 new retailer logos by Q2 2026**\n- **Logic:** Winning a retailer creates a forced network effect — each retailer anchor unlocks **20–50 brand customers** who need syndication to that retailer\n- **Current pipeline:** Kroger (contract in progress, **$240K ACV**), Costco (advanced negotiation, **$",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "FY 2026 Annual Strategy — Apex",
+          "FY 2026 Go-to-Market Strategy — Apex",
+          "Key Stakeholders & Decision Makers",
+          "FY 2026 Annual Strategy — Apex",
+          "Visual UGC — Strategic Decision & Launch Plan"
+        ],
+        "isStale": true,
+        "retrievalMs": 944,
+        "generationMs": 18953,
+        "totalMs": 19897,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "Answer directly addresses the query with all three strategic bets, comprehensive supporting details, and context that would help a new PM. All claims are traceable to source documents."
+        },
+        "flags": [
+          "generation_slow:18953ms",
+          "total_slow:19897ms"
+        ],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      },
+      {
+        "id": 20,
+        "query": "What did Priya Sharma approve in the last 6 months?",
+        "category": "E-nuanced",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "Based on your connected sources, here are the decisions Priya Sharma approved:\n\n- **August 22, 2025**: Approved the decision to build SAML 2.0 SSO (PROD-1623) as a table-stakes enterprise requirement, targeting a Kroger pilot by November 2025.\n- **October 8, 2025**: Confirmed the decision to deprioritise a native mobile app for FY 2026, opting instead for PWA improvements in Q2 2026.\n- **September 2025**: Ratified (alongside Vikram Nair) the decision to double investment in Visual UGC — scaling from 1 to 4 engineers and committing to ship video review support (PROD-1456) by April 2026.\n\n**Note",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "SSO & Enterprise Security — SAML 2.0 Decision",
+          "Key Stakeholders & Decision Makers",
+          "Pricing Model Decision — Seat-based vs Usage-based vs Module-based",
+          "Mobile App for Brand Managers — Deprioritisation Decision",
+          "Visual UGC — Strategic Decision & Launch Plan"
+        ],
+        "isStale": true,
+        "retrievalMs": 998,
+        "generationMs": 5435,
+        "totalMs": 6434,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "notes": "The answer directly addresses the query with three specific approvals from the last 6 months (relative to January 12, 2026), all fully supported by the source documents with dates, decision details, and context."
+        },
+        "flags": [],
+        "runAt": "2026-06-11T11:57:30.524Z"
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.8,
+      "avgCitationAccuracy": 5,
+      "avgHallucination": 4.9,
+      "avgRetrievalMs": 1397,
+      "avgGenerationMs": 7336,
+      "avgTotalMs": 8734,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passLatency": true,
+      "overallPass": true
+    }
+  }
+]
