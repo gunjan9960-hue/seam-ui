@@ -14,6 +14,12 @@ const SUGGESTED_QUERIES = [
   "What are the open action items from the Q3 planning session?",
 ];
 
+const PREVIEW_QUERIES = [
+  "Why did we decide to build vs buy the moderation pipeline?",
+  "What commitments did we make to Enterprise clients in Q2?",
+  "What's the rationale behind deprioritising mobile this quarter?",
+];
+
 // ── Brand icons ───────────────────────────────────────────────────────────────
 function BrandIcon({ id }: { id: string }) {
   const s = 32;
@@ -139,6 +145,24 @@ export default function HomePage() {
               >
                 Go to Integrations →
               </button>
+            </div>
+
+            {/* Preview: what you'll be able to ask */}
+            <div style={{ marginTop: "20px", width: "100%", textAlign: "left" }}>
+              <p style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.2)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
+                What you&apos;ll be able to ask
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                {PREVIEW_QUERIES.map((q) => (
+                  <div
+                    key={q}
+                    style={{ display: "flex", alignItems: "center", gap: "10px", padding: "9px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "9px" }}
+                  >
+                    <ArrowUpRight size={11} color="rgba(79,107,245,0.4)" strokeWidth={2} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", fontFamily: "Inter, sans-serif", lineHeight: 1.4 }}>{q}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Bell, Shield, LogOut, Check, ChevronRight, Loader } from "lucide-react";
+import { User, Bell, Shield, LogOut, Check, ChevronRight, Loader, AlertTriangle } from "lucide-react";
 import AppShell from "@/app/components/AppShell";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -134,10 +134,13 @@ function InfoRow({ label, description }: { label: string; description: string })
   );
 }
 
+interface ErroredSource { provider: string; error_message: string | null; }
+
 export default function SettingsPage() {
   const router = useRouter();
   const [profile, setProfile] = useState({ name: "", productName: "", company: "", stage: "", email: "" });
   const [loading, setLoading] = useState(true);
+  const [erroredSources, setErroredSources] = useState<ErroredSource[]>([]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -145,7 +148,10 @@ export default function SettingsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       const email = user.email ?? "";
-      const { data } = await supabase.from("users").select("full_name,product_name,company,stage").eq("id", user.id).single();
+      const [{ data }, { data: sourcesData }] = await Promise.all([
+        supabase.from("users").select("full_name,product_name,company,stage").eq("id", user.id).single(),
+        supabase.from("sources").select("provider,status,error_message").eq("status", "error"),
+      ]);
       setProfile({
         name: data?.full_name ?? user.user_metadata?.full_name ?? "",
         productName: data?.product_name ?? "",
@@ -153,6 +159,7 @@ export default function SettingsPage() {
         stage: data?.stage ?? "",
         email,
       });
+      setErroredSources((sourcesData ?? []) as ErroredSource[]);
       setLoading(false);
     }
     load();
@@ -190,6 +197,33 @@ export default function SettingsPage() {
               Manage your profile, preferences, and workspace.
             </p>
           </div>
+
+          {/* Token expiry / source error banner */}
+          {erroredSources.length > 0 && (
+            <div
+              className="mb-6"
+              style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "12px", padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              {erroredSources.map((s) => (
+                <div key={s.provider} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                  <AlertTriangle size={14} style={{ color: "#EF4444", flexShrink: 0, marginTop: "1px" }} />
+                  <div style={{ flex: 1 }}>
+                    <span style={{ fontSize: "13px", fontWeight: 600, color: "#EF4444", textTransform: "capitalize" }}>{s.provider}</span>
+                    <span style={{ fontSize: "13px", color: "rgba(239,68,68,0.8)" }}> connection needs re-authorisation</span>
+                    {s.error_message && (
+                      <div style={{ fontSize: "11.5px", color: "rgba(239,68,68,0.55)", marginTop: "2px" }}>{s.error_message}</div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => router.push("/app/integrations")}
+                    style={{ fontSize: "11.5px", fontWeight: 600, color: "#EF4444", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "7px", padding: "4px 10px", cursor: "pointer", flexShrink: 0, fontFamily: "Inter, sans-serif" }}
+                  >
+                    Reconnect
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Profile */}
           <div className="mb-6" style={{ background: "white", border: "1px solid var(--border)", borderRadius: "12px", padding: "20px 20px 4px" }}>

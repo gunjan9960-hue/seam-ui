@@ -73,6 +73,15 @@ const ConfluenceIcon: React.FC<{ size: number }> = ({ size }) => (
 );
 
 
+const GoogleSlidesIcon: React.FC<{ size: number }> = ({ size }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="4" fill="#FBBC04"/>
+    <rect x="5" y="6" width="14" height="12" rx="1.5" fill="white"/>
+    <rect x="8" y="9" width="5" height="4" rx="0.5" fill="#FBBC04" opacity="0.5"/>
+    <path d="M8 15h8M8 13h3" stroke="#FBBC04" strokeWidth="1" strokeLinecap="round"/>
+  </svg>
+);
+
 const MixpanelIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <rect width="24" height="24" rx="4" fill="#7C3AED"/>
@@ -119,6 +128,12 @@ export const CONNECTORS: Record<ConnectorId, ConnectorMeta> = {
     color: "#1868DB",
     bg: "#EBF2FF",
     Icon: ConfluenceIcon,
+  },
+  "google-slides": {
+    label: "Google Slides",
+    color: "#FBBC04",
+    bg: "#FFFBEA",
+    Icon: GoogleSlidesIcon,
   },
   mixpanel: {
     label: "Mixpanel",

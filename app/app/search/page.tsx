@@ -7,8 +7,10 @@ import {
   Search, ExternalLink, Sparkles,
   ThumbsUp, ThumbsDown, AlertCircle,
   Clock, Scale, FileText, User, FlaskConical, Map, Handshake, Compass, Plus,
+  Copy, Check, RefreshCw,
 } from "lucide-react";
 import AppShell from "@/app/components/AppShell";
+import { createClient } from "@/lib/supabase/client";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface SourceCard {
@@ -42,6 +44,23 @@ function saveThread(query: string) {
   const next: ThreadEntry[] = [{ id: Date.now().toString(), query, ts: new Date().toISOString() }, ...deduped].slice(0, 10);
   localStorage.setItem("seam_threads", JSON.stringify(next));
 }
+
+// ── Sync recency helpers ──────────────────────────────────────────────────────
+function relativeTime(iso: string): string {
+  const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const h = Math.floor(mins / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
+
+const SOURCE_TO_PROVIDER: Record<string, string> = {
+  "Notion": "notion",
+  "Jira": "jira",
+  "Slack": "slack",
+  "Google Docs": "google-docs",
+};
 
 // ── Source colours ────────────────────────────────────────────────────────────
 const SOURCE_COLORS: Record<string, string> = {
@@ -153,7 +172,7 @@ function AnswerText({ text }: { text: string }) {
 }
 
 // ── Source card ───────────────────────────────────────────────────────────────
-function SourceGridCard({ s, index }: { s: SourceCard; index: number }) {
+function SourceGridCard({ s, index, syncedAt }: { s: SourceCard; index: number; syncedAt?: string }) {
   const color = SOURCE_COLORS[s.source] ?? "#4F6BF5";
   const icon = SOURCE_ICONS[s.source] ?? "·";
   return (
@@ -227,9 +246,45 @@ function SourceGridCard({ s, index }: { s: SourceCard; index: number }) {
           <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", marginTop: "4px" }}>
             {s.author} · {s.date}
           </div>
+          {syncedAt && (
+            <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "3px" }}>
+              <RefreshCw size={7} style={{ color: "rgba(255,255,255,0.18)" }} />
+              <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.18)" }}>synced {relativeTime(syncedAt)}</span>
+            </div>
+          )}
         </div>
       </div>
     </a>
+  );
+}
+
+// ── Copy with citations ───────────────────────────────────────────────────────
+function CopyButton({ answer, sources }: { answer: string; sources: SourceCard[] }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = () => {
+    const parts = [answer];
+    if (sources.length > 0) {
+      parts.push("\n\nSources:");
+      sources.forEach((s, i) => {
+        parts.push(`${i + 1}. ${s.title} — ${s.source}${s.url ? ` — ${s.url}` : ""}`);
+      });
+    }
+    navigator.clipboard.writeText(parts.join("\n")).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  return (
+    <button
+      onClick={copy}
+      style={{ background: "none", border: "none", cursor: "pointer", color: copied ? "#34D399" : "rgba(255,255,255,0.22)", padding: 0, display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", transition: "color 0.15s" }}
+      onMouseEnter={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
+      onMouseLeave={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)"; }}
+    >
+      {copied ? <><Check size={13} /><span>Copied</span></> : <Copy size={13} />}
+    </button>
   );
 }
 
@@ -261,7 +316,7 @@ function InlineFeedback() {
 }
 
 // ── One completed exchange ────────────────────────────────────────────────────
-function CompletedExchange({ exchange }: { exchange: Exchange }) {
+function CompletedExchange({ exchange, syncMap }: { exchange: Exchange; syncMap: Record<string, string> }) {
   const intentCfg = INTENT_CONFIG[exchange.intent];
   const Icon = intentCfg?.icon ?? Search;
 
@@ -321,6 +376,16 @@ function CompletedExchange({ exchange }: { exchange: Exchange }) {
       {/* Hairline divider */}
       <div style={{ height: "1px", background: "rgba(255,255,255,0.055)", marginBottom: "22px" }} />
 
+      {/* No-match warning */}
+      {exchange.sources.length === 0 && !exchange.isDemo && (
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "9px", background: "rgba(251,191,36,0.07)", border: "1px solid rgba(251,191,36,0.18)", borderRadius: "10px", padding: "10px 14px", marginBottom: "16px" }}>
+          <AlertCircle size={13} style={{ color: "#FCD34D", flexShrink: 0, marginTop: "1px" }} />
+          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.55 }}>
+            No matching documents found in your indexed sources. This answer is based on general knowledge — verify before sharing with a stakeholder.
+          </span>
+        </div>
+      )}
+
       {/* Answer — clean, no box */}
       <AnswerText text={exchange.answer} />
 
@@ -372,15 +437,17 @@ function CompletedExchange({ exchange }: { exchange: Exchange }) {
             }}
           >
             {exchange.sources.map((s, i) => (
-              <SourceGridCard key={s.id} s={s} index={i} />
+              <SourceGridCard key={s.id} s={s} index={i} syncedAt={syncMap[SOURCE_TO_PROVIDER[s.source] ?? ""]} />
             ))}
           </div>
         </div>
       )}
 
-      {/* Feedback — minimal, no label */}
-      <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "16px" }}>
+      {/* Feedback + copy */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px" }}>
         <InlineFeedback />
+        <div style={{ width: "1px", height: "12px", background: "rgba(255,255,255,0.08)" }} />
+        <CopyButton answer={exchange.answer} sources={exchange.sources} />
       </div>
     </div>
   );
@@ -415,6 +482,7 @@ function SearchContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [followUp, setFollowUp] = useState("");
   const [apiError, setApiError] = useState<string | null>(null);
+  const [syncMap, setSyncMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (query && !hasRun.current) {
@@ -424,6 +492,18 @@ function SearchContent() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.from("sources").select("provider,last_synced_at").then(({ data }) => {
+      if (!data) return;
+      const map: Record<string, string> = {};
+      for (const s of data) {
+        if (s.last_synced_at) map[s.provider as string] = s.last_synced_at as string;
+      }
+      setSyncMap(map);
+    });
+  }, []);
 
   async function runQuery(q: string, history: { question: string; answer: string }[]) {
     setActiveQuery(q);
@@ -603,7 +683,7 @@ function SearchContent() {
 
             {/* Completed exchanges */}
             {exchanges.map((ex) => (
-              <CompletedExchange key={ex.id} exchange={ex} />
+              <CompletedExchange key={ex.id} exchange={ex} syncMap={syncMap} />
             ))}
 
             {/* In-progress: question heading + skeleton/streaming */}
