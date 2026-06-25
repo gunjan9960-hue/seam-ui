@@ -63,29 +63,38 @@ interface EvalResult {
 }
 
 // ── Test suite ────────────────────────────────────────────────────────────────
-// Same 20 queries as v1 — extend this array to add new cases.
+// 20 queries against the BazaarVoice synthetic corpus (see scripts/seed-eval-corpus.ts).
 
 const TEST_CASES: EvalCase[] = [
-  { id: 1,  query: "Why did Apex decide to build SAML 2.0 SSO?",                                                                  category: "A-single-intent", intentExpected: "decision_recall"        },
-  { id: 2,  query: "What are the acceptance criteria in the Permissions redesign PRD?",                                            category: "A-single-intent", intentExpected: "spec_lookup"           },
-  { id: 3,  query: "What did Walmart request and what was the escalation about?",                                                  category: "A-single-intent", intentExpected: "customer_request"      },
-  { id: 4,  query: "What did the build vs buy AI analysis conclude?",                                                             category: "A-single-intent", intentExpected: "research_history"      },
-  { id: 5,  query: "Why was the mobile app deprioritised in H1 2026?",                                                            category: "A-single-intent", intentExpected: "roadmap_rationale"     },
-  { id: 6,  query: "Who signed off on the Stripe migration?",                                                                     category: "A-single-intent", intentExpected: "stakeholder_commitment" },
-  { id: 7,  query: "Tell me about Apex — revenue, products, and key stakeholders",                                                category: "A-single-intent", intentExpected: "onboarding"            },
-  { id: 8,  query: "What is Apex's FY 2026 strategy and how do the Q2 OKRs connect to it?",                                      category: "B-complex",       intentExpected: "roadmap_rationale"     },
-  { id: 9,  query: "What happened during the Syndication outage and what decisions came out of it?",                              category: "B-complex",       intentExpected: "decision_recall"        },
-  { id: 10, query: "Compare Review Engine and Visual UGC — what are they, who are the ICPs, and what is the roadmap?",           category: "B-complex",       intentExpected: "spec_lookup"           },
-  { id: 11, query: "What enterprise customer feedback drove the most roadmap decisions in 2025?",                                  category: "B-complex",       intentExpected: "customer_request"      },
-  { id: 12, query: "billing",                                                                                                      category: "C-ambiguous",     intentExpected: "decision_recall"        },
-  { id: 13, query: "api",                                                                                                          category: "C-ambiguous",     intentExpected: "spec_lookup"           },
-  { id: 14, query: "permissions",                                                                                                  category: "C-ambiguous",     intentExpected: "spec_lookup"           },
-  { id: 15, query: "What is the current status of the Home Depot pilot?",                                                         category: "D-freshness",     intentExpected: "customer_request"      },
-  { id: 16, query: "What is the latest on the API v1 deprecation timeline?",                                                      category: "D-freshness",     intentExpected: "spec_lookup"           },
-  { id: 17, query: "What are Apex current pricing tiers?",                                                                        category: "D-freshness",     intentExpected: "decision_recall"        },
-  { id: 18, query: "What revenue did Apex lose before building SSO and which deals were affected?",                               category: "E-nuanced",       intentExpected: "decision_recall"        },
-  { id: 19, query: "As a new PM at Apex, what are the top 3 strategic bets for this year?",                                       category: "E-nuanced",       intentExpected: "onboarding"            },
-  { id: 20, query: "What did Priya Sharma approve in the last 6 months?",                                                         category: "E-nuanced",       intentExpected: "stakeholder_commitment" },
+  // A — Single-intent: clean signal, one document, one intent
+  { id: 1,  query: "Why did we choose in-house ML over Perspective API for moderation?",              category: "A-single-intent", intentExpected: "decision_recall"        },
+  { id: 2,  query: "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?", category: "A-single-intent", intentExpected: "spec_lookup"        },
+  { id: 3,  query: "What were the top enterprise customer complaints in Q1 2026?",                    category: "A-single-intent", intentExpected: "customer_request"      },
+  { id: 4,  query: "What did the SMB customer discovery research find about willingness to pay?",     category: "A-single-intent", intentExpected: "research_history"      },
+  { id: 5,  query: "Why was the mobile SDK deprioritised in H2 2026?",                               category: "A-single-intent", intentExpected: "roadmap_rationale"     },
+  { id: 6,  query: "What did the CEO and VP Product commit to after the syndication launch update?",  category: "A-single-intent", intentExpected: "stakeholder_commitment" },
+  { id: 7,  query: "Walk me through the enterprise client onboarding process and SLA commitments",    category: "A-single-intent", intentExpected: "onboarding"            },
+
+  // B — Complex: multi-part questions that span multiple documents
+  { id: 8,  query: "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?", category: "B-complex", intentExpected: "roadmap_rationale"     },
+  { id: 9,  query: "What caused the May 18 review display outage and what corrective actions were decided?",                  category: "B-complex", intentExpected: "decision_recall"       },
+  { id: 10, query: "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",      category: "B-complex", intentExpected: "customer_request"      },
+  { id: 11, query: "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?", category: "B-complex", intentExpected: "decision_recall"      },
+
+  // C — Ambiguous: one-word or short queries with weak intent signal
+  { id: 12, query: "pricing",                                                                         category: "C-ambiguous",     intentExpected: "decision_recall"       },
+  { id: 13, query: "api",                                                                              category: "C-ambiguous",     intentExpected: "spec_lookup"           },
+  { id: 14, query: "syndication",                                                                      category: "C-ambiguous",     intentExpected: "stakeholder_commitment" },
+
+  // D — Freshness-sensitive: queries where recency matters
+  { id: 15, query: "What is the current status of the H2 2026 roadmap?",                              category: "D-freshness",     intentExpected: "roadmap_rationale"     },
+  { id: 16, query: "What is the latest on the Attribute Ratings GA launch?",                           category: "D-freshness",     intentExpected: "spec_lookup"           },
+  { id: 17, query: "What are our current enterprise pricing tiers and when do they take effect?",      category: "D-freshness",     intentExpected: "decision_recall"       },
+
+  // E — Nuanced: require synthesis or reading between the lines
+  { id: 18, query: "How does the competitive landscape in India connect to the H2 roadmap priorities?", category: "E-nuanced",      intentExpected: "roadmap_rationale"     },
+  { id: 19, query: "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?", category: "E-nuanced", intentExpected: "onboarding" },
+  { id: 20, query: "What enterprise customer feedback is directly reflected in the Q3 OKRs?",          category: "E-nuanced",       intentExpected: "customer_request"      },
 ];
 
 // ── Targets ───────────────────────────────────────────────────────────────────
@@ -103,9 +112,9 @@ const TARGETS = {
 // ── Intent detection (mirrors lib/rag/retrieval.ts) ───────────────────────────
 
 const INTENT_SIGNALS: Record<QueryIntent, string[]> = {
-  decision_recall:        ["why","decision","decide","decided","chose","choose","rationale","reason","moved","changed","switched"],
+  decision_recall:        ["why","decision","decide","decided","chose","choose","rationale","reason","moved","changed","switched","outage","incident","corrective","root cause","tiered","pricing tiers"],
   spec_lookup:            ["spec","specification","prd","acceptance criteria","requirements","latest","current","final","what is the","edge case","api contract"],
-  customer_request:       ["customer","walmart","target","homedepot","pg","loreal","samsung","requested","feature request","cfr","commit","committed","promised","waiting","blocker"],
+  customer_request:       ["customer","walmart","target","homedepot","pg","loreal","samsung","mamaearth","hdfc","nykaa","flipkart","boat","himalaya","requested","feature request","cfr","commit","committed","promised","waiting","blocker","escalation","complaint","feedback","nps"],
   research_history:       ["research","analysis","study","was there","did we","have we","prior","before","discovery","interview","benchmark","feasibility"],
   roadmap_rationale:      ["roadmap","priority","deprioritised","cut","deferred","shelved","icebox","backlog","why was","what was on","h1","h2","q1","q2","q3","q4"],
   stakeholder_commitment: ["agreed","sign off","signed off","committed","approved","what did","who owns","ceo","cto","vp","outcome","leadership","cross-functional"],
