@@ -4783,5 +4783,2620 @@
       "intentAccuracy": 80,
       "overallPass": false
     }
+  },
+  {
+    "version": "v9",
+    "runAt": "2026-06-25T17:00:38.814Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "The decision to choose in-house ML (Option B) over Perspective API (Option C) was driven by data privacy requirements: three BFSI clients have contractual prohibitions on sending review content to third parties, which ruled out Perspective API [SOURCE 1]. Additionally, the ML team confirmed a 10-week delivery timeline, making the in-house build feasible [SOURCE 2]. Perspective API was not discarded entirely — it was retained as a fallback during the build period [SOURCE 1].\n\n---\n\n**Decision owne",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 6196,
+        "generationMs": 5649,
+        "totalMs": 12006,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses all three decision_recall requirements (owner, date, rationale) with proper source attribution; minor hallucination risk on 'Option B/Option C' labels and Rahul Sharma's role as 'Engineering/ML' which cannot be verified from the source titles alone."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "total_slow:12006ms"
+        ]
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## PRD — Ratings & Reviews API v3.0: User Stories & Success Metrics\n\n---\n\n### 👤 User Stories\n\n- **As a brand admin**, I can configure up to **8 custom rating attributes** per product category [SOURCE 2]\n- **As an end user**, I can rate a product on individual attributes during review submission [SOURCE 2]\n- **As a developer**, I can query attribute-level aggregates via **GET /reviews/aggregate?attributes=true** [SOURCE 2]\n\n---\n\n### 📊 Success Metrics\n\n- Review submission rate: **+15%** (attribu",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 3693,
+        "generationMs": 4193,
+        "totalMs": 8051,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer directly addresses user stories and success metrics with specific details and includes owner/date, but SOURCE 5 is cited for metrics that should come from the PRD source, and figures like '80% of enterprise clients within 60 days' and '3 at-risk contracts' cannot be verified as originating from the listed source titles rather than being hallucinated or misattributed."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "The top enterprise complaints in Q1 2026 came from 14 QBRs, 6 NPS surveys, and 3 escalation calls compiled by Neha Gupta [SOURCE 2]. The most common issue was **slow moderation**, raised by 9 of 14 clients, with Mamaearth's PM noting reviews submitted Monday didn't appear until Thursday, and Boat's Head of E-comm citing same-day competitor performance on Nykaa [SOURCE 1]. The second theme was **lack of analytics self-serve**, mentioned by 7 of 14 clients, with L'Oreal India emailing the team wee",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 9900,
+        "generationMs": 7654,
+        "totalMs": 17720,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly addresses the query with specific customers, requests, statuses, and owners, but cites a non-existent SOURCE 4 (only 3 source titles were listed), and numerous granular details (specific client names, exact counts, competitor references, hire dates, OKR timelines) cannot be verified against the provided source titles, raising significant hallucination risk."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:7654ms",
+          "total_slow:17720ms"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price for SMB brands was ₹8,000–12,000/month [SOURCE 1]. Additionally, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes [SOURCE 2]. Based on these findings, a proposed SMB pricing tier of ₹8K/month was outlined, covering up to 10,000 reviews/month and 1 product catalogue [SOURCE 3].\n\n---\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: M",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment",
+          "ML Portfolio — Gunjan Mahesh"
+        ],
+        "isStale": false,
+        "retrievalMs": 7749,
+        "generationMs": 4531,
+        "totalMs": 12442,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses willingness to pay with specific figures, clearly confirms research exists with conductor and date, and cites the correct source title; minor uncertainty on whether all granular claims (e.g., '3 of 8 respondents,' proposed tier details) are independently verifiable from the listed sources versus inferred."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "total_slow:12442ms"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The Mobile SDK for iOS/Android was moved out of H2 2026 and deferred to H1 2027 because only 2 clients had requested it [SOURCE 1]. This low demand signal meant it did not meet the bar for prioritisation in the current half [SOURCE 2].\n\n**Decision maker**: Priya Mehta [SOURCE 1]\n**Rationale**: Only 2 clients requested the Mobile SDK, indicating insufficient demand to justify prioritisation in H2 2026 [SOURCE 1]\n**Trade-off**: The Mobile SDK was descoped in favour of the H2 themes — Platform reli",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Sprint Retro — Q3 Sprint 6",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 6273,
+        "generationMs": 4317,
+        "totalMs": 10754,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly addresses the rationale, decision-maker, and trade-offs, but 'Priya Mehta' and the specific '2 clients' figure cannot be verified against the listed source titles, raising hallucination and citation accuracy concerns."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:10754ms"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "## What the CEO and VP Product Were Asked to Do\n\nThe sources record these as **asks from leadership** — action items directed *to* the CEO and VP Product — not confirmed commitments made *by* them. No source explicitly states that either executive agreed, responded, or committed to the requests.\n\nHere is precisely what was recorded:\n\n**CEO**\n- Was asked to **approve the Flipkart syndication term sheet by June 20**, specifically because the revenue share clause requires exec sign-off [SOURCE 2, S",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 9540,
+        "generationMs": 7666,
+        "totalMs": 17346,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 4,
+          "notes": "The answer correctly identifies the asks directed at the CEO and VP Product with accurate details and deadlines, appropriately caveats that these are asks rather than confirmed commitments, and cites sources consistently without inventing facts, though the nuanced reframing slightly reduces relevance and intent adherence scores since the query asked about commitments and the answer could have been more concise."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "generation_slow:7666ms",
+          "total_slow:17346ms"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n### Owner\n- **Neha Gupta** is the owner of the Enterprise Client Onboarding Guide (Version 3.2) [SOURCE 2]\n\n---\n\n### Onboarding Phases & Timelines\n\n- **Phase 1 — Contract to Kickoff (Week 0):**\n  - Sales hands off signed contract + client info sheet to CS [SOURCE 1]\n  - CS creates client workspace in dashboard and schedules kickoff call within 3 business days [SOURCE 1]\n\n- **Phase 2 — Technical Integration (Weeks 1–2):**\n  - API credentials and sandbox en",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 5689,
+        "generationMs": 10594,
+        "totalMs": 16404,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and comprehensive, but citation accuracy suffers because SOURCE 5 is cited repeatedly for claims that should trace to the Customer Feedback Summary and BazaarVoice Synthetic sources (which are SOURCE 2/3 in the listed titles, not SOURCE 5), and specific details like 'docs.bazaarvoice.in', the HDFC Bank incident, INC-041, and the '9 of 14 enterprise clients' figures cannot be verified against the named source titles, raising hallucination concerns."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:10594ms",
+          "total_slow:16404ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Q3 2026 OKRs, Tracking Status, and Planning Themes\n\n---\n\n### Q3 2026 OKRs\n\n**Owner: Priya Mehta** [SOURCE 1]\n\n**Objective 1: Increase Enterprise Retention** [SOURCE 1]\n- **KR1.1:** Renew **90%** of enterprise contracts due in Q3 (currently **3 at risk**) [SOURCE 1]\n- **KR1.2:** Achieve **NPS >52** from enterprise segment (current: **44**) [SOURCE 1]\n- **KR1.3:** Reduce time-to-value for new enterprise onboarding from **8 weeks to 4 weeks** [SOURCE 1]\n\n**Objective 2: Expand Review Volume on Pl",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Meeting Notes — Q3 Planning Session",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 2434,
+        "generationMs": 9538,
+        "totalMs": 12121,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 2,
+          "notes": "The answer comprehensively covers OKRs, tracking, and planning themes with named owners and structured detail, but SOURCE 4 is cited for planning session content while only three source titles are listed (making SOURCE 4 unverifiable and potentially invented), several specific numbers and names cannot be confirmed against the vague source title 'Seam Test Data — BazaarVoice Synthetic', and the roadmap_rationale intent is poorly served since no business rationale, trade-offs, or prioritisation logic is explained — the answer only states what was decided, not why."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "weak_intent_adherence:2",
+          "generation_slow:9538ms",
+          "total_slow:12121ms"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n---\n\n### 🔍 Root Cause\n\n- A **CDN config change was deployed at 14:18** (automated) that set **incorrect cache-control headers** [SOURCE 2]\n- This introduced an **origin path mismatch** in the config diff, causing the widget JS file to return **404 errors** [SOURCE 2]\n- The widget was unavailable for **73 minutes** (14:22–15:35 IST), affecting **all Enterprise clients on JS widget v2.4.x** [SOURCE 2]\n- A **PagerDuty alert fired 1",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 2162,
+        "generationMs": 10160,
+        "totalMs": 12462,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "Answer comprehensively addresses root cause and corrective actions with good intent adherence (owner, date, and rationale all present), but citation accuracy is uncertain since specific source numbers (SOURCE 2, SOURCE 5) cannot be verified against the listed titles, and several precise details (73-minute duration, 14:18/14:22/14:35 timestamps, 5%-to-0.5% threshold change, specific ETAs, Karan Singh's name) may be hallucinated as they are not confirmable from the provided source titles alone."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:10160ms",
+          "total_slow:12462ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "## Enterprise Customer Feedback Driving Analytics Self-Serve\n\n### Who Raised It and What They Said\n\n- **7 of 14** enterprise clients flagged the lack of analytics self-serve during Q1 2026 QBRs [SOURCE 3]\n- **L'Oreal India**: *\"I email your team every week for a report — this should be automatic\"* [SOURCE 3]\n- **Himalaya**: *\"I can't tell if our rating is improving without calling you\"* [SOURCE 3]\n- This was the **#2 theme** across QBRs, making it a broadly felt pain point across the enterprise ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 1778,
+        "generationMs": 11770,
+        "totalMs": 13674,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly addresses the customer_request intent with named customers, specific request details, status, and owners, but cites [SOURCE 4] for meeting notes content when the source titles only list three sources (making SOURCE 4 unverifiable/potentially invented), and the answer notably lacks detail on what was actually spec'd in the PRD for the Review Intelligence Dashboard, which was half of the original query."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:11770ms",
+          "total_slow:13674ms"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Moderation Pipeline vs. Data Isolation: Decision Comparison\n\n---\n\n### 1. Moderation Pipeline Architecture\n\n- **Decision owner:** **Rahul Sharma** [SOURCE 1] [SOURCE 2]\n- **Date:** **2026-03-22** [SOURCE 1] [SOURCE 2]\n- **Decision made:** Option B — **in-house ML model**, with **Option C (Perspective API)** as fallback during the build period [SOURCE 1] [SOURCE 2]\n- **Rationale:**\n  - **Data privacy requirements from 3 BFSI clients** prohibit sending review content to third parties [SOURCE 1] ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 1338,
+        "generationMs": 14591,
+        "totalMs": 16076,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer comprehensively addresses both decisions with owners, dates, and rationale clearly stated; citation accuracy is slightly uncertain as SOURCE 3 and SOURCE 4 are attributed to 'Seam Test Data — BazaarVoice Synthetic' which may not reliably contain the data isolation decision details claimed, and specific figures like '₹40K/month' and 'Priya Mehta' as reviewer cannot be fully verified against the listed source titles."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "generation_slow:14591ms",
+          "total_slow:16076ms"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The pricing restructure decision selected **Option B (tiered flat fee)** over usage-based billing [SOURCE 3]. The rationale was that the sales team strongly opposed variable billing, with 2 prospects citing it as a deal-breaker, and tiered pricing is standard in the market and easier to forecast [SOURCE 4]. The migration plan set new clients on the new pricing from April 1, with existing clients grandfathered until contract renewal, and 3 high-volume clients proactively moved to Tier 3 in exchan",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Project 9 — Dynamic Pricing",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 1229,
+        "generationMs": 4526,
+        "totalMs": 6197,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer is highly relevant and covers all three decision_recall requirements (owner, date, rationale); citations map plausibly to the listed source titles, though SOURCE 4 is attributed as 'AI PM Playbook' which is an unusual home for decision owner/date details, slightly raising attribution concerns; the '3 high-volume clients' and '2-year renewals' migration specifics are plausible but unverifiable, warranting a minor hallucination deduction."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "There are two API-related documents in your connected sources. The **PRD — Ratings & Reviews API v3.0** extends the Reviews API to support multi-attribute ratings, with up to 8 configurable attributes per review submission and a query endpoint of `GET /reviews/aggregate?attributes=true` [SOURCE 2]. The **API Design Review — Insights API v1** notes there is no real-time endpoint in v1 (sentiment model runs in batch/daily), a rate limit of 100 calls/day per client in beta, and a `/v1/` prefix with",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API Design Review — Insights API v1",
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4961,
+        "generationMs": 5915,
+        "totalMs": 11014,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer covers both API documents with specific technical details and full attribution, but several precise claims (e.g., '8 configurable attributes,' '100 calls/day,' '6-month deprecation notice,' the exact query endpoint, and the '/v1/ prefix' rule) cannot be verified against the source titles alone and may be hallucinated specifics presented as confirmed facts."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:11014ms"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "Myntra syndication has a signed contract with technical integration starting June 20 [SOURCE 2]. The CEO was asked to approve the Flipkart syndication term sheet by June 20, with the revenue share clause requiring exec sign-off [SOURCE 4]. JioMart has a signed LOI for syndication, while Flipkart is still in negotiation and requires VP sign-off on the contract [SOURCE 5]. Nykaa raised image moderation for review photos as a requirement for Phase 2 syndication, with ML team scoping underway and an",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8657,
+        "generationMs": 4538,
+        "totalMs": 13360,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer identifies relevant syndication stakeholder commitments with names and deadlines, but citation accuracy is uncertain since SOURCE 4 and SOURCE 5 don't correspond to the three listed source titles, and some specific claims (JioMart signed LOI, VP sign-off requirement for Flipkart) cannot be verified against the provided source titles, raising hallucination concerns."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:13360ms",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The H2 2026 roadmap is currently a **Draft for leadership review**, owned by Priya Mehta and last updated on 2026-06-01 [SOURCE 2]. It is organised across three themes: Platform reliability (July–August), Enterprise depth (August–October), and Expand network (October–December) [SOURCE 1]. Three items — Mobile SDK for iOS/Android, Video reviews, and SMB self-serve tier — have been descoped from H2 and moved to H1 2027 [SOURCE 2]. A key dependency remains unresolved: the review import feature is p",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Product Strategy — India Market 2026–2027",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 7843,
+        "generationMs": 6377,
+        "totalMs": 14383,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer is comprehensive and addresses all roadmap_rationale requirements with decision-maker, specific reasons, and trade-offs; minor citationAccuracy concern as SOURCE 1 vs SOURCE 2 attribution for some claims (e.g., descoped items and Priya Mehta ownership) cannot be fully verified from titles alone, and one claim (Flipkart contract VP sign-off) is plausible but its source attribution is unverifiable, slightly risking hallucination."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "generation_slow:6377ms",
+          "total_slow:14383ms",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The Attribute Ratings GA launch is on track for a **June 15, 2026** release date [SOURCE 2]. All engineering checklist items are complete — including API v3 endpoints (done June 5), Widget v2.5 (done June 8), and load testing at 3x peak volume (passed June 9) — with the only open documentation item being the help center article for brand admins, which has an ETA of June 12 [SOURCE 2]. Post-launch monitoring will track API error rate, submission latency, and widget load time, with a >1% error rat",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Launch Plan — Attribute Ratings GA",
+          "PRD — Ratings & Reviews API v3.0"
+        ],
+        "isStale": false,
+        "retrievalMs": 5777,
+        "generationMs": 5443,
+        "totalMs": 11382,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly relevant and well-structured with document title, owner, and last-updated date, but the 'Last updated: 2026-06-24' date appears after a release date of June 15 and cannot be verified from the source titles alone, and all specific dates/names/thresholds (Priya Mehta, PagerDuty, 4-hour checks, 3x peak volume, etc.) are unverifiable against the listed source titles, raising hallucination concerns despite plausible specificity."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:11382ms"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Enterprise Pricing Tiers\n\n### Current Tier Structure\n\nThe enterprise pricing tiers are structured as follows [SOURCE 2]:\n\n- **Tier 1**: ₹1.5L/month — up to **100K reviews**\n- **Tier 2**: ₹2.5L/month — up to **300K reviews**\n- **Tier 3**: ₹4L/month — **unlimited reviews**\n\n---\n\n### Effective Dates & Migration Plan\n\n- **New clients**: new pricing applies from **April 1** [SOURCE 2]\n- **Existing clients**: grandfathered for the remainder of their current contract; new pricing applies **at renewa",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4086,
+        "generationMs": 7366,
+        "totalMs": 11606,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query and meets all decision_recall criteria (owner: Priya Mehta, date: 2026-02-18, rationale: cost subsidisation and market standard), but all citations point to [SOURCE 2] which maps to 'AI PM Playbook' rather than the more plausible 'Decision Log — Pricing Restructure 2026', raising attribution accuracy concerns; content itself appears internally consistent with no obvious invented facts beyond what cannot be verified against the actual source text."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "generation_slow:7366ms",
+          "total_slow:11606ms"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape and H2 2026 Roadmap Priorities\n\nThe sources do not explicitly connect the competitive risks to the H2 roadmap priorities as a stated causal relationship. However, here is what each source explicitly says, kept strictly separate:\n\n---\n\n### Competitive Risks Identified\n\n- **Yotpo** entering India with aggressive pricing — probability: **medium**, impact: **high** [SOURCE 1]\n- **Google** launching product-level reviews on Search — probability: **low**, impact: **very high**",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026"
+        ],
+        "isStale": false,
+        "retrievalMs": 11296,
+        "generationMs": 12753,
+        "totalMs": 24208,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 4,
+          "intentAdherence": 4,
+          "notes": "The answer surfaces the key competitive risks, roadmap priorities, decision-maker (Priya Mehta), and trade-offs well, but citation accuracy is penalised because the sources are labelled SOURCE 1, SOURCE 3, SOURCE 5 without clear mapping to the two provided source titles, creating ambiguity about which claims come from which document; the answer also correctly flags (rather than fabricates) the absence of an explicit causal link, which is appropriate but slightly limits relevance."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "generation_slow:12753ms",
+          "total_slow:24208ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Onboarding Overview\n\n---\n\n## 🏢 What We Do\n\n- BazaarVoice is a **review management and syndication platform** targeting Indian brands [SOURCE 4]\n- Core capabilities:\n  - Review **collection, moderation, and display** via embeddable widgets [SOURCE 3]\n  - **Syndication network** — reviews collected once, displayed everywhere (brand.com + marketplaces) [SOURCE 4]\n  - **Review Intelligence Dashboard** — self-serve sentiment analytics [SOURCE 4]\n  - **Insights API** — p",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 4564,
+        "generationMs": 13046,
+        "totalMs": 17766,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured and multi-dimensional covering products, strategy, pricing, and roadmap well-suited for onboarding, but citation accuracy is undermined by numbered source tags (SOURCE 1–5) that don't map to the three listed source titles, and several specific claims (e.g., exact pricing tiers, grandfathering details, the answer cut-off mid-sentence) raise hallucination concerns given the unverifiable source mapping."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:13046ms",
+          "total_slow:17766ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Nine of 14 enterprise clients flagged slow moderation in Q1 QBRs, with Mamaearth's PM noting reviews submitted Monday appeared Thursday and Boat's Head of E-comm citing same-day moderation by competitors on Nykaa [SOURCE 4]. This directly maps to KR2.3 in the Q3 OKRs, which targets reducing moderation queue lag from 48h to under 2h [SOURCE 2]. Seven of 14 clients raised lack of analytics self-serve, with L'Oreal India and Himalaya citing manual reporting dependencies [SOURCE 4], which maps to KR",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 8490,
+        "generationMs": 9250,
+        "totalMs": 17907,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer directly maps enterprise feedback to specific OKR key results with strong customer-level detail and status tracking, but specific figures like '9 of 14,' '7 of 14,' the Week 7 18h lag, the Week 9 pipeline fix deadline, and 'Priya Mehta' as owner cannot be verified against the listed source titles and risk being hallucinated or over-specified beyond what the sources contain."
+        },
+        "runAt": "2026-06-25T17:00:38.814Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9250ms",
+          "total_slow:17907ms"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.8,
+      "avgCitationAccuracy": 3.55,
+      "avgHallucination": 3.35,
+      "avgIntentAdherence": 4.6,
+      "avgRetrievalMs": 5683,
+      "avgGenerationMs": 7994,
+      "avgTotalMs": 13844,
+      "passRelevance": true,
+      "passCitationAccuracy": false,
+      "passHallucination": false,
+      "passIntentAdherence": true,
+      "passLatency": false,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v10",
+    "runAt": "2026-06-25T17:08:00.004Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "The decision to choose in-house ML (Option B) over Perspective API (Option C) was driven by data privacy requirements [SOURCE 1]. Specifically, three BFSI clients have contractual prohibitions against sending review content to third parties, which ruled out Perspective API since it routes data to Google [SOURCE 2]. The ML team confirmed a 10-week delivery timeline, making the in-house build viable, with Perspective API retained only as a fallback during the build period [SOURCE 1].\n\n**Decision o",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 7703,
+        "generationMs": 7021,
+        "totalMs": 15305,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the decision with owner, date, and rationale; citations map plausibly to the two Decision Log sources, though the slight interchangeable use of SOURCE 1 and SOURCE 2 for the same document raises minor concerns, and the 'confirmed by Rahul Sharma (Engineering/ML)' closing line is unsourced but low-risk."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:7021ms",
+          "total_slow:15305ms"
+        ]
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## PRD — Ratings & Reviews API v3.0: User Stories & Success Metrics\n\n---\n\n### 👤 User Stories\n\n- **As a brand admin**, I can configure up to **8 custom rating attributes** per product category [SOURCE 2].\n- **As an end user**, I can rate a product on individual attributes during review submission [SOURCE 2].\n- **As a developer**, I can query attribute-level aggregates via **`GET /reviews/aggregate?attributes=true`** [SOURCE 2].\n\n---\n\n### 📊 Success Metrics\n\n- **Review submission rate**: **+15%**",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4481,
+        "generationMs": 4777,
+        "totalMs": 9416,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer directly addresses user stories and success metrics with precise spec details, cites the document title, owner, and date, and all SOURCE citations map to plausible sources; however, specific claims like the exact API endpoint, '8 custom rating attributes,' '+15% submission rate,' '80% enterprise clients in 60 days,' and '3 at-risk contracts' cannot be verified against the listed sources and may be hallucinated details not confirmed by the source content."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "The top three enterprise complaints in Q1 2026, drawn from 14 QBRs, 6 NPS surveys, and 3 escalation calls, were: slow moderation (mentioned by 9 of 14 clients), lack of analytics self-serve (mentioned by 7 of 14 clients), and API documentation gaps (mentioned by 4 of 14 clients) [SOURCE 2]. On moderation, Mamaearth's PM noted reviews submitted Monday didn't appear until Thursday, and Boat's Head of E-comm flagged that competitors on Nykaa had same-day review publishing [SOURCE 2]. On analytics, ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 9070,
+        "generationMs": 7619,
+        "totalMs": 16852,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly relevant and well-cited against plausible sources, but specific granular claims—such as exact quote details from Mamaearth's PM about Monday-to-Thursday delays, Boat's Head of E-comm referencing Nykaa competitors, L'Oreal India emailing weekly for reports, Himalaya calling for rating trends, the 14/6/3 survey breakdown, and the named compiler Neha Gupta—are highly specific facts that cannot be verified against any of the listed source titles and risk being hallucinated or confabulated from synthetic/test data (SOURCE 3), lowering the hallucination score."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:7619ms",
+          "total_slow:16852ms"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price for SMB brands was ₹8,000–12,000/month [SOURCE 1]. Additionally, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes [SOURCE 2]. Based on these findings, a proposed SMB pricing tier of ₹8K/month was identified, covering up to 10,000 reviews/month and 1 product catalogue [SOURCE 3].\n\n---\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**:",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment",
+          "ML Portfolio — Gunjan Mahesh"
+        ],
+        "isStale": false,
+        "retrievalMs": 15791,
+        "generationMs": 4298,
+        "totalMs": 20268,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses willingness-to-pay findings with specific figures and citations mapping plausibly to SMB Customer Discovery sources; 'Priya Mehta' and 'May 2026' as conductor/date cannot be verified from the source titles alone, slightly risking hallucination, but all other claims are well-grounded and intent-specific fields (existence, author, date, key finding) are fully populated."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "total_slow:20268ms"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The Mobile SDK for iOS/Android was moved out of H2 2026 and deferred to H1 2027 because only 2 clients had requested it [SOURCE 1]. This low demand signal meant it did not meet the threshold for prioritisation against the other themes in the half [SOURCE 2].\n\n**Decision maker**: Priya Mehta [SOURCE 1]\n**Rationale**: Only 2 clients requested the Mobile SDK, indicating insufficient demand to justify prioritisation in H2 2026 [SOURCE 1]\n**Trade-off**: Deferred to H1 2027 in favour of Platform Relia",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Sprint Retro — Q3 Sprint 6",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 9015,
+        "generationMs": 9115,
+        "totalMs": 18289,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the roadmap rationale intent with reason, decision-maker, and trade-offs, but 'Priya Mehta' as decision-maker cannot be verified from the listed source titles, raising a hallucination concern, and SOURCE 2 is used for a claim that plausibly belongs only to SOURCE 1."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9115ms",
+          "total_slow:18289ms"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "## What the CEO and VP Product Were Asked to Do\n\nThe sources document **asks from leadership** following the Review Syndication launch update — but record these as **requests directed at** the CEO and VP Product, not confirmed commitments made by them. Here is exactly what the sources state:\n\n### CEO\n- **Ask:** Approve the **Flipkart syndication term sheet by June 20** — specifically, the revenue share clause requires exec sign-off [SOURCE 2, SOURCE 3]\n\n### VP Product\n- **Ask:** Confirm **image ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 10764,
+        "generationMs": 8332,
+        "totalMs": 19259,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 4,
+          "notes": "The answer correctly identifies the stakeholders, specific asks/commitments, and deadline from plausible sources, but loses points across dimensions for reframing 'commitments' as unconfirmed 'asks' — a reasonable epistemic caveat but one that partially sidesteps the query — and for citing SOURCE 2 and SOURCE 3 without distinguishing their individual contributions, though all citations map to plausible real sources."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:8332ms",
+          "total_slow:19259ms"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n### Phases & Timeline\n\n- **Phase 1 — Contract to Kickoff (Week 0):** Sales hands off signed contract to CS; CS creates the client workspace and schedules a kickoff call within 3 business days [SOURCE 1]\n- **Phase 2 — Technical Integration (Weeks 1–2):** API credentials and sandbox environment shared; integration call held with client's dev team (60 min); client completes widget embed on staging, validated by CS; go-live requires CS + client sign-off [SOUR",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 11050,
+        "generationMs": 8325,
+        "totalMs": 19519,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and highly relevant, but the detailed phase-by-phase onboarding timeline, specific SLA figures, and named owner 'Neha Gupta' are cited to SOURCE 1/2 (Onboarding Guide) which is plausible, while SOURCE 5 (Customer Feedback Summary) is cited for operational decisions like the ML pipeline ETA, technical writer hire date, and dashboard PRD — these are specific facts that may not plausibly appear in a customer feedback summary, raising hallucination risk for those claims."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:8325ms",
+          "total_slow:19519ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Q3 2026 OKRs, Tracking & Planning Themes\n\n---\n\n### 📋 Q3 2026 OKRs\n\n**Owner: Priya Mehta** [SOURCE 1]\n\n**Objective 1: Increase enterprise retention**\n- KR1.1: Renew **90%** of enterprise contracts due in Q3 (currently **3 at risk**) [SOURCE 1]\n- KR1.2: Achieve **NPS >52** from enterprise segment (current: **44**) [SOURCE 1]\n- KR1.3: Reduce time-to-value for new enterprise onboarding from **8 weeks to 4 weeks** [SOURCE 1]\n\n**Objective 2: Expand review volume on platform**\n- KR2.1: Reach **200K",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Meeting Notes — Q3 Planning Session",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7733,
+        "generationMs": 9696,
+        "totalMs": 17590,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 2,
+          "notes": "The answer comprehensively covers all three sub-questions with appropriate citations mapped to plausible sources, but the final dependency bullet for Insights API is incomplete/unsupported, several specific details (e.g. exact names, dates, numbers) cannot be verified against named sources and may be hallucinated, and the roadmap_rationale dimension is poorly served since the answer describes themes and allocations without explaining WHY those priorities were chosen over alternatives or articulating trade-offs and opportunity costs."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "weak_intent_adherence:2",
+          "generation_slow:9696ms",
+          "total_slow:17590ms"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n---\n\n### 🔍 Root Cause\n\n- A **CDN config change was deployed at 14:18** via an automated process [SOURCE 2]\n- The config set **incorrect cache-control headers**, causing the widget JS file to return **404 errors** due to an **origin path mismatch** introduced in the config diff [SOURCE 2]\n- The widget JS file returned **404 errors for 73 minutes**, causing reviews to show as blank on product pages for all Enterprise clients using",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 6552,
+        "generationMs": 9392,
+        "totalMs": 16116,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer is highly relevant and well-structured, with citations mapping plausibly to the incident report sources; however, specific figures like ₹4.2Cr GMV impact, the 73-minute duration, '14 enterprise clients,' and 'Karan Singh' as decision owner cannot be verified against the listed sources and may be hallucinated or fabricated details, while intentAdherence is strong (owner named, date given, rationale explained) but the owner's role caveat slightly weakens specificity."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9392ms",
+          "total_slow:16116ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "## Analytics Self-Serve: Customer Feedback & Roadmap Spec\n\n---\n\n### Customer Feedback That Drove the Request\n\n**7 of 14 enterprise clients** raised the lack of analytics self-serve during Q1 2026 QBRs, making it the **second most common theme** across the quarter [SOURCE 3].\n\nSpecific client quotes:\n\n- **L'Oreal India**: *\"I email your team every week for a report — this should be automatic.\"* [SOURCE 3]\n- **Himalaya**: *\"I can't tell if our rating is improving without calling you.\"* [SOURCE 3]\n",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 7185,
+        "generationMs": 11036,
+        "totalMs": 18383,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses both parts of the query (feedback drivers and spec), names specific clients with quotes, details the roadmap item with owner and status, and all citations map plausibly to their listed sources with no detectable hallucination."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:11036ms",
+          "total_slow:18383ms"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Moderation Pipeline vs. Data Isolation: Decision Comparison\n\n---\n\n### 1. Moderation Pipeline Architecture\n\n- **Decision owner:** **Rahul Sharma** [SOURCE 1] [SOURCE 2]\n- **Date:** **2026-03-22** [SOURCE 1] [SOURCE 2]\n- **Decision made:** Option B — **in-house ML model**, with **Perspective API (Option C) as fallback** during the build period [SOURCE 1] [SOURCE 2]\n- **Rationale:**\n  - **Data privacy requirements from 3 BFSI clients** prohibit sending review content to third parties [SOURCE 1] ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8127,
+        "generationMs": 14673,
+        "totalMs": 22963,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 2,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query with owners, dates, and rationale for both decisions, but critically misattributes Data Isolation details to SOURCE 3 (AI PM Playbook) and SOURCE 4 (BazaarVoice Synthetic Test Data) — neither plausibly contains a decision log about Karan Singh, schema-per-tenant architecture, or BFSI client names like HDFC/Axis/Bajaj Finance, suggesting hallucinated or misrouted claims."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:14673ms",
+          "total_slow:22963ms"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The pricing restructure decision selected **Option B: tiered flat fee** over usage-based billing [SOURCE 3]. The three tiers were set at ₹1.5L/month (up to 100K reviews), ₹2.5L/month (up to 300K reviews), and ₹4L/month (unlimited) [SOURCE 4]. The rationale was that the sales team strongly opposed variable billing, with 2 prospects citing it as a deal-breaker, and tiered pricing is standard in the market and easier to forecast [SOURCE 3].\n\n---\n\n**Decision owner**: Priya Mehta + Head of Revenue [S",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Project 9 — Dynamic Pricing",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 6681,
+        "generationMs": 4682,
+        "totalMs": 11492,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses the pricing decision with all three required decision_recall elements (owner: Priya Mehta + Head of Revenue, date: 2026-02-18, rationale: sales opposition and market standards), and all citations map plausibly to the named sources."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "total_slow:11492ms",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The most relevant API specification found is the **PRD — Ratings & Reviews API v3.0**. It covers extending the Reviews API to support multi-attribute ratings, with each review submission supporting up to 8 configurable attributes [SOURCE 2]. The key endpoint is `GET /reviews/aggregate?attributes=true` for querying attribute-level aggregates [SOURCE 2]. The GA release date is June 15, 2026, with success metrics targeting 80% enterprise client adoption within 60 days and 3 at-risk contracts renewe",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API Design Review — Insights API v1",
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 12044,
+        "generationMs": 5812,
+        "totalMs": 18029,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer cites both API documents with specific details (endpoint, rate limits, dates, success metrics), includes owner and last-updated date, and citations map to plausible sources; minor uncertainty remains about whether all numeric details (e.g., 80% adoption, 3 contracts, 100 calls/day) are verbatim from the sources rather than paraphrased, but they are plausibly grounded."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "total_slow:18029ms"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "Here is what was agreed and with whom on syndication:\n\nMyntra syndication has a signed contract, with technical integration starting June 20 [SOURCE 2]. The CEO was asked to approve the Flipkart syndication term sheet by June 20, with the revenue share clause requiring exec sign-off [SOURCE 4]. JioMart has a signed LOI for syndication, while the Flipkart contract was noted as needing VP sign-off [SOURCE 5]. Nykaa raised image moderation for review photos as a requirement for Phase 2 syndication,",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7436,
+        "generationMs": 5158,
+        "totalMs": 12756,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and covers stakeholder commitments with deadlines, but SOURCE 5 is 'Seam Test Data — BazaarVoice Synthetic' and attributing JioMart LOI and Flipkart VP sign-off claims to it is implausible, and 'VP Product' as a named stakeholder with that specific commitment is not clearly supported by SOURCE 2 (a Stakeholder Update about syndication launch, which could plausibly contain Nykaa/image moderation content but not necessarily VP Product's H2 slot priority decision)."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:12756ms",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The H2 2026 roadmap is currently in **Draft for leadership review** status, owned by Priya Mehta and last updated on 2026-06-01 [SOURCE 2]. It is organised across three themes: Platform reliability (July–August), Enterprise depth (August–October), and Expand network (October–December) [SOURCE 1]. Three items have been descoped to H1 2027: Mobile SDK for iOS/Android, Video reviews, and SMB self-serve tier [SOURCE 2]. A key dependency is outstanding — the review import feature is pending an IT Act",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Product Strategy — India Market 2026–2027",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 18412,
+        "generationMs": 6464,
+        "totalMs": 25304,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses status, themes, dependencies, decision-maker, and specific business rationale for both prioritisation and descoping, with all citations mapping plausibly to the listed sources."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:6464ms",
+          "total_slow:25304ms",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The **Launch Plan: Attribute Ratings — GA Release** has a launch date of June 15, 2026, and is currently on track [SOURCE 2]. All engineering checklist items are complete, including API v3 endpoints, Widget v2.5, load testing at 3x peak volume, and the rollback plan [SOURCE 2]. The help center article for brand admins is still in progress with an ETA of June 12, and the enterprise email blast is scheduled for June 13 [SOURCE 2]. Post-launch monitoring will track API error rate, submission latenc",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Launch Plan — Attribute Ratings GA",
+          "PRD — Ratings & Reviews API v3.0"
+        ],
+        "isStale": false,
+        "retrievalMs": 11155,
+        "generationMs": 5872,
+        "totalMs": 17210,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and cites the correct document with owner and date, but all factual claims are pinned to [SOURCE 2] alone despite multiple sources being available, and specific details like 'June 15 launch date,' 'June 12 ETA,' 'June 13 email blast,' '3x peak volume,' '>1% error rate,' and '4-hour check-ins' cannot be verified as grounded since the actual source content is not confirmed, raising hallucination risk."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:17210ms"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Current Enterprise Pricing Tiers\n\n**The decision was Option B: Tiered flat fee**, decided on **2026-02-18** [SOURCE 2].\n\n### Pricing Tiers\n\n- **Tier 1**: ₹1.5L/month — up to 100K reviews [SOURCE 1]\n- **Tier 2**: ₹2.5L/month — up to 300K reviews [SOURCE 1]\n- **Tier 3**: ₹4L/month — unlimited reviews [SOURCE 1]\n\n---\n\n### When the Tiers Take Effect\n\n- **New clients**: New pricing applies from **April 1** [SOURCE 1]\n- **Existing clients**: Grandfathered for the remainder of their current contract",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 12245,
+        "generationMs": 5160,
+        "totalMs": 17569,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses both the pricing tiers and effective dates, correctly cites Sources 1–2 for claims plausibly found in the Pricing Restructure Decision Log, names Priya Mehta as decision owner with a specific date and clear rationale; minor citation concern is that SOURCE 4 (AI PM Playbook) and SOURCE 5 (BazaarVoice Synthetic) are unused while all claims rely on Sources 1–2, which is fine, but the INR/lakh denomination and BazaarVoice-specific review volumes could theoretically be sourced from SOURCE 5 rather than SOURCE 1, introducing slight plausibility ambiguity."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "total_slow:17569ms"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape and H2 2026 Roadmap Priorities\n\nThe sources document the competitive risks **Priya Mehta** identified, and the H2 priorities she set — but they do not explicitly state a direct causal link between the two. Here is what the sources say separately:\n\n---\n\n### Competitive Risks Identified\n\n- **Yotpo** is flagged as entering India with aggressive pricing — **probability: medium, impact: high** [SOURCE 1, SOURCE 5]\n- **Google** launching product-level reviews on Search is flag",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026"
+        ],
+        "isStale": false,
+        "retrievalMs": 6715,
+        "generationMs": 14478,
+        "totalMs": 21354,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly addresses the query by presenting competitive risks and H2 priorities side by side with specific figures, honestly flags that no explicit causal link is stated in the sources, names Priya Mehta as decision-maker, and documents trade-offs with specific reasons for descoping — all citations map plausibly to the named sources."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:14478ms",
+          "total_slow:21354ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — Product, Strategy & Market Position\n\n---\n\n## 🏢 What We Do\n\n- BazaarVoice is a **review management and syndication platform** targeting brands in India [SOURCE 4]\n- Core capabilities:\n  - Review **collection, moderation, and display** via embeddable widgets [SOURCE 3]\n  - **Syndication network** — reviews collected once, displayed across brand.com + marketplaces [SOURCE 4]\n  - **Review Intelligence Dashboard** — self-serve sentiment analytics [SOURCE 4]\n  - **Insights API*",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 11880,
+        "generationMs": 14249,
+        "totalMs": 26301,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is excellently structured and comprehensive for onboarding, but citation accuracy is questionable because several claims tagged [SOURCE 1] and [SOURCE 3] (AI PM Playbook) are BazaarVoice-specific operational details (Insights API owners, pricing tiers, named persons) that are implausible in a generic AI PM Playbook, raising hallucination and mis-citation concerns."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:14249ms",
+          "total_slow:26301ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Slow moderation was flagged by 9 of 14 enterprise clients in Q1 QBRs, with Mamaearth's PM noting reviews submitted Monday appeared Thursday, and this directly maps to KR2.3: reducing moderation queue lag from 48h to <2h [SOURCE 4]. The lack of analytics self-serve, raised by 7 of 14 clients including L'Oreal India and Himalaya, maps to KR3.3: getting the first enterprise customer live on the Review Intelligence dashboard [SOURCE 4]. At the Week 7 mid-quarter check-in, KR2.3 is behind with queue ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 11924,
+        "generationMs": 10022,
+        "totalMs": 22056,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly maps enterprise feedback to specific OKR key results with named clients, statuses, and owners; minor hallucination risk exists around the 'Week 7 mid-quarter check-in' and 'Week 9 pipeline fix' specifics which cannot be fully verified against the named sources, but citations are plausible and all required intent fields are present."
+        },
+        "runAt": "2026-06-25T17:08:00.004Z",
+        "flags": [
+          "generation_slow:10022ms",
+          "total_slow:22056ms"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.85,
+      "avgCitationAccuracy": 4.1,
+      "avgHallucination": 3.6,
+      "avgIntentAdherence": 4.75,
+      "avgRetrievalMs": 9798,
+      "avgGenerationMs": 8309,
+      "avgTotalMs": 18302,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": false,
+      "passIntentAdherence": true,
+      "passLatency": false,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v11",
+    "runAt": "2026-06-25T17:13:52.593Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "The decision to choose in-house ML (Option B) over Perspective API (Option C) was driven by data privacy requirements from 3 BFSI clients that prohibit sending review content to third parties [SOURCE 1]. Perspective API would have required transmitting review data to Google, making it non-compliant with those client constraints [SOURCE 2]. The ML team confirmed a 10-week delivery timeline, making the in-house build feasible, with Perspective API retained as a fallback during the build period [SO",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 4382,
+        "generationMs": 5384,
+        "totalMs": 9947,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the decision with owner, date, and rationale; citations map to plausible Decision Log sources, though the claim about 'Perspective API retained as fallback' and 'Option B/C' labels cannot be verified against the named sources, introducing minor uncertainty."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": []
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## PRD — Ratings & Reviews API v3.0: User Stories & Success Metrics\n\n### User Stories\n\n- As a **brand admin**, I can configure up to **8 custom rating attributes** per product category [SOURCE 2]\n- As an **end user**, I can rate a product on individual attributes during review submission [SOURCE 2]\n- As a **developer**, I can query attribute-level aggregates via **`GET /reviews/aggregate?attributes=true`** [SOURCE 2]\n\n---\n\n### Success Metrics\n\n- **Review submission rate: +15%** (attribute rating",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8040,
+        "generationMs": 4482,
+        "totalMs": 12687,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer directly addresses user stories and success metrics with specific details, cites the correct document with owner and date, and all citations point to plausible sources (SOURCE 2 is a valid PRD chunk); however, specific facts like the exact endpoint string, '8 custom rating attributes,' '60 days,' '90 days,' '3 at-risk contracts,' and 'Priya Mehta' cannot be verified against the listed sources and may be hallucinated, slightly lowering the hallucination score."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:12687ms"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "The top three enterprise complaints in Q1 2026 were compiled from 14 QBRs, 6 NPS surveys, and 3 escalation calls [SOURCE 2]. The most common issue was slow moderation, mentioned by 9 of 14 clients, with Mamaearth noting reviews submitted Monday didn't appear until Thursday [SOURCE 1]. The second theme was lack of analytics self-serve, raised by 7 of 14 clients, with L'Oreal India reporting they had to email the team weekly for reports [SOURCE 1]. Third was API documentation gaps, mentioned by 4 ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 4175,
+        "generationMs": 6709,
+        "totalMs": 11045,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly relevant and well-structured for a customer_request intent, with named customers, specific requests, statuses, and owners; citation accuracy is slightly penalized because SOURCE 4 (Q3 OKRs) is plausibly linked to Priya Mehta as OKR owner but SOURCE 2 (a feedback summary) is implausibly the source for 'Neha Gupta compiled' attribution, and hallucination scores low-moderate because specific details like Mamaearth's Monday-to-Thursday delay, L'Oreal India's weekly email workflow, the 2x integration time figure, SOURCE 3 (synthetic test data) being unused, and the June start date for the technical writer cannot be verified against any named source and may be fabricated."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:6709ms",
+          "total_slow:11045ms"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price was ₹8,000–12,000/month [SOURCE 1]. Additionally, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes [SOURCE 2]. The roadmap implication noted was an SMB pricing tier of ₹8,000/month, covering up to 10,000 reviews/month and 1 product catalogue [SOURCE 3].\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Median acceptable price is ₹8,",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment",
+          "ML Portfolio — Gunjan Mahesh"
+        ],
+        "isStale": false,
+        "retrievalMs": 8821,
+        "generationMs": 4330,
+        "totalMs": 13781,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses willingness-to-pay findings with specific figures, correctly cites Sources 1-3 (all from the SMB Customer Discovery document), clearly states research existence, names the researcher (Priya Mehta), provides the date (May 2026), and states the key finding."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "total_slow:13781ms"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The Mobile SDK for iOS/Android was moved out of H2 2026 and deferred to H1 2027 because only 2 clients had requested it [SOURCE 1]. The decision is documented in the H2 2026 roadmap, owned by Priya Mehta [SOURCE 2].\n\n---\n\n**Decision maker**: Priya Mehta [SOURCE 1, SOURCE 2]\n**Rationale**: Insufficient client demand — only 2 clients requested the Mobile SDK [SOURCE 1]\n**Trade-off**: Deprioritised in favour of H2 themes covering platform reliability and enterprise depth; moved to H1 2027 [SOURCE 1",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Sprint Retro — Q3 Sprint 6",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 9197,
+        "generationMs": 4046,
+        "totalMs": 13405,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query with rationale, decision-maker, and trade-off; citations map to plausible sources (Sources 1 and 2 are both H2 2026 Roadmap docs), though the split citation between SOURCE 1 and SOURCE 2 for the same claim is redundant but not penalisable; 'Priya Mehta' and the specific '2 clients' figure cannot be verified against the listed source descriptions but are plausibly contained within the H2 2026 roadmap documents, warranting only a minor hallucination caution rather than a heavy penalty."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "total_slow:13405ms"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "## What the CEO and VP Product Were Asked to Commit To\n\nThe sources record these as **asks from leadership** — pending actions requested of the CEO and VP Product — not confirmations of what they committed to. Here is precisely what the sources state:\n\n---\n\n### CEO\n- **Ask:** Approve the **Flipkart syndication term sheet by June 20** — specifically, the revenue share clause requires exec sign-off. [SOURCE 2] [SOURCE 3]\n\n### VP Product\n- **Ask:** Confirm **image moderation priority vs Seller Resp",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7672,
+        "generationMs": 7826,
+        "totalMs": 15609,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 4,
+          "notes": "The answer addresses the query accurately by extracting specific asks, stakeholders, and a deadline from plausible sources, but correctly flags the distinction between 'asks' and confirmed 'commitments,' slightly reducing relevance; the fabricated claim about searching 'eval_corpus, Notion' is a minor unsupported assertion but does not affect factual content."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "generation_slow:7826ms",
+          "total_slow:15609ms"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n### Phases & Timeline\n\n- **Phase 1 — Contract to Kickoff (Week 0):** Sales hands off signed contract to CS; CS creates client workspace and schedules kickoff call within 3 business days [SOURCE 1]\n- **Phase 2 — Technical Integration (Weeks 1–2):** API credentials and sandbox environment shared; integration call with client's dev team (60 min); client completes widget embed on staging; go-live requires CS + client sign-off [SOURCE 1]\n- **Phase 3 — Content ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7776,
+        "generationMs": 8722,
+        "totalMs": 16632,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and comprehensive, but specific claims like phase names/timelines, SLA numbers, Neha Gupta's ownership, and version details are attributed to SOURCE 1/2 (Onboarding Guide) which plausibly contains them, while SOURCE 5 (Customer Feedback Summary) is used for strategic context plausibly; however, the highly granular details (exact phase weeks, 60-min integration call, <4h P1/<24h P2 support SLAs, 99.9% uptime, version 3.2, 2026-05-15 date, 7 of 14 clients figure) cannot be verified against the named sources and risk hallucination."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:8722ms",
+          "total_slow:16632ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Q3 2026 OKRs, Tracking Status, and Planning Session Themes\n\n---\n\n### Q3 2026 OKRs\n\n**Objective 1: Increase Enterprise Retention** [SOURCE 1]\n- **KR1.1:** Renew **90%** of enterprise contracts due in Q3 (currently **3 at risk**) [SOURCE 1]\n- **KR1.2:** Achieve **NPS >52** from enterprise segment (current: **44**) [SOURCE 1]\n- **KR1.3:** Reduce time-to-value for new enterprise onboarding from **8 weeks to 4 weeks** [SOURCE 1]\n\n**Objective 2: Expand Review Volume on Platform** [SOURCE 1]\n- **KR2",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Meeting Notes — Q3 Planning Session",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 5533,
+        "generationMs": 9729,
+        "totalMs": 15393,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 2,
+          "notes": "The answer comprehensively covers all three parts of the query with appropriate citations mapping to plausible sources, but the answer is cut off mid-sentence on a dependency item, and while theme leads are named the answer lacks explicit business rationale for prioritisation decisions and trade-offs/opportunity costs required for full roadmap_rationale intent adherence."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "weak_intent_adherence:2",
+          "generation_slow:9729ms",
+          "total_slow:15393ms"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n---\n\n### Root Cause\n\n- A **CDN config change** was deployed at **14:18** and set **incorrect cache-control headers** [SOURCE 2]\n- This caused an **origin path mismatch** in the config diff, resulting in the **widget JS file returning 404 errors** for **73 minutes** [SOURCE 2]\n- The outage ran from **14:22 to 15:35 IST**, affecting all **Enterprise clients using JS widget v2.4.x** — reviews showed as blank on product pages [SOURCE",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 5752,
+        "generationMs": 9143,
+        "totalMs": 15024,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses both questions and satisfies all three decision_recall requirements (owner: Karan Singh, date: 2026-05-18, rationale explained), but several highly specific figures (₹4.2Cr GMV, 14 enterprise clients, 3 escalation calls, exact timestamps, incident ID INC-2026-041, 5%→0.5% threshold, June 1/June 15 ETAs) cannot be verified against the source descriptions provided and risk being hallucinated or confabulated details, which limits the hallucination score despite all citations pointing to plausible source documents."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9143ms",
+          "total_slow:15024ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "## Enterprise Customer Feedback → Analytics Self-Serve Roadmap\n\n### Who Raised It and What They Said\n\n- **Theme 2: Lack of analytics self-serve** was mentioned by **7 of 14** enterprise clients in Q1 2026 QBRs [SOURCE 3]\n- Specific client quotes driving the request:\n  - **L'Oreal India**: *\"I email your team every week for a report — this should be automatic.\"* [SOURCE 3]\n  - **Himalaya**: *\"I can't tell if our rating is improving without calling you.\"* [SOURCE 3]\n\n---\n\n### What Was Planned / Sp",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 7267,
+        "generationMs": 10740,
+        "totalMs": 18126,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses both parts of the query (feedback drivers and spec), names specific customers with quotes, maps all claims to plausible sources within the provided list, and includes owner, status, and dependencies satisfying all intent-specific criteria."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "generation_slow:10740ms",
+          "total_slow:18126ms"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Moderation Pipeline vs. Data Isolation: Decision Comparison\n\n---\n\n### 1. Moderation Pipeline Architecture\n\n- **Decision owner:** **Rahul Sharma** [SOURCE 1] [SOURCE 2]\n- **Date:** **2026-03-22** [SOURCE 1] [SOURCE 2]\n- **Decision made:** Option B — **in-house ML model**, with Option C (Perspective API) as fallback during the build period [SOURCE 1] [SOURCE 2]\n\n**Rationale:**\n- **Data privacy requirements from 3 BFSI clients** prohibit sending review content to third parties [SOURCE 1] [SOURCE",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 5469,
+        "generationMs": 13181,
+        "totalMs": 18761,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 2,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query with all required decision_recall elements (owner, date, rationale), but critically misattributes the data isolation decision to SOURCE 3 (AI PM Playbook) and SOURCE 4 (BazaarVoice Synthetic Test Data), neither of which plausibly contains architectural decision log content about Karan Singh, schema-per-tenant choices, or BFSI contractual isolation requirements — suggesting hallucinated facts mapped to implausible sources."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:13181ms",
+          "total_slow:18761ms"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The pricing restructure decision selected **Option B (tiered flat fee)** over usage-based billing [SOURCE 3]. The rationale was that the sales team strongly opposed variable billing, with 2 prospects stating it was a deal-breaker, and tiered pricing is standard in the market and easier to forecast [SOURCE 4]. The migration plan set new pricing for new clients from April 1, with existing clients grandfathered until renewal, and 3 high-volume clients proactively moved to Tier 3 in exchange for 2-y",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Project 9 — Dynamic Pricing",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 12401,
+        "generationMs": 4504,
+        "totalMs": 17048,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses the pricing decision with all three required decision_recall elements (owner: Priya Mehta + Head of Revenue, date: 2026-02-18, rationale: sales opposition and market standards), and all SOURCE citations map plausibly to the listed Decision Log and project sources."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "total_slow:17048ms",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "There are two API-related documents in your connected sources. The **PRD — Ratings & Reviews API v3.0** extends the Reviews API to support multi-attribute ratings, allowing up to 8 configurable attributes per review submission, with the aggregate endpoint at `GET /reviews/aggregate?attributes=true` [SOURCE 2]. The **API Design Review — Insights API v1** notes there is no real-time endpoint in v1 (sentiment model runs in batch/daily), a rate limit of 100 calls/day per client in beta, and a `/v1/`",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API Design Review — Insights API v1",
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 11740,
+        "generationMs": 6309,
+        "totalMs": 18451,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer correctly cites both API documents with specific details and includes owner/date, but several precise claims (e.g., '8 configurable attributes,' '100 calls/day,' '6-month deprecation policy,' 'Karan Singh,' '2026-05-20') cannot be verified against the listed sources and risk being hallucinated, lowering the hallucination score; citations map to plausible sources so citationAccuracy is only slightly penalised."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:6309ms",
+          "total_slow:18451ms"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The Myntra syndication contract was signed, with technical integration starting June 20 [SOURCE 2]. The CEO was asked to approve the Flipkart syndication term sheet by June 20, with the revenue share clause requiring exec sign-off [SOURCE 4]. JioMart has a signed LOI for syndication partnership, while Flipkart syndication is still in negotiation and requires VP sign-off on the contract [SOURCE 5].\n\n---\n\n**Stakeholder**: CEO\n**Commitment**: Approve Flipkart syndication term sheet (revenue share c",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8413,
+        "generationMs": 4729,
+        "totalMs": 13280,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer correctly identifies key stakeholder commitments with deadlines, but SOURCE 5 is labeled 'Seam Test Data — BazaarVoice Synthetic' making it implausible to contain JioMart/Flipkart VP sign-off details attributed to it, and the VP Product commitment about image moderation vs Seller Response H2 slot is a specific claim that cannot be verified against any named source, raising hallucination concerns."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:13280ms",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The H2 2026 roadmap is currently in **\"Draft for leadership review\"** status, owned by Priya Mehta, and was last updated on 2026-06-01 [SOURCE 2]. It is organised across three themes: Platform reliability (July–August), Enterprise depth (August–October), and Expand network (October–December) [SOURCE 1]. Three items have been descoped to H1 2027: Mobile SDK for iOS/Android, Video reviews, and the SMB self-serve tier [SOURCE 2]. Key dependencies remain open, including a legal review of the review ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Product Strategy — India Market 2026–2027",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 4938,
+        "generationMs": 6209,
+        "totalMs": 11266,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses roadmap status, provides specific business rationale for each descoped item, names Priya Mehta as decision-maker, and explicitly states the trade-off, with all citations mapping to plausible sources within the provided list."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "generation_slow:6209ms",
+          "total_slow:11266ms",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The **Launch Plan: Attribute Ratings — GA Release** shows the launch date is June 15, 2026, and status is marked as on track [SOURCE 2]. All engineering checklist items are complete, including API v3 endpoints (done June 5), Widget v2.5 (done June 8), and load test at 3x peak volume (done June 9, passed) [SOURCE 2]. On the client readiness side, Nykaa has already signed off from beta, Flipkart has an integration call on June 11 with sandbox testing June 12–14, and Mamaearth is skipping v3 until ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Launch Plan — Attribute Ratings GA",
+          "PRD — Ratings & Reviews API v3.0"
+        ],
+        "isStale": false,
+        "retrievalMs": 6776,
+        "generationMs": 6401,
+        "totalMs": 13308,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly relevant and well-structured with document title, owner, and last-updated date present, but specific facts (exact dates like June 5/8/9/11/12/14, client names like Nykaa/Flipkart/Mamaearth, and the June 12 help center ETA) cannot be verified against the named sources and may be hallucinated, lowering hallucination confidence despite plausible citation numbers."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:6401ms",
+          "total_slow:13308ms"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Current Enterprise Pricing Tiers\n\n**The decision was Option B: Tiered flat fee**, decided on **2026-02-18** [SOURCE 2].\n\n### Pricing Tiers\n\n- **Tier 1**: ₹1.5L/month — up to **100K reviews/month** [SOURCE 1]\n- **Tier 2**: ₹2.5L/month — up to **300K reviews/month** [SOURCE 1]\n- **Tier 3**: ₹4L/month — **unlimited reviews** [SOURCE 1]\n\n---\n\n### When Do They Take Effect?\n\n- **New clients**: New pricing applies from **April 1** [SOURCE 1]\n- **Existing clients**: Grandfathered for the remainder of",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4545,
+        "generationMs": 5536,
+        "totalMs": 10194,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses both parts of the query with correct decision owner, date, and rationale; citations map plausibly to the Decision Log sources, though SOURCE 5 (BazaarVoice synthetic test data) is unused and the Indian Rupee denominations are unusual for an enterprise pricing doc, slightly raising hallucination concern but not enough to heavily penalize given the source plausibility."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "total_slow:10194ms"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape and H2 2026 Roadmap Priorities\n\n### Competitive Risks Identified\n\n- **Yotpo** entering India with aggressive pricing was flagged as a risk with **probability: medium, impact: high** [SOURCE 5].\n- **Google** launching product-level reviews on Search was flagged as a risk with **probability: low, impact: very high** [SOURCE 5].\n- **ML team attrition** was noted as a risk — the team is **2 people**, both receiving above-market offers [SOURCE 5].\n\n### How These Risks Connect",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026"
+        ],
+        "isStale": false,
+        "retrievalMs": 3880,
+        "generationMs": 10770,
+        "totalMs": 14758,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer thoroughly addresses the competitive-to-roadmap connection, names Priya Mehta as decision-maker, explains the 'how we win' differentiation rationale, and lists descoped trade-offs; slight relevance deduction because the answer candidly admits the sources don't explicitly link competitive risks to H2 priorities, which is honest but leaves the core question partially unanswered, and all citations map plausibly to the named sources."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "generation_slow:10770ms",
+          "total_slow:14758ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Onboarding Overview\n\n---\n\n## 🏢 What We Do\n\n- BazaarVoice is a review management and syndication platform serving brands in India [SOURCE 4]\n- Core capabilities:\n  - **Review collection** via widgets and email campaigns [SOURCE 3]\n  - **Review moderation** with ML-assisted processing [SOURCE 4]\n  - **Review syndication** — collected once, displayed across brand.com and marketplaces [SOURCE 4]\n  - **Review Intelligence Dashboard** — self-serve sentiment analytics [SO",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 7506,
+        "generationMs": 18521,
+        "totalMs": 26152,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and highly relevant for onboarding, but pricing details (tiers, amounts, dates, owners) and Insights API specifics are tagged to SOURCE 1 and SOURCE 3 (AI PM Playbook) when those sources would not plausibly contain BazaarVoice-specific pricing decisions or named BazaarVoice employees, raising both citation accuracy and hallucination concerns."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:18521ms",
+          "total_slow:26152ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Nine of 14 enterprise clients flagged slow moderation in Q1 QBRs, with Mamaearth's PM noting reviews submitted Monday don't appear until Thursday, and Boat's Head of E-comm citing same-day competitor performance [SOURCE 4]. This directly maps to Q3 KR2.3: reduce moderation queue lag from 48h to <2h, which as of the Week 7 check-in sits at 18h and is behind, needing a pipeline fix by Week 9 [SOURCE 2]. Seven of 14 clients also raised the lack of analytics self-serve, with L'Oreal India and Himala",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 9583,
+        "generationMs": 8503,
+        "totalMs": 18523,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly maps enterprise feedback to specific Q3 KRs with named clients, statuses, and owners; a minor hallucination risk exists around the precise 'Week 7/Week 9' pipeline fix detail and Priya Mehta as owner, which are plausible but unverifiable without seeing SOURCE 2's full content, preventing a perfect hallucination score."
+        },
+        "runAt": "2026-06-25T17:13:52.593Z",
+        "flags": [
+          "generation_slow:8503ms",
+          "total_slow:18523ms"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.85,
+      "avgCitationAccuracy": 4.15,
+      "avgHallucination": 3.7,
+      "avgIntentAdherence": 4.75,
+      "avgRetrievalMs": 7193,
+      "avgGenerationMs": 7789,
+      "avgTotalMs": 15170,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": false,
+      "passIntentAdherence": true,
+      "passLatency": false,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v12",
+    "runAt": "2026-06-25T17:21:24.089Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "The decision to choose in-house ML (Option B) over Perspective API (Option C) was driven by data privacy requirements from 3 BFSI clients that prohibit sending review content to third parties [SOURCE 1]. Since Perspective API routes data to Google, it was ruled out as a primary solution despite its faster 2-week integration timeline [SOURCE 1]. The ML team confirmed a 10-week delivery, making in-house ML viable, with Perspective API retained only as a fallback during the build period [SOURCE 2].",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 10749,
+        "generationMs": 6652,
+        "totalMs": 17574,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer correctly identifies the primary rationale (BFSI data privacy), decision owner, and date; citation accuracy is slightly off as some claims are attributed solely to SOURCE 1 when they also appear in SOURCE 2, and the final line about 'ML/Product — Decision Log Owner' is a minor editorial addition not directly sourced but not a factual hallucination."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:6652ms",
+          "total_slow:17574ms"
+        ]
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## PRD — Ratings & Reviews API v3.0: User Stories & Success Metrics\n\n---\n\n### User Stories\n\n- As a **brand admin**, I can configure up to **8 custom rating attributes** per product category [SOURCE 2].\n- As an **end user**, I can rate a product on individual attributes during review submission [SOURCE 2].\n- As a **developer**, I can query attribute-level aggregates via **`GET /reviews/aggregate?attributes=true`** [SOURCE 2].\n\n---\n\n### Success Metrics\n\n- **Review submission rate: +15%** (attribut",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 6041,
+        "generationMs": 4569,
+        "totalMs": 10775,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "Answer is complete and accurate with all facts traceable to source chunks, but citation accuracy is penalised because all claims are attributed solely to SOURCE 2 when identical content appears across SOURCE 1, 3, 4, and 5 — the citations are not wrong but are inconsistently selective and miss that SOURCE 2 is actually truncated mid-sentence on the API adoption metric, making SOURCE 1/4/5 more complete sources for that claim."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "total_slow:10775ms"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "The top three enterprise complaints in Q1 2026, drawn from 14 QBRs, 6 NPS surveys, and 3 escalation calls, were: slow moderation (mentioned by 9 of 14 clients), lack of analytics self-serve (mentioned by 7 of 14 clients), and API documentation gaps (mentioned by 4 of 14 clients) [SOURCE 2]. On moderation, Mamaearth's PM noted reviews submitted Monday weren't appearing until Thursday, and Boat's Head of E-comm flagged that competitors on Nykaa had same-day review publishing [SOURCE 2]. On analyti",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 5858,
+        "generationMs": 8444,
+        "totalMs": 14807,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 4,
+          "notes": "The answer is comprehensive and accurate, correctly identifying all three themes with client quotes and planned actions; citation accuracy is slightly off since some claims attributed to SOURCE 2 also appear in SOURCE 1 and SOURCE 3, but no citations are factually wrong; the '~48h' moderation lag paraphrase is supported by sources though not verbatim from the QBR section specifically; intentAdherence is strong with named customers, requests, and statuses, but owners for individual workstreams are absent."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:8444ms",
+          "total_slow:14807ms"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price was ₹8,000–12,000/month [SOURCE 1]. Additionally, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes [SOURCE 2]. The research was conducted by Priya Mehta across 8 interviews during May 2026 [SOURCE 1].\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Median acceptable price was ₹8,000–12,000/month; 3 of 8 respondents would pay immed",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment",
+          "ML Portfolio — Gunjan Mahesh"
+        ],
+        "isStale": false,
+        "retrievalMs": 4513,
+        "generationMs": 3815,
+        "totalMs": 8485,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer accurately covers all willingness-to-pay findings from the sources with correct facts; the only minor citation issue is that the '3 of 8' finding appears in all three SMB sources (1, 2, and 3) but is attributed only to SOURCE 2, while the median price range is attributed to SOURCE 1 — both claims are present in both sources so no material error, just slightly imprecise attribution."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": []
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The Mobile SDK for iOS/Android was moved out of H2 2026 and deferred to H1 2027 because only 2 clients had requested it [SOURCE 1]. The decision was documented by Priya Mehta as part of the H2 2026 roadmap descoping [SOURCE 2].\n\n---\n\n**Decision maker**: Priya Mehta [SOURCE 1, SOURCE 2]\n**Rationale**: Only 2 clients requested the Mobile SDK, indicating insufficient demand to justify prioritisation in H2 2026 [SOURCE 1]\n**Trade-off**: The Mobile SDK was moved to H1 2027 to make room for the H2 pri",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Sprint Retro — Q3 Sprint 6",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 7107,
+        "generationMs": 4586,
+        "totalMs": 11855,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer accurately captures the core rationale (only 2 clients requested it), names Priya Mehta as the decision maker, and states the trade-off; citation accuracy is slightly penalised because SOURCE 2 does not add anything beyond SOURCE 1 for the 'decision maker' claim, and the trade-off framing ('to make room for platform reliability and enterprise depth') is a reasonable inference but not explicitly stated in the sources as a direct trade-off explanation."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "total_slow:11855ms"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "The sources record **asks directed at** the CEO and VP Product — not confirmed commitments or responses from them. Here is exactly what the sources state:\n\n---\n\n**What was asked of each stakeholder:**\n\n- **CEO** was asked to: approve the **Flipkart syndication term sheet by June 20**, specifically because the revenue share clause requires exec sign-off [SOURCE 2, SOURCE 3]\n- **VP Product** was asked to: confirm **image moderation priority vs Seller Response for the H2 slot** [SOURCE 2, SOURCE 3]",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7541,
+        "generationMs": 7954,
+        "totalMs": 15653,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 4,
+          "notes": "The answer accurately extracts the asks from the correct sources with no hallucinated facts, correctly distinguishes asks from confirmed commitments, and includes stakeholders, deliverables, and the CEO's June 20 deadline; intentAdherence is 4 rather than 5 because the query asked what they 'committed to' and the answer appropriately clarifies these were requests not commitments, which slightly limits direct satisfaction of the commitment-framing expected by the intent."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:7954ms",
+          "total_slow:15653ms"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n### Phases & Timeline\n\n- **Phase 1 — Contract to Kickoff (Week 0):** Sales hands off the signed contract to CS, CS creates the client workspace, and schedules a kickoff call within 3 business days [SOURCE 1]\n- **Phase 2 — Technical Integration (Weeks 1–2):** API credentials and sandbox environment are shared, a 60-minute integration call is held with the client's dev team, and go-live requires sign-off from both CS and the client [SOURCE 1]\n- **Phase 3 — ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4429,
+        "generationMs": 8911,
+        "totalMs": 13492,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully covers all four onboarding phases, SLA commitments, named owner, and current strategic initiatives with accurate citations throughout; every claim is directly traceable to the source chunks with no hallucinated facts."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:8911ms",
+          "total_slow:13492ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Q3 2026 OKRs, Tracking & Planning Themes\n\n---\n\n### Objectives & Key Results\n\n**Objective 1: Increase Enterprise Retention** [SOURCE 1]\n- **KR1.1:** Renew **90%** of enterprise contracts due in Q3 (currently **3 at risk**) [SOURCE 1]\n- **KR1.2:** Achieve **NPS >52** from enterprise segment (current: **44**) [SOURCE 1]\n- **KR1.3:** Reduce time-to-value for new enterprise onboarding from **8 weeks to 4 weeks** [SOURCE 1]\n\n**Objective 2: Expand Review Volume on Platform** [SOURCE 1]\n- **KR2.1:** ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Meeting Notes — Q3 Planning Session",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 3789,
+        "generationMs": 9902,
+        "totalMs": 13844,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 2,
+          "notes": "The answer comprehensively covers all three parts of the query with accurate citations (minor issue: SOURCE 1 vs SOURCE 2 attribution for tracking data is slightly inconsistent but largely correct), no hallucinated facts detected, but intentAdherence is low because the roadmap_rationale intent requires explaining WHY decisions were made, naming decision-makers for prioritisation calls, and discussing trade-offs — the answer merely lists themes and OKRs without addressing rationale, opportunity cost, or who made prioritisation decisions beyond listing leads."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "weak_intent_adherence:2",
+          "generation_slow:9902ms",
+          "total_slow:13844ms"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n---\n\n### 🔴 Root Cause\n\n- A **CDN config change was deployed at 14:18** via an automated process [SOURCE 2]\n- The config set **incorrect cache-control headers**, causing an origin path mismatch [SOURCE 2]\n- As a result, the **widget JS file returned 404 errors for 73 minutes** (14:22–15:35 IST) [SOURCE 2]\n- A **19-minute delay in alerting** occurred because the PagerDuty alert threshold was set too high (at **5%**), meaning the a",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 6696,
+        "generationMs": 8294,
+        "totalMs": 15151,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 2,
+          "notes": "Answer is fully relevant and corrective actions are accurate, but it invents 'Karan Singh' as decision owner (not present in any source chunk), which constitutes hallucination and also inflates intentAdherence since the owner requirement is technically 'met' with a fabricated name; citation accuracy is penalised because SOURCE 2 is cited for the PagerDuty 5% threshold detail that appears in SOURCE 1/2 correctly, but the fabricated owner claim is cited to SOURCE 2 which contains no such name."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "hallucination_risk:2",
+          "weak_intent_adherence:2",
+          "generation_slow:8294ms",
+          "total_slow:15151ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "## Enterprise Customer Feedback → Analytics Self-Serve Roadmap\n\n### Who raised it and what they said\n\n- **7 of 14** enterprise clients cited lack of analytics self-serve as a top theme in Q1 2026 QBRs [SOURCE 3]\n- Specific client quotes:\n  - **L'Oreal India**: *\"I email your team every week for a report — this should be automatic.\"* [SOURCE 3]\n  - **Himalaya**: *\"I can't tell if our rating is improving without calling you.\"* [SOURCE 3]\n\n### What was planned in response\n\n- The planned response to",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 9895,
+        "generationMs": 11675,
+        "totalMs": 21733,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses both parts of the query (feedback drivers and what was spec'd), correctly cites all sources, names specific clients and owners, and provides status/dependencies; a minor hallucination flag is warranted because the answer references a PRD for the Review Intelligence Dashboard ('see PRD' is noted in sources) but does not actually describe what was spec'd in that PRD — the spec details are absent from retrieved chunks, yet the answer does not fabricate spec content, so hallucination risk is low but the answer also doesn't flag this gap explicitly."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:11675ms",
+          "total_slow:21733ms"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Moderation Pipeline vs. Data Isolation: Decision Comparison\n\n---\n\n### 1. Moderation Pipeline Architecture\n\n- **Owner:** **Rahul Sharma** [SOURCE 1]\n- **Date:** **2026-03-22** [SOURCE 1]\n- **Decision:** **Option B — in-house ML model**, with **Option C (Perspective API)** as fallback during the build period [SOURCE 1]\n- **Rationale:**\n  - **Data privacy requirements from 3 BFSI clients** prohibit sending review content to third parties — ruling out Option C (Perspective API, which sends data t",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4939,
+        "generationMs": 14835,
+        "totalMs": 19929,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the comparison query with correct owners (Rahul Sharma, Karan Singh), precise dates (2026-03-22, 2026-03-15), and detailed rationales for both decisions, with all citations accurately mapping to the source chunks containing those claims."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:14835ms",
+          "total_slow:19929ms"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The pricing restructure decision selected **Option B: tiered flat fee** over usage-based pricing [SOURCE 3]. The decision was owned by **Priya Mehta and Head of Revenue**, dated **2026-02-18**, with status: Decided [SOURCE 4]. The rationale was that the sales team strongly opposed variable billing — 2 prospects said it was a deal-breaker — and tiered pricing is standard in the market and easier to forecast [SOURCE 3].\n\n---\n\n**Decision owner**: Priya Mehta + Head of Revenue [SOURCE 4]\n**Date deci",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Project 9 — Dynamic Pricing",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 6503,
+        "generationMs": 9205,
+        "totalMs": 15868,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer accurately covers all three decision_recall requirements (owner, date, rationale) with correct source content; minor citation quibble is that SOURCE 3 and SOURCE 4 contain nearly identical text so cross-attribution is largely harmless, but the final line 'Decision confirmed by Priya Mehta (Product)' adds a role label ('Product') not explicitly stated in any source chunk, causing a slight hallucination deduction."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:9205ms",
+          "total_slow:15868ms",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The most relevant API specification is the **PRD — Ratings & Reviews API v3.0**, which extends the Reviews API to support multi-attribute ratings with up to 8 configurable attributes per product category [SOURCE 2]. Developers can query attribute-level aggregates via `GET /reviews/aggregate?attributes=true` [SOURCE 2]. The GA release date is June 15, 2026, with the API schema finalized on May 1 and beta with 2 design partners on May 20 [SOURCE 2]. Out of scope items include AI-generated attribut",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API Design Review — Insights API v1",
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8102,
+        "generationMs": 4012,
+        "totalMs": 12274,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer accurately cites SOURCE 2 for all claims, includes document title, owner, date, and specific spec details like the endpoint and timeline; SOURCE 1 (Insights API) was available but not surfaced, though the v3.0 PRD is clearly the most relevant spec for a generic 'api' query."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "total_slow:12274ms"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "Here is what was agreed and with whom on syndication:\n\nMyntra syndication had a contract signed, with technical integration starting June 20 [SOURCE 2]. The CEO was asked to approve the Flipkart syndication term sheet by June 20, specifically because the revenue share clause requires exec sign-off [SOURCE 4]. JioMart has a Letter of Intent (LOI) signed, and Flipkart syndication is listed as \"in negotiation\" for the October–December period [SOURCE 5].\n\n---\n\n**Stakeholder**: CEO\n**Commitment**: Ap",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 10984,
+        "generationMs": 4677,
+        "totalMs": 15820,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer accurately covers all syndication commitments with correct stakeholders, deadlines, and facts from the sources; the Myntra contract claim is cited to SOURCE 2 which does contain it, though SOURCE 4 also contains it, making the citation technically valid but slightly imprecise."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "total_slow:15820ms",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The H2 2026 roadmap is currently in **\"Draft for leadership review\"** status, owned by Priya Mehta, and was last updated on 2026-06-01 [SOURCE 2]. It is structured across three themes: Platform reliability (July–August), Enterprise depth (August–October), and Expand network (October–December) [SOURCE 1]. Three items have been descoped to H1 2027: Mobile SDK for iOS/Android, Video reviews, and SMB self-serve tier [SOURCE 2]. A key outstanding dependency is the legal review of the Review import fe",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Product Strategy — India Market 2026–2027",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 8460,
+        "generationMs": 6918,
+        "totalMs": 15545,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query with accurate status details, correctly cites all claims to their sources, introduces no hallucinated facts, and satisfies all roadmap_rationale criteria by naming Priya Mehta as decision-maker, providing specific business rationale for prioritisation, and detailing trade-offs for each descoped item."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:6918ms",
+          "total_slow:15545ms",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The Attribute Ratings GA launch is on track with a target launch date of June 15, 2026 [SOURCE 2]. All engineering checklist items are complete, including API v3 endpoints (done June 5), Widget v2.5 (done June 8), and a load test at 3x peak volume (passed June 9) [SOURCE 2]. The help center article for brand admins is still in progress with an ETA of June 12, and client readiness varies — Nykaa has already signed off, Flipkart has sandbox testing scheduled for June 12–14, and Mamaearth is skippi",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Launch Plan — Attribute Ratings GA",
+          "PRD — Ratings & Reviews API v3.0"
+        ],
+        "isStale": false,
+        "retrievalMs": 9339,
+        "generationMs": 6442,
+        "totalMs": 15952,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer is highly relevant and citations are accurate, but the footer 'Last updated: 2026-06-24' is not present in any source chunk (a hallucinated date), which lowers the hallucination score; intentAdherence is strong with document title, owner, and key spec details, but the fabricated last-updated date is not sourced."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:6442ms",
+          "total_slow:15952ms"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Current Enterprise Pricing Tiers\n\n**The decision to restructure pricing was made on 2026-02-18, selecting Option B: Tiered Flat Fee** [SOURCE 1].\n\n### Pricing Tiers\n\n- **Tier 1**: ₹1.5L/month — up to 100K reviews [SOURCE 1]\n- **Tier 2**: ₹2.5L/month — up to 300K reviews [SOURCE 1]\n- **Tier 3**: ₹4L/month — unlimited reviews [SOURCE 1]\n\n### When They Take Effect\n\n- **New clients**: New pricing applies from **April 1** [SOURCE 1]\n- **Existing clients**: Grandfathered for the remainder of their ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8969,
+        "generationMs": 5302,
+        "totalMs": 14460,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query with all tiers, effective dates, owner, date, and rationale; citation accuracy is slightly imperfect as some claims attributed solely to SOURCE 1 also appear in SOURCE 2/3, and 'Decision confirmed by Priya Mehta (Revenue/Product)' adds a minor unsourced characterization ('Revenue/Product' role label) not explicitly in the sources, but no significant hallucinations are present."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "total_slow:14460ms"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape and H2 2026 Roadmap Priorities\n\n### Competitive Risks Identified\n\n- **Yotpo** is flagged as entering India with aggressive pricing — probability: **medium**, impact: **high** [SOURCE 1]\n- **Google** launching product-level reviews on Search — probability: **low**, impact: **very high** [SOURCE 1]\n- **ML team attrition risk** — only **2 engineers** on the ML team, both receiving above-market offers [SOURCE 1]\n\n### How the Strategy Responds (as explicitly stated in sources",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026"
+        ],
+        "isStale": false,
+        "retrievalMs": 6657,
+        "generationMs": 10820,
+        "totalMs": 17636,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 4,
+          "notes": "The answer is thorough and honest about the lack of explicit causal links between competitive risks and H2 priorities, correctly cites sources, contains no hallucinated facts, names Priya Mehta as decision-maker, and covers trade-offs, but loses a point on relevance and intentAdherence for not more directly synthesizing the implicit connection (e.g., platform reliability/enterprise depth as a defensive moat against Yotpo's pricing threat)."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:10820ms",
+          "total_slow:17636ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Orientation Overview\n\n---\n\n## 🎯 What We Do (Products)\n\n- **Core product:** A review platform that collects, moderates, and displays customer reviews for brands [SOURCE 4]\n- **Syndication network:** Reviews collected once, displayed everywhere — brand.com + marketplaces [SOURCE 4]\n- **Review Intelligence Dashboard:** Self-serve sentiment analytics — described as the **only platform of its kind in India** [SOURCE 4]\n- **Insights API v1** (in development): Endpoints f",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 9025,
+        "generationMs": 14198,
+        "totalMs": 23386,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer comprehensively addresses products, strategy, and market position with accurate citations throughout, all claims trace back to the correct source chunks, no hallucinated facts are present, and the structured multi-section format with tables, owners, numbers, and priorities is ideal for a new PM onboarding."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:14198ms",
+          "total_slow:23386ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Nine of 14 enterprise clients flagged slow moderation in Q1 QBRs, with Mamaearth's PM noting reviews submitted Monday don't appear until Thursday [SOURCE 4]. This directly maps to KR2.3: reducing moderation queue lag from 48h to <2h, which at the Week 7 check-in sits at 18h — behind target and requiring a pipeline fix by Week 9 [SOURCE 2]. Seven of 14 clients raised the lack of analytics self-serve, with L'Oreal India and Himalaya specifically citing the need for automatic reporting [SOURCE 4], ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 12504,
+        "generationMs": 7661,
+        "totalMs": 20352,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer accurately maps Q1 enterprise feedback themes to specific OKR KRs with correct facts and customer names; citation accuracy is slightly reduced because SOURCE 2 and SOURCE 4 are near-duplicate chunks and the mid-quarter check-in detail (18h, Week 9) appears in both SOURCE 1 and SOURCE 2, making SOURCE 2 attribution technically correct but the distinction between the two OKR sources is inconsequential."
+        },
+        "runAt": "2026-06-25T17:21:24.089Z",
+        "flags": [
+          "generation_slow:7661ms",
+          "total_slow:20352ms"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.9,
+      "avgCitationAccuracy": 4.25,
+      "avgHallucination": 4.4,
+      "avgIntentAdherence": 4.5,
+      "avgRetrievalMs": 7605,
+      "avgGenerationMs": 7944,
+      "avgTotalMs": 15730,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passIntentAdherence": true,
+      "passLatency": false,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
   }
 ]

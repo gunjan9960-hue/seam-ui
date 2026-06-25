@@ -93,10 +93,11 @@ function buildPrompt(
   isStale: boolean,
   slackHeavy = false,
 ): string {
+  // Number each source so the model can cite by index — prevents cross-source hallucination
   const contextBlocks = retrieved
     .map(
-      (r) =>
-        `[${SOURCE_LABELS[r.chunk.doc.source] ?? r.chunk.doc.source}] ${r.chunk.doc.title} · ${r.chunk.doc.author} · ${r.chunk.doc.date}\n${r.chunk.text}`,
+      (r, i) =>
+        `[SOURCE ${i + 1}: ${r.chunk.doc.title} · ${r.chunk.doc.author} · ${r.chunk.doc.date}]\n${r.chunk.text}`,
     )
     .join("\n\n---\n\n");
 
@@ -139,11 +140,11 @@ ${historyText}${freshnessNote}${slackNote}Question: ${query}
 
 Instructions:
 - ${formatInstruction}${compareInstruction}
-- Use specific facts, names, dates, ticket numbers, and numbers from the context.
-- ONLY state what the context explicitly says. Do not infer, guess, or extrapolate.
-- Do not hallucinate. If a fact is not in the context, do not include it.
-- If the answer is not in the context, say only: "I searched ${sourceNames} and could not find this in your connected sources." Do NOT suggest where the information might live — only reference sources that are indexed.
-- Do not cite sources you were not given. Do not fabricate document titles or names.
+- Every factual claim MUST be followed immediately by its source in brackets, e.g. "The decision was made by Rahul Sharma [SOURCE 2]." If you cannot attribute a fact to a numbered source, do not include it.
+- ONLY state what a source explicitly says. Do not infer, connect, or combine facts across sources unless the connection is explicitly stated in one of them.
+- Do not hallucinate. No dates, names, numbers, or decisions that are not verbatim in a source.
+- If the answer is not in the sources, say only: "I searched ${sourceNames} and could not find this in your connected sources."
+- Do not fabricate source titles or attribute facts to sources that don't contain them.
 ${INTENT_REQUIRED_FORMAT[intent]}`;
 }
 

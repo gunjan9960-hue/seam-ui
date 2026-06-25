@@ -264,11 +264,12 @@ Question: ${query}
 
 Instructions:
 - ${formatInstruction}
-- Use specific facts, names, dates, ticket numbers, and numbers from the context.
-- ONLY state what the context explicitly says. Do not infer, guess, or extrapolate.
-- If the answer is not in the context, say only: "I searched ${sourceNames} and could not find this in your connected sources."
-${INTENT_REQUIRED_FORMAT[intent]}
-- Do not hallucinate. Do not cite sources you were not given.`;
+- Every factual claim MUST be followed immediately by its source in brackets, e.g. "The decision was made by Rahul Sharma [SOURCE 2]." If you cannot attribute a fact to a numbered source, do not include it.
+- ONLY state what a source explicitly says. Do not infer, connect, or combine facts across sources unless the connection is explicitly stated in one of them.
+- Do not hallucinate. No dates, names, numbers, or decisions that are not verbatim in a source.
+- If the answer is not in the sources, say only: "I searched ${sourceNames} and could not find this in your connected sources."
+- Do not fabricate source titles or attribute facts to sources that don't contain them.
+${INTENT_REQUIRED_FORMAT[intent]}`;
 }
 
 function buildJudgePrompt(
@@ -276,12 +277,23 @@ function buildJudgePrompt(
   intent: QueryIntent,
   answer: string,
   sourceTitles: string[],
+  numberedSources?: string[],
+  sourceContents?: string[],
 ): string {
+  const sourceList = (numberedSources ?? sourceTitles).map((t, i) => {
+    const content = sourceContents?.[i] ? `\n${sourceContents[i]}` : "";
+    return `SOURCE ${i + 1}: ${t}${content}`;
+  }).join("\n\n");
+
   return `You are a strict evaluator of RAG (retrieval-augmented generation) answers for a PM knowledge tool called Seam.
 
 Query: "${query}"
 Detected intent: ${intent}
-Source titles used: ${sourceTitles.join(" | ")}
+
+Retrieved source chunks (the ONLY information the model had access to):
+---
+${sourceList}
+---
 
 Answer to evaluate:
 """
@@ -291,9 +303,9 @@ ${answer}
 Score the answer on these 4 dimensions. Return integer scores 1–5 only.
 
 UNIVERSAL (apply to all intents):
-1. relevance (1–5): Does the answer directly and completely address what was asked? A non-answer ("not found") scores 1 only if information was available in the source titles.
-2. citationAccuracy (1–5): Are the claims traceable to the source titles listed? Penalise if document titles are invented or misattributed.
-3. hallucination (1–5): Are there any facts, names, numbers, or dates not supported by the sources? 5 = nothing invented. 1 = multiple invented facts.
+1. relevance (1–5): Does the answer directly and completely address what was asked? A non-answer ("not found") scores 1 only if information was available in the source chunks above.
+2. citationAccuracy (1–5): Does each [SOURCE N] citation in the answer correctly point to the source chunk that contains that claim? Penalise if a claim is cited to a source that does not actually contain it.
+3. hallucination (1–5): Are there specific facts, names, numbers, or dates in the answer that are NOT present in ANY of the source chunks above? 5 = every claim appears verbatim or clearly paraphrased from a source. 1 = multiple invented facts. You MUST check against the actual source text — do not guess based on titles alone.
 ${INTENT_RUBRICS[intent]}
 
 Return ONLY valid JSON — no prose, no markdown, just the object:
@@ -420,7 +432,7 @@ async function main() {
     // ── 5. Generate answer (non-streaming) ───────────────────────────────────
     const sourceNames = [...new Set(retrieved.map((r: { source: string }) => SOURCE_LABELS[r.source] ?? r.source))].join(", ") || "Notion, Jira, Slack";
     const contextBlocks = retrieved
-      .map((r: { source: string; title: string; author: string; date: string; text: string }) => `[${SOURCE_LABELS[r.source] ?? r.source}] ${r.title} · ${r.author} · ${r.date}\n${r.text}`)
+      .map((r: { source: string; title: string; author: string; date: string; text: string }, i: number) => `[SOURCE ${i + 1}: ${r.title} · ${r.author} · ${r.date}]\n${r.text}`)
       .join("\n\n---\n\n");
     const isStale = retrieved.length > 0 && retrieved.every((r: { date: string }) => isStaleDate(r.date));
 
@@ -444,14 +456,16 @@ async function main() {
     const totalMs      = Date.now() - start;
 
     // ── 6. Judge answer ──────────────────────────────────────────────────────
-    const sourceTitles = [...new Set(retrieved.map((r: { title: string }) => r.title))];
+    const numberedSources = retrieved.map((r: { title: string }) => r.title);
+    const sourceContents  = retrieved.map((r: { text: string }) => r.text);
+    const sourceTitles    = [...new Set(numberedSources)];
     let llmScores: JudgeScores = { relevance: 1, citationAccuracy: 1, hallucination: 5, intentAdherence: 1, notes: "Judge call failed" };
 
     try {
       const judgeMsg = await claude.messages.create({
         model:      "claude-sonnet-4-6",
-        max_tokens: 300,
-        messages:   [{ role: "user", content: buildJudgePrompt(tc.query, tc.intentExpected, answer, sourceTitles) }],
+        max_tokens: 400,
+        messages:   [{ role: "user", content: buildJudgePrompt(tc.query, tc.intentExpected, answer, sourceTitles, numberedSources, sourceContents) }],
       });
       const raw = (judgeMsg.content[0] as { type: string; text: string }).type === "text"
         ? (judgeMsg.content[0] as { text: string }).text.trim()
