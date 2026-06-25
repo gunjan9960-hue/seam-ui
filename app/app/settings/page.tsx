@@ -31,8 +31,6 @@ function FieldRow({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => { setVal(value); }, [value]);
-
   const handleSave = async () => {
     if (!onSave) { setEditing(false); return; }
     setSaving(true);
@@ -73,12 +71,12 @@ function FieldRow({
         ) : (
           <>
             <span style={{ fontSize: "13px", color: "var(--text-primary)", flex: 1 }}>
-              {val || <span style={{ color: "var(--text-muted)" }}>—</span>}
+              {value || <span style={{ color: "var(--text-muted)" }}>—</span>}
               {saved && <Check size={12} className="inline ml-1" style={{ color: "#10B981" }} />}
             </span>
             {editable && (
               <button
-                onClick={() => setEditing(true)}
+                onClick={() => { setVal(value); setEditing(true); }}
                 style={{ fontSize: "11px", color: "var(--blue)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px" }}
               >
                 Edit

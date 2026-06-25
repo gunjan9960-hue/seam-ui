@@ -225,13 +225,13 @@ export default function PRDCreatorPage() {
 
     const section = stringySections[activeSection];
     if (!section) {
-      setPhase("done");
+      setTimeout(() => setPhase("done"), 0);
       return;
     }
 
     const content = PRD_TEMPLATE[section.key as keyof typeof PRD_TEMPLATE];
     if (typeof content !== "string") {
-      setActiveSection((n) => n + 1);
+      setTimeout(() => setActiveSection((n) => n + 1), 0);
       return;
     }
 

@@ -439,7 +439,7 @@ export default function LandingPage() {
           <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "2px" }} />
         </div>
         <div style={{ display: "flex", gap: "24px" }}>
-          {[["Pricing", "/pricing"], ["Roadmap", "/roadmap"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
+          {[["Pricing", "/pricing"], ["Roadmap", "/roadmap"], ["FAQ", "/faq"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
             <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>

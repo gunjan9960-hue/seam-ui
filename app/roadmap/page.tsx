@@ -239,7 +239,7 @@ export default function RoadmapPage() {
             Product Roadmap
           </p>
           <h1 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 900, color: "var(--text-primary)", letterSpacing: "-1.5px", lineHeight: 1.1, marginBottom: "14px" }}>
-            What we're building — and what's next.
+            What we&apos;re building — and what&apos;s next.
           </h1>
           <p style={{ fontSize: "15px", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "560px", marginBottom: "24px" }}>
             Seam ships fast. Every item here is driven by PMs who told us what slows them down.
@@ -296,7 +296,7 @@ export default function RoadmapPage() {
             Missing something?
           </h3>
           <p style={{ fontSize: "13.5px", color: "var(--text-secondary)", marginBottom: "20px", lineHeight: 1.65 }}>
-            Every item on this roadmap came from a PM request. If a tool you use or a feature you need isn't here — tell us.
+            Every item on this roadmap came from a PM request. If a tool you use or a feature you need isn&apos;t here — tell us.
           </p>
           <a
             href="mailto:hello@getseam.com?subject=Roadmap feedback"

@@ -112,7 +112,7 @@ function OnboardingConnectGuide({
           <div className="flex items-center gap-2.5 mb-2">
             <span style={{ fontSize: "20px" }}>🎉</span>
             <h2 style={{ fontSize: "16px", fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.3px" }}>
-              You're all set!
+              You&apos;re all set!
             </h2>
           </div>
           <p style={{ fontSize: "13px", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "16px" }}>
@@ -215,7 +215,7 @@ function OnboardingConnectGuide({
               textDecoration: "underline",
             }}
           >
-            Skip for now — I'll connect later
+            Skip for now — I&apos;ll connect later
           </button>
         </>
       )}

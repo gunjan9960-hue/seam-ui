@@ -165,13 +165,11 @@ export default function DashboardPage() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
 
-  const [threads, setThreads] = useState<ThreadEntry[]>([]);
+  const [threads] = useState<ThreadEntry[]>(() => loadThreads().slice(0, 5));
   const [userName, setUserName] = useState("");
   const [sources, setSources] = useState<Source[]>([]);
   const [docs, setDocs] = useState<Doc[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => { setThreads(loadThreads().slice(0, 5)); }, []);
 
   useEffect(() => {
     const supabase = createClient();

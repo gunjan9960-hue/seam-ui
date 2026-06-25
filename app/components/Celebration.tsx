@@ -15,18 +15,16 @@ const CONFETTI_COUNT = 36;
 type ConfettiPiece = { color: string; left: number; delay: number; duration: number; size: number; shape: string };
 
 function Confetti() {
-  const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
-
-  useEffect(() => {
-    setPieces(Array.from({ length: CONFETTI_COUNT }, (_, i) => ({
+  const [pieces] = useState<ConfettiPiece[]>(() =>
+    Array.from({ length: CONFETTI_COUNT }, (_, i) => ({
       color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
       left: Math.random() * 100,
       delay: Math.random() * 1.2,
       duration: 2.4 + Math.random() * 1.5,
       size: 6 + Math.random() * 8,
       shape: i % 3 === 0 ? "50%" : "2px",
-    })));
-  }, []);
+    }))
+  );
 
   if (pieces.length === 0) return null;
 
