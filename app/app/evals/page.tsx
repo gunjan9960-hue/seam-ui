@@ -7,6 +7,12 @@ type EvalResult = Record<string, any>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type EvalRun = Record<string, any>;
 
+interface EvalSummary {
+  avgIntentAdherence?: number;
+  passIntentAdherence?: boolean;
+  intentAccuracy?: number;
+}
+
 export const dynamic = "force-dynamic";
 
 function loadRuns(): EvalRun[] {
@@ -114,24 +120,27 @@ export default function EvalsPage() {
           </div>
 
           {/* Metric cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "28px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "28px" }}>
             <MetricCard label="Answer Relevance"   value={`${summary.avgRelevance}`}        unit="/5"  pass={summary.passRelevance}        target={`≥${targets.relevance}`}         />
             <MetricCard label="Citation Accuracy"  value={`${summary.avgCitationAccuracy}`} unit="/5"  pass={summary.passCitationAccuracy}  target={`≥${targets.citationAccuracy}`}  />
             <MetricCard label="Hallucination"      value={`${summary.avgHallucination}`}    unit="/5"  pass={summary.passHallucination}     target={`≥${targets.hallucination}`}     />
+            <MetricCard label="Intent Adherence"   value={`${(summary as EvalSummary).avgIntentAdherence ?? "—"}`} unit="/5" pass={(summary as EvalSummary).passIntentAdherence ?? false} target={`≥${targets.intentAdherence ?? 3.5}`} />
             <MetricCard label="Retrieval Latency"  value={`${summary.avgRetrievalMs}`}      unit="ms"  pass={summary.avgRetrievalMs <= targets.retrievalMs}  target={`<${targets.retrievalMs}ms`} />
             <MetricCard label="Generation Latency" value={`${summary.avgGenerationMs}`}     unit="ms"  pass={summary.avgGenerationMs <= targets.generationMs} target={`<${targets.generationMs}ms`} />
             <MetricCard label="Total Latency"      value={`${summary.avgTotalMs}`}          unit="ms"  pass={summary.passLatency}           target={`<${targets.totalMs}ms`}         />
+            <MetricCard label="Intent Accuracy"    value={`${(summary as EvalSummary).intentAccuracy ?? "—"}`} unit="%" pass={((summary as EvalSummary).intentAccuracy ?? 0) >= 70} target="≥70%" />
           </div>
 
           {/* Results table */}
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", overflow: "hidden" }}>
-            <div style={{ padding: "14px 20px", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "grid", gridTemplateColumns: "32px 1fr 100px 80px 80px 80px 80px 80px", gap: "12px", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            <div style={{ padding: "14px 20px", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "grid", gridTemplateColumns: "32px 1fr 90px 70px 70px 70px 70px 70px 70px", gap: "10px", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
               <span>#</span>
               <span>Query</span>
               <span>Category</span>
               <span>Relevance</span>
               <span>Citation</span>
               <span>Hallucin.</span>
+              <span>Intent</span>
               <span>Total ms</span>
               <span>Flags</span>
             </div>
@@ -143,8 +152,8 @@ export default function EvalsPage() {
                   padding: "12px 20px",
                   borderBottom: "1px solid rgba(255,255,255,0.05)",
                   display: "grid",
-                  gridTemplateColumns: "32px 1fr 100px 80px 80px 80px 80px 80px",
-                  gap: "12px",
+                  gridTemplateColumns: "32px 1fr 90px 70px 70px 70px 70px 70px 70px",
+                  gap: "10px",
                   alignItems: "center",
                   background: r.flags.length > 0 ? "rgba(248,113,113,0.03)" : "transparent",
                 }}
@@ -168,6 +177,7 @@ export default function EvalsPage() {
                 <ScoreBar value={r.llmScores.relevance} />
                 <ScoreBar value={r.llmScores.citationAccuracy} />
                 <ScoreBar value={r.llmScores.hallucination} />
+                <ScoreBar value={r.llmScores.intentAdherence ?? 0} />
 
                 <span style={{ fontSize: "11px", color: r.totalMs > targets.totalMs ? "#F87171" : "rgba(255,255,255,0.5)", fontWeight: r.totalMs > targets.totalMs ? 700 : 400 }}>
                   {r.totalMs}
