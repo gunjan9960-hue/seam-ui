@@ -1790,5 +1790,2998 @@
       "intentAccuracy": 80,
       "overallPass": false
     }
+  },
+  {
+    "version": "v4",
+    "runAt": "2026-06-25T16:25:21.170Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "**Decision owner:** Rahul Sharma | **Date:** 2026-03-22\n\nThe primary reason for choosing the in-house ML model (Option B) over Perspective API (Option C) was that **data privacy requirements from 3 BFSI clients explicitly prohibit sending review content to third parties** — which Perspective API would require. Additionally, the ML team confirmed a 10-week delivery timeline, making the build feasible, while Perspective API carried an ongoing cost of ~₹8L/month at current volume (180K reviews/day)",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 871,
+        "generationMs": 5090,
+        "totalMs": 6095,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses the decision with owner, date, and multi-factor rationale traceable to the Decision Log source; minor hallucination risk on specifics like '3 BFSI clients,' '₹8L/month,' '180K reviews/day,' and '10-week timeline' which cannot be fully verified against listed source titles alone."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": []
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched eval_corpus and could not find this in your connected sources.\n\nThe connected sources contain a **Feature Spec — Seller Response Module** (authored by Ankit Verma, dated 2026-05-02), but there is no document matching **\"Ratings & Reviews API v3.0 PRD\"** — no user stories or success metrics from that document are available.\n\nIf you'd like, I can share details from the Seller Response Module spec instead, or you can check whether the Ratings & Reviews API v3.0 PRD has been connected to ",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Feature Spec — Seller Response Module"
+        ],
+        "isStale": false,
+        "retrievalMs": 932,
+        "generationMs": 3660,
+        "totalMs": 4718,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 3,
+          "notes": "The answer correctly identifies that the requested document is not in the corpus and accurately describes the available source (author Ankit Verma, date 2026-05-02) without inventing any facts, but cannot fulfill the spec_lookup intent since the target document is absent; intentAdherence scores 3 because the existing document is cited with owner and date but no spec details are provided for the actual query."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": []
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.\n\nThe context contains information about a May 2026 outage (INC-2026-041), Q2 retro outcomes, and SMB customer research, but there is no data about enterprise customer complaints specific to Q1 2026.",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 728,
+        "generationMs": 5086,
+        "totalMs": 5934,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 4,
+          "intentAdherence": 1,
+          "notes": "The answer appropriately acknowledges absence of Q1 2026 enterprise complaint data and describes what is available, earning a reasonable relevance score; however, it mentions 'Notion' as a search location which is not supported by the listed source titles, and it fails entirely on intentAdherence as no specific customer, request, or owner is identified."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "Yes, this research exists. It was conducted by **Priya Mehta** across **8 SMB customer interviews in May 2026**, and the findings are documented in Notion under **\"Customer Discovery — SMB Segment.\"**\n\nOn willingness to pay, the research found that the **median acceptable price was ₹8,000–12,000/month**. Notably, **3 of 8 respondents said they would pay immediately at ₹8,000/month**, provided setup took under 30 minutes. This fed directly into a proposed **SMB pricing tier of ₹8K/month** (up to ",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment"
+        ],
+        "isStale": false,
+        "retrievalMs": 677,
+        "generationMs": 4245,
+        "totalMs": 5036,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly addresses the query and meets all research_history criteria, but specific details like Priya Mehta's name, the ₹8,000–12,000/month range, the '3 of 8 respondents' breakdown, the 30-minute setup condition, and the H1 2027 deferral cannot be verified against the source title alone and risk being hallucinated."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 631,
+        "generationMs": 0,
+        "totalMs": 631,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly admits no sources were found and fabricates nothing, earning high marks for accuracy and hallucination, but scores 3 on relevance because no source titles were available to penalise the non-answer further, and 1 on intentAdherence because no rationale, decision-maker, or trade-off is provided."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 525,
+        "generationMs": 0,
+        "totalMs": 525,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, but it fails to surface any stakeholder commitment details required by the intent, warranting a mid relevance score and minimum intentAdherence."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n**Owner:** Neha Gupta | **Version:** 3.2 | **Last updated:** 2026-05-15\n\n---\n\n### Onboarding Phases\n\n- **Phase 1 — Contract to Kickoff (Week 0)**\n  - Sales hands off signed contract + client info sheet to CS\n  - CS creates client workspace in dashboard (admin account)\n  - CS schedules kickoff call within **3 business days**\n\n- **Phase 2 — Technical Integration (Weeks 1–2)**\n  - API credentials + sandbox environment shared with client\n  - Developer docs at",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup"
+        ],
+        "isStale": false,
+        "retrievalMs": 561,
+        "generationMs": 9439,
+        "totalMs": 10109,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and directly addresses the query, but contains multiple unverifiable specifics — including the owner name 'Neha Gupta', version '3.2', the URL 'docs.bazaarvoice.in', CDN domain 'cdn.bazaarvoice.in', exact SLA figures, and the '<2h post-ML launch' target — none of which can be confirmed from the single cited source title, raising significant hallucination concerns."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:9439ms",
+          "total_slow:10109ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 562,
+        "generationMs": 0,
+        "totalMs": 562,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided so the 'not found' response is legitimate and citation/hallucination scores are clean, but the answer earns only a mid relevance score for correctly reporting absence and a minimum intentAdherence score because it provides zero roadmap rationale, decision-maker attribution, or trade-off discussion."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n**Decision Owner:** Karan Singh\n**Date:** 2026-05-18\n**Incident ID:** INC-2026-041 | **Severity:** P1\n\n---\n\n### Root Cause\n\n- A **CDN config change** was deployed at **14:18 IST** (automated deployment)\n- The config set **incorrect cache-control headers**, introducing an **origin path mismatch**\n- The widget JS file returned **404 errors** for **73 minutes** (14:22–15:35 IST)\n- A **19-minute delay** in alerting occurred because t",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Stakeholder Update — Review Syndication Launch"
+        ],
+        "isStale": false,
+        "retrievalMs": 528,
+        "generationMs": 8427,
+        "totalMs": 9111,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 3,
+          "notes": "The answer is highly relevant and names a decision owner with a date, but specific figures (₹4.2 Cr GMV, 73-minute outage window, 19-minute alert delay, 5% threshold, v2.4.x, INC-2026-041, exact ETAs) cannot be verified against the listed source titles and appear potentially hallucinated, and the rationale for each corrective action is implied rather than explicitly stated."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:8427ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI Interview File",
+          "AI PM Playbook",
+          "Prompt Engineering — Master Reference Guide",
+          "Project 2 — Credit Card Fraud Detection"
+        ],
+        "isStale": false,
+        "retrievalMs": 565,
+        "generationMs": 1810,
+        "totalMs": 2533,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly abstains rather than hallucinating, and no false citations are made, but it fails to identify any customer, request detail, or status, and the source titles (AI Interview File, AI PM Playbook, etc.) do not appear to contain the enterprise analytics self-serve roadmap information queried, making the 'not found' response appropriate yet scoring low on intent adherence due to complete absence of required customer_request fields."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 569,
+        "generationMs": 0,
+        "totalMs": 569,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no findings and invents nothing, but since no source titles were provided it cannot be penalised for ignoring available content; however, it completely fails the decision_recall intent by providing no owner, date, or rationale for either decision."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 479,
+        "generationMs": 0,
+        "totalMs": 479,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no results found and invents nothing, but since no source titles were provided it cannot be penalised for relevance on that basis; however, it completely fails the decision_recall intent by providing no decision owner, date, or rationale."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 445,
+        "generationMs": 0,
+        "totalMs": 445,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is technically accurate and not a hallucination, but it fails to fulfill the spec_lookup intent with any document reference, spec details, or owner/date information."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 530,
+        "generationMs": 0,
+        "totalMs": 530,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is accurate and non-hallucinated, but it completely fails the stakeholder_commitment intent by naming no stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1570,
+        "generationMs": 0,
+        "totalMs": 1570,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer is an honest 'not found' response with no invented sources or facts, which is appropriate given empty source titles, but it provides zero roadmap rationale, no decision-maker, and no trade-off analysis as required by the intent."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1337,
+        "generationMs": 0,
+        "totalMs": 1337,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is appropriate and contains no invented facts, but it fully fails the spec_lookup intent by providing no document reference, spec details, or metadata."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 516,
+        "generationMs": 0,
+        "totalMs": 516,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found and invents nothing, earning high marks for accuracy and hallucination, but scores mid on relevance (a transparent not-found is acceptable given empty source titles) and 1 on intentAdherence because it provides none of the required decision_recall elements: no owner, no date, no rationale."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1020,
+        "generationMs": 0,
+        "totalMs": 1020,
+        "llmScores": {
+          "relevance": 1,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer is a non-answer citing no available sources, which is appropriate given empty source titles, so no hallucination or citation issues, but it completely fails to address the roadmap rationale intent."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "low_relevance:1",
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Orientation Overview\n\n---\n\n### 🧩 What We Do (Products)\n\n**Core Platform**\n- Review collection, moderation, and display for brands\n- Widget embed on client storefronts (staging + production)\n- Email review request campaigns\n\n**Key Product Features (Current & Launching)**\n- **Attribute-level ratings** — GA launched **June 15, 2026** (Owner: **Priya Mehta**)\n- **Review Insights API** — beta launching in **August–October 2026**; provides sentiment + trend data\n- **Sell",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 638,
+        "generationMs": 14273,
+        "totalMs": 15068,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured and multi-dimensional, directly addressing products, strategy, and market position, but several specific claims (e.g., exact pricing figures like ₹1.5L/month, named beta clients HDFC Bank and L'Oreal India, the July 30 legal review ETA, and the 'only platform' self-serve analytics claim) cannot be verified against the listed source titles and risk being hallucinated or over-specified beyond what the sources confirm."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:14273ms",
+          "total_slow:15068ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 607,
+        "generationMs": 0,
+        "totalMs": 607,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no findings across connected sources and invents nothing, but because no source titles were provided there is no evidence the information was available, making the non-answer acceptable on relevance/citation/hallucination yet completely failing the customer_request intent which requires a named customer, specific request, and status/owner."
+        },
+        "runAt": "2026-06-25T16:25:21.170Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 3.5,
+      "avgCitationAccuracy": 4.55,
+      "avgHallucination": 4.4,
+      "avgIntentAdherence": 2,
+      "avgRetrievalMs": 715,
+      "avgGenerationMs": 2602,
+      "avgTotalMs": 3370,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passIntentAdherence": false,
+      "passLatency": true,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v5",
+    "runAt": "2026-06-25T16:30:45.039Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "On **2026-03-22**, the team chose **Option B (in-house ML)** over Perspective API (Option C) primarily because **data privacy requirements from 3 BFSI clients prohibit sending review content to third parties** — which Perspective API would have required. Additionally, the in-house ML model demonstrated a **4% false positive rate in POC**, outperforming Perspective API's 6%, and the ML team confirmed a **10-week delivery timeline**, making it a viable build. Perspective API also carried a recurri",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 602,
+        "generationMs": 6816,
+        "totalMs": 7577,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the decision with owner, date, and specific rationale; citation to 'Decision Log — Moderation Pipeline Architecture' is appropriate, though the specific figures (₹8L/month, exact false positive rates, 10-week timeline) cannot be independently verified against the listed source titles without access to the documents, introducing minor hallucination risk."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "generation_slow:6816ms"
+        ]
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched eval_corpus and could not find this in your connected sources.\n\nThe connected source contains the **Feature Spec — Seller Response Module**, not a \"Ratings & Reviews API v3.0 PRD.\" There is no document matching that title, and no user stories are present in any retrieved document.\n\n---\n\n**Document**: Feature Spec — Seller Response Module\n**Owner**: Ankit Verma\n**Last updated**: 2026-05-02",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Feature Spec — Seller Response Module"
+        ],
+        "isStale": false,
+        "retrievalMs": 546,
+        "generationMs": 4329,
+        "totalMs": 5030,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 3,
+          "notes": "The answer correctly identifies that the requested PRD is not in the available sources and accurately describes what is present without inventing information, but scores mid-range on relevance and intentAdherence because the queried document genuinely does not exist in the corpus — the system appropriately declines rather than fabricating spec details, yet cannot fulfill the spec_lookup intent."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": []
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.\n\nThe connected context does not contain any data specifically about top enterprise customer complaints from Q1 2026. The documents reference a P1 outage incident from May 2026 (Q2), SMB feedback from a research session, and Q3 planning notes, but no Q1 2026 enterprise complaint data is present.\n\n**Customer**: N/A\n**Request / issue**: N/A — Q1 2026 enterprise complaint data not found in connected sources\n**Status**: N/A\n**Owner*",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 630,
+        "generationMs": 3872,
+        "totalMs": 4992,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 1,
+          "notes": "The answer appropriately flags that Q1 2026 enterprise complaint data is absent and accurately references what is present in the sources, but it fails entirely on intent adherence since no customer is identified and no request/status/owner can be surfaced, which is structurally required for customer_request intent."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price was **₹8,000–12,000/month**. Notably, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes. This research was conducted by **Priya Mehta** across 8 interviews in **May 2026**, and the findings live in the Notion document titled *Customer Discovery — SMB Segment*.\n\n---\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Median acceptable p",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment"
+        ],
+        "isStale": false,
+        "retrievalMs": 548,
+        "generationMs": 4032,
+        "totalMs": 4733,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses the query with all required research_history fields (existence, author, date, key finding) correctly attributed to the listed source; minor hallucination risk on specific details like '3 of 8 respondents' and 'under 30 minutes' which cannot be verified against the source titles alone but are plausible and internally consistent."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": []
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 574,
+        "generationMs": 0,
+        "totalMs": 575,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports no sources were found (no hallucination, no false citations), but provides zero rationale, decision-maker, or trade-off information required by the roadmap_rationale intent; relevance is mid because an honest 'not found' is appropriate when sources are empty, but it fully fails the intent-specific requirements."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 577,
+        "generationMs": 0,
+        "totalMs": 577,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is legitimate and citation accuracy/hallucination scores are clean, but the answer fails entirely on intent adherence by naming no stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n**Owner:** Neha Gupta | Version 3.2 | Last updated: 2026-05-15\n\n---\n\n### Phases & Timelines\n\n- **Week 0 — Contract to Kickoff**\n  - Sales hands off signed contract + client info sheet to CS\n  - CS creates client workspace (admin account) in dashboard\n  - CS schedules kickoff call within **3 business days**\n\n- **Weeks 1–2 — Technical Integration**\n  - API credentials + sandbox environment shared with client\n  - Developer docs at **docs.bazaarvoice.in**\n  -",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup"
+        ],
+        "isStale": false,
+        "retrievalMs": 430,
+        "generationMs": 10113,
+        "totalMs": 10683,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer is well-structured and comprehensively addresses onboarding phases and SLAs, but contains several potentially hallucinated specifics — including the owner name 'Neha Gupta', version '3.2', date '2026-05-15', domain references like 'docs.bazaarvoice.in' and 'cdn.bazaarvoice.in', and the '<2h post-ML launch' SLA target — none of which can be verified against the single generic source title provided, lowering citationAccuracy and hallucination scores significantly."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:10113ms",
+          "total_slow:10683ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 543,
+        "generationMs": 0,
+        "totalMs": 543,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports inability to find the information and invents nothing, but scores 3 on relevance (not 1) because no source titles were provided indicating the information was available; intentAdherence is 1 as no rationale, decision-maker, or trade-off is provided."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n---\n\n### Root Cause\n\n- A **CDN config change** was deployed at **14:18 IST** on **May 18, 2026**\n- The change set **incorrect cache-control headers**, causing an **origin path mismatch**\n- The widget JS file returned **404 errors** for **73 minutes** (14:22–15:35 IST)\n- A **PagerDuty alert delay of 19 minutes** worsened response time — the alert threshold was set too high (**5% 404 rate**), so the alert didn't fire until **14:41*",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Stakeholder Update — Review Syndication Launch"
+        ],
+        "isStale": false,
+        "retrievalMs": 472,
+        "generationMs": 11028,
+        "totalMs": 11612,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses root cause and corrective actions with owner, date, and rationale, but the highly specific figures (₹4.2Cr GMV, 73 minutes, 19-minute alert delay, 14 enterprise clients, exact IST timestamps, PagerDuty threshold values, widget v2.4.x, June 1/June 15 ETAs) cannot be verified against the listed source titles and carry a significant hallucination risk, while the parenthetical 'eval_corpus' citation method is non-standard and raises traceability concerns."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:11028ms",
+          "total_slow:11612ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.\n\nThe connected Notion pages cover AI interview preparation notes, an AI PM playbook, prompt engineering techniques, and a fraud detection project. None of them contain information about an enterprise customer, customer feedback driving an analytics self-serve roadmap item, or any related spec.\n\n**Customer**: Not found\n**Request / issue**: Not found\n**Status**: Not found\n**Owner**: Not found",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI Interview File",
+          "AI PM Playbook",
+          "Prompt Engineering — Master Reference Guide",
+          "Project 2 — Credit Card Fraud Detection"
+        ],
+        "isStale": false,
+        "retrievalMs": 595,
+        "generationMs": 5242,
+        "totalMs": 5954,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly identifies that the required information is absent from the available sources and accurately describes those sources without inventing content, but it fails to satisfy the customer_request intent since no customer, request, status, or owner could be identified."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 732,
+        "generationMs": 0,
+        "totalMs": 732,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found (no hallucination, no false citations), but because no source titles were provided the 'not found' response is legitimate; however it completely fails the decision_recall intent by providing no owner, date, or rationale for either decision."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 988,
+        "generationMs": 0,
+        "totalMs": 988,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no information found and invents nothing, but it completely fails the decision_recall intent by providing no decision owner, date, or rationale for any pricing decision."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 929,
+        "generationMs": 0,
+        "totalMs": 929,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is legitimate and contains no hallucinations or citation errors, but it fails spec_lookup intent requirements as no document, spec details, owner, or date are cited."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 447,
+        "generationMs": 0,
+        "totalMs": 447,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is accurate and non-hallucinated, but it entirely fails the stakeholder_commitment intent by naming no stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 502,
+        "generationMs": 0,
+        "totalMs": 502,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found (no hallucination, no false citations), but since source titles are empty this is appropriate; however it provides zero roadmap rationale, no decision-maker, and no trade-off, failing the intent-specific requirements entirely."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 424,
+        "generationMs": 0,
+        "totalMs": 424,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, but it completely fails the spec_lookup intent by providing no document reference, spec details, owner, or date."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 682,
+        "generationMs": 0,
+        "totalMs": 682,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no results found across connected sources (no hallucination, no false citations), but since no source titles were provided it cannot be penalised for ignoring available content; however, it entirely fails the decision_recall intent by providing no decision owner, date, or rationale."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 611,
+        "generationMs": 0,
+        "totalMs": 611,
+        "llmScores": {
+          "relevance": 1,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer is a non-answer with no source titles provided to draw from, so citation accuracy and hallucination scores are maximal by default, but it completely fails to address the roadmap rationale or any aspect of the query."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "low_relevance:1",
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Orientation Brief\n\n---\n\n## 🧭 What We Do\n\n- **Core product:** A review management platform for brands — collects, moderates, and displays customer reviews\n- **Key capabilities:**\n  - Review collection via widgets and email campaigns\n  - ML-powered moderation pipeline\n  - Review syndication (collected once, displayed across brand.com + marketplaces)\n  - **Review Intelligence Dashboard** — self-serve sentiment analytics (described as the only such platform in India)\n ",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 477,
+        "generationMs": 13090,
+        "totalMs": 13689,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured and multi-dimensional with owners, dates, and quantitative context drawn plausibly from the listed sources, but specific claims like 'only platform in India,' the '48h market standard,' the Flipkart/JioMart deal statuses, and the IT Act compliance ETA of July 30 cannot be verified against the provided source titles and risk being hallucinated or over-specified; the answer also cuts off mid-section on pricing, suggesting truncation."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:13090ms",
+          "total_slow:13689ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 566,
+        "generationMs": 0,
+        "totalMs": 567,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports no results from searched sources (no citation fabrication, no hallucination), but since no source titles were provided it cannot be penalised for missing information; however, it completely fails the customer_request intent by identifying no customer, no specific request, and no status or owner."
+        },
+        "runAt": "2026-06-25T16:30:45.039Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 3.45,
+      "avgCitationAccuracy": 4.65,
+      "avgHallucination": 4.45,
+      "avgIntentAdherence": 2.1,
+      "avgRetrievalMs": 594,
+      "avgGenerationMs": 2926,
+      "avgTotalMs": 3592,
+      "passRelevance": false,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passIntentAdherence": false,
+      "passLatency": true,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v6",
+    "runAt": "2026-06-25T16:35:22.623Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "On **2026-03-22**, the team chose the in-house ML model (Option B) over Perspective API (Option C) primarily because **data privacy requirements from 3 BFSI clients explicitly prohibit sending review content to third parties** — which ruled out Perspective API. Additionally, the ML team confirmed a **10-week delivery timeline**, making the build feasible, with Perspective API retained as a fallback during that build period.\n\n**Decision owner**: Rahul Sharma (Decision Log owner)\n**Date decided**:",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 883,
+        "generationMs": 5022,
+        "totalMs": 6030,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer directly addresses the decision with all three required elements (owner, date, rationale); citationAccuracy docked slightly because the answer cannot be independently verified against source content, and the specific '3 BFSI clients' detail and '10-week timeline' figures could be fabricated though plausible given the Decision Log source title."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": []
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 600,
+        "generationMs": 0,
+        "totalMs": 601,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, but it completely fails to address the spec_lookup intent with any document citation, spec details, or owner/date information."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.\n\nThe context provided does not contain any specific documentation of enterprise customer complaints from Q1 2026. The incident report (INC-2026-041) references a P1 outage in May 2026 (Q2), and the SMB interview data captures pricing and usability feedback, but neither is attributed to enterprise customers in Q1 2026 specifically.\n\n**Customer**: Not specified in sources\n**Request / issue**: No Q1 2026 enterprise complaint data ",
+        "sourceCount": 3,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 665,
+        "generationMs": 4010,
+        "totalMs": 4833,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 1,
+          "notes": "The answer appropriately acknowledges missing Q1 2026 enterprise data and accurately references INC-2026-041 and SMB interview data without fabricating complaints, but fails entirely on intent adherence by identifying no specific customer, request, or owner as required for customer_request intent."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price among the 8 interviewees was **₹8,000–12,000/month**. Notably, 3 of the 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes. A pain point directly tied to pricing was also clear: 7 of 8 respondents stated they could not afford ₹2L/month for a tool their team uses only 30 minutes a week.\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Medi",
+        "sourceCount": 2,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment"
+        ],
+        "isStale": false,
+        "retrievalMs": 675,
+        "generationMs": 4630,
+        "totalMs": 5798,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query and meets all intent requirements (existence, author, date, key findings), but specific figures like '3 of 8,' '7 of 8,' '₹2L/month,' and the exact date 'May 2026' cannot be verified against the source title alone and risk being hallucinated details, warranting a reduced hallucination score."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 558,
+        "generationMs": 0,
+        "totalMs": 558,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is appropriate and honest with no hallucination or citation issues, but it completely fails to address the roadmap rationale intent, providing zero explanation of why, who, or what trade-offs were involved."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 472,
+        "generationMs": 0,
+        "totalMs": 472,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is plausible and contains no hallucinations or false citations, but it entirely fails to address the stakeholder commitment intent with no named stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 529,
+        "generationMs": 0,
+        "totalMs": 529,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and citation-accurate with no hallucination, but it completely fails the onboarding intent by providing no structured, multi-dimensional, or quantitative content to orient a new PM."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 487,
+        "generationMs": 0,
+        "totalMs": 487,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found (earning high hallucination and citation scores), but because no source titles were provided it cannot be penalised for a missed retrieval; however, it completely fails the roadmap_rationale intent by offering no OKR status, themes, rationale, decision-makers, or trade-offs."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n*(Incident ID: **INC-2026-041** | Severity: **P1** | Reported by: **Karan Singh**)*\n\n---\n\n### Root Cause\n\n- A **CDN config change deployed at 14:18 IST** set **incorrect cache-control headers**\n- This introduced an **origin path mismatch** in the config diff\n- As a result, the **widget JS file returned 404 errors** for **73 minutes** (14:22–15:35 IST)\n- All **Enterprise clients on JS widget v2.4.x** were affected — reviews showed",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 498,
+        "generationMs": 9760,
+        "totalMs": 10416,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 4,
+          "notes": "The answer is highly relevant and covers decision owner, date, and rationale well, but specific figures like ₹4.2Cr GMV impact, the 73-minute window, 14 enterprise clients, INC-2026-041, and precise timestamps cannot be verified against the vague source titles provided, raising significant hallucination risk for a P1 incident report that may or may not contain those exact details."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:9760ms",
+          "total_slow:10416ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched eval_corpus, Notion and could not find this in your connected sources.\n\nThe connected context contains a Sprint Retro note (Q3 Sprint 6) and an AI Interview File — neither document mentions enterprise customer feedback, an analytics self-serve roadmap item, or any related spec.\n\n---\n\n**Customer**: Not found in connected sources\n**Request / issue**: Not found in connected sources\n**Status**: Not found in connected sources\n**Owner**: Not found in connected sources",
+        "sourceCount": 2,
+        "sourceTitles": [
+          "Sprint Retro — Q3 Sprint 6",
+          "AI Interview File"
+        ],
+        "isStale": false,
+        "retrievalMs": 1019,
+        "generationMs": 3002,
+        "totalMs": 4179,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly identifies that the two available source documents do not contain the requested information and makes no unsupported claims, but because the customer, request details, and status are entirely absent, intentAdherence scores 1."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 612,
+        "generationMs": 0,
+        "totalMs": 612,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found and invents nothing, but since no source titles were provided it cannot be penalised for missing content; however it entirely fails the decision_recall intent by providing no owner, date, or rationale for either decision."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 970,
+        "generationMs": 0,
+        "totalMs": 971,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no results found across connected sources (no fabrication, no misattribution), but it entirely fails the decision_recall intent by providing no decision owner, date, or rationale regarding pricing."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 461,
+        "generationMs": 0,
+        "totalMs": 461,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, but it fails to fulfill the spec_lookup intent with any document reference, spec details, or owner/date information."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 481,
+        "generationMs": 0,
+        "totalMs": 481,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is accurate and non-hallucinated, but it completely fails to address stakeholder commitment details required by the intent."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 470,
+        "generationMs": 0,
+        "totalMs": 470,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports no sources were found (no hallucination, no false citations), but since source titles are empty it earns a middle relevance score rather than 1; it provides zero roadmap rationale, decision-maker, or trade-off as required by the intent."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 585,
+        "generationMs": 0,
+        "totalMs": 585,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is appropriate and introduces no hallucinations or false citations, but it completely fails the spec_lookup intent by providing no document reference, spec details, or owner/date information."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 525,
+        "generationMs": 0,
+        "totalMs": 525,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no relevant sources were found (no hallucination, no false citations), but it completely fails the decision_recall intent by providing none of the required elements — no decision owner, no date, and no rationale — and only marginally addresses relevance by acknowledging the search was conducted."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape & H2 2026 Roadmap Priorities\n\n### Identified Competitive Risks (as documented)\n\n- **Yotpo entering India** with aggressive pricing — assessed as **probability: medium, impact: high**\n- **Google launching product-level reviews on Search** — assessed as **probability: low, impact: very high**\n\n---\n\n### H2 2026 Roadmap Priorities (as documented)\n\n- **Platform reliability**\n- **Enterprise depth** — specifically: SSO, Insights API, Seller Response\n\n---\n\n### What the Context E",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 608,
+        "generationMs": 9945,
+        "totalMs": 10647,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 3,
+          "notes": "The answer accurately surfaces the documented facts and correctly flags the absence of an explicit causal link rather than fabricating one; it names the decision-maker (Priya Mehta) and provides competitive risk details, but scores 3 on intentAdherence because no trade-off or opportunity cost is documented and the answer cannot supply the causal 'why' the query requires."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "generation_slow:9945ms",
+          "total_slow:10647ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Onboarding Overview\n\n---\n\n## 🧭 What We Do\n\n- A **review management platform** for brands in India — collecting, moderating, and displaying customer reviews\n- Core capabilities:\n  - **Review collection** via widgets and email campaigns\n  - **Moderation pipeline** (ML-powered, targeting **<2h** turnaround vs. **48h** market standard)\n  - **Review syndication** — collected once, displayed across brand.com + marketplaces\n  - **Review Intelligence Dashboard** — self-ser",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 718,
+        "generationMs": 13790,
+        "totalMs": 14660,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer is highly structured and multi-dimensional, covering products, strategy, roadmap, and pricing with specific numbers and owners traceable to the listed sources; minor hallucination risk exists on granular claims (e.g., HDFC Bank/L'Oreal Okta detail, exact GMV threshold) that cannot be fully verified without seeing source content, and the answer cuts off mid-sentence on pricing."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "generation_slow:13790ms",
+          "total_slow:14660ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1411,
+        "generationMs": 0,
+        "totalMs": 1411,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer appropriately returns a not-found response with no invented facts, and since source titles are empty the citation accuracy and hallucination scores are maximized; however, relevance is middling (not penalized to 1 since no sources were available) and intentAdherence is 1 because no customer name, specific request, or status/owner is identified."
+        },
+        "runAt": "2026-06-25T16:35:22.623Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 3.5,
+      "avgCitationAccuracy": 4.65,
+      "avgHallucination": 4.6,
+      "avgIntentAdherence": 1.85,
+      "avgRetrievalMs": 661,
+      "avgGenerationMs": 2508,
+      "avgTotalMs": 3236,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passIntentAdherence": false,
+      "passLatency": true,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v7",
+    "runAt": "2026-06-25T16:39:21.747Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "The decision to choose in-house ML (Option B) over the Perspective API (Option C) was made on **2026-03-22** by **Rahul Sharma**. The primary rationale was that data privacy requirements from **3 BFSI clients explicitly prohibit sending review content to third parties**, which ruled out Perspective API since it routes data to Google. Additionally, the ML team confirmed a **10-week delivery timeline**, making the in-house build a viable alternative, with Perspective API retained only as a fallbac",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 738,
+        "generationMs": 5954,
+        "totalMs": 6823,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the decision recall query with owner, date, and detailed rationale traceable to the Decision Log source; the 4% vs 6% false positive rates and 10-week timeline are plausible but cannot be fully verified without seeing the actual document content, introducing minor hallucination risk."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": []
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 559,
+        "generationMs": 0,
+        "totalMs": 560,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, but it fails to retrieve or cite any spec details, document owner, or last-updated date, making it useless for the spec_lookup intent."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion and could not find this in your connected sources.\n\nThe context does not contain any record of enterprise customer complaints from Q1 2026. The incident report (INC-2026-041) covers a May 2026 outage, and the SMB research references pain points, but neither is attributed to Q1 2026 enterprise complaints specifically.\n\n**Customer**: Not specified in sources\n**Request / issue**: Not specified in sources\n**Status**: Not specified in sources\n**Owner**: Not specified in sources",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 565,
+        "generationMs": 5286,
+        "totalMs": 6006,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly acknowledges the information gap and accurately references real source titles without inventing facts, but it fails to identify any customer by name or provide any specifics required by the customer_request intent, earning a 1 for intentAdherence; relevance scores 3 because the 'not found' response is appropriate given the sources genuinely lack Q1 2026 enterprise complaint data."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price point is **₹8,000–12,000/month**. Notably, 3 of the 8 respondents said they would pay immediately at ₹8,000/month if setup could be completed in under 30 minutes. This research was conducted by **Priya Mehta** across 8 interviews in **May 2026**, and the findings are documented in both eval_corpus and Notion.\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Median acceptable pric",
+        "sourceCount": 2,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment"
+        ],
+        "isStale": false,
+        "retrievalMs": 532,
+        "generationMs": 4088,
+        "totalMs": 4778,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query and meets all research_history intent requirements, but specific details like Priya Mehta's name, May 2026 date, and the '8 interviews' count cannot be verified from the source title alone, raising hallucination concerns despite correct citation of the source document."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 532,
+        "generationMs": 0,
+        "totalMs": 532,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly admits no sources were found and invents nothing, earning full marks on accuracy and hallucination, but provides zero rationale, decision-maker, or trade-off information, failing the roadmap_rationale intent entirely; relevance is mid-range because the honest 'not found' response is appropriate given empty source titles."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 509,
+        "generationMs": 0,
+        "totalMs": 510,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is legitimate and contains no hallucinations or false citations, but it fully fails the stakeholder_commitment intent by naming no stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 512,
+        "generationMs": 0,
+        "totalMs": 512,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is honest and non-hallucinated, earning full marks on citation accuracy and hallucination, but it completely fails to address the onboarding query with any structure, dimensions, or quantitative context, warranting a 1 on intentAdherence and a middle relevance score since the absence of sources justifies the non-answer."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 635,
+        "generationMs": 0,
+        "totalMs": 635,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly admits no information was found and invents nothing, earning full marks on citation accuracy and hallucination; relevance is mid-range (3) because the 'not found' response is appropriate given empty source titles, but it fails entirely on intentAdherence as no rationale, decision-maker, or trade-off is provided."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Root Cause & Corrective Actions\n\n**Incident ID:** INC-2026-041 | **Severity:** P1 | **Date:** 2026-05-18\n\n---\n\n### Root Cause\n\n- A **CDN config change deployed at 14:18 IST** set **incorrect cache-control headers**\n- This introduced an **origin path mismatch** in the config diff\n- As a result, the **widget JS file returned 404 errors** for **73 minutes** (14:22–15:35 IST)\n- All **Enterprise clients using JS widget v2.4.x** were affected — reviews showed as blank",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 729,
+        "generationMs": 8934,
+        "totalMs": 9843,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 4,
+          "notes": "The answer thoroughly addresses the query with plausible specifics, but highly precise figures (₹4.2 Cr GMV, 14 clients, 73 minutes, exact IST timestamps, 'Karan Singh') cannot be verified against the listed source titles and likely represent hallucinated or confabulated details, lowering hallucination and citation accuracy scores; intentAdherence is near-complete with owner, date, and rationale all present though owner's role is unconfirmed."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:8934ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched eval_corpus, Notion and could not find this in your connected sources.\n\nThere is no information in the provided context about an enterprise customer driving an analytics self-serve roadmap item, nor any associated spec or customer feedback tied to that initiative.\n\n---\n\n**Customer**: Not found\n**Request / issue**: Not found\n**Status**: Not found\n**Owner**: Not found",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Sprint Retro — Q3 Sprint 6",
+          "AI Interview File",
+          "AI PM Playbook",
+          "Prompt Engineering — Master Reference Guide",
+          "Project 2 — Credit Card Fraud Detection"
+        ],
+        "isStale": false,
+        "retrievalMs": 713,
+        "generationMs": 2600,
+        "totalMs": 3472,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly acknowledges no matching information was found and invents nothing, but the source titles (particularly Sprint Retro Q3 Sprint 6 and AI Interview File) plausibly could contain roadmap and customer feedback details, so a 'not found' response may reflect retrieval failure rather than true absence, and the intent-specific fields (customer name, request, status, owner) are entirely unresolved."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1525,
+        "generationMs": 0,
+        "totalMs": 1525,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports no sources were found (no hallucination, no false citations), but because no source titles were provided the 'not found' response is appropriate for relevance; however it completely fails the decision_recall intent by providing no owner, date, or rationale for either decision."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 1391,
+        "generationMs": 0,
+        "totalMs": 1391,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no relevant sources were found (no hallucination, no false citations), but a 'not found' response inherently fails to provide the decision owner, date, or rationale required for decision_recall intent, warranting low intentAdherence and mid relevance."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The **AI PM Playbook** documents two API changes for the Seller Response module. A new endpoint `POST /reviews/{id}/response` accepts a body of `{ text: string, notify_reviewer: boolean }`, and the existing `GET /reviews/{id}` endpoint has been updated so its response object now includes a `response` field if one exists.\n\n**Document**: AI PM Playbook\n**Owner**: Not specified in the source\n**Last updated**: 2026-06-24",
+        "sourceCount": 2,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 515,
+        "generationMs": 3650,
+        "totalMs": 4321,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 3,
+          "notes": "The answer cites the correct document title and provides specific endpoint details, but the precise API spec details (endpoint paths, field names, notify_reviewer boolean) cannot be verified against the vague source title 'AI PM Playbook | Seam Test Data — BazaarVoice Synthetic' and appear likely fabricated, and the owner is acknowledged as missing which lowers intentAdherence."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "hallucination_risk:2"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 627,
+        "generationMs": 0,
+        "totalMs": 627,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' answer is appropriately honest and invents nothing, but it completely fails the stakeholder_commitment intent by naming no stakeholders, commitments, or deadlines."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 487,
+        "generationMs": 0,
+        "totalMs": 487,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer correctly reports no sources were found (no hallucination, no false citations), but since source titles are empty this is an appropriate non-answer; however it provides zero roadmap rationale, decision-maker, or trade-off information, failing the intent-specific requirements entirely."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 454,
+        "generationMs": 0,
+        "totalMs": 455,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "No source titles were provided, so the 'not found' response is appropriate and contains no invented facts, but it completely fails the spec_lookup intent by providing no document reference, spec details, owner, or date."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 488,
+        "generationMs": 0,
+        "totalMs": 488,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no sources were found (no hallucination, no citation issues), but scores mid on relevance because no source titles were provided so 'not found' is a legitimate response, yet it completely fails intentAdherence by providing none of the required decision_recall elements: no decision owner, no date, and no rationale."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape & H2 2026 Roadmap Priorities\n\n### Identified Competitive Risks (per **Priya Mehta**, **2026-06-01**)\n\n- **Yotpo entering India** with aggressive pricing\n  - Probability: **medium**\n  - Impact: **high**\n- **Google launching product-level reviews on Search**\n  - Probability: **low**\n  - Impact: **very high**\n\n### H2 2026 Roadmap Priorities\n\n- **Platform reliability**\n- **Enterprise depth**, specifically: **SSO, Insights API, Seller Response**\n\n---\n\n### Connection Between t",
+        "sourceCount": 1,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 537,
+        "generationMs": 7646,
+        "totalMs": 8338,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 2,
+          "notes": "The answer accurately surfaces both competitive risks and H2 priorities from the source and correctly names Priya Mehta, but scores low on intentAdherence because it explicitly admits no causal link is stated and provides no WHY reasoning or trade-offs, reducing utility for a roadmap_rationale query even though the transparency about limits is epistemically honest."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:2",
+          "generation_slow:7646ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Orientation Brief\n\n---\n\n## 🧭 What We Do\n\n- **Core product:** A review management platform for brands — collects, moderates, and displays product reviews\n- **Key capabilities:**\n  - Review collection via widgets and email campaigns\n  - ML-powered moderation pipeline\n  - Review syndication (reviews collected once, displayed across brand.com + marketplaces)\n  - **Review Intelligence Dashboard** — described as the only platform in India with self-serve sentiment analyt",
+        "sourceCount": 4,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 655,
+        "generationMs": 14573,
+        "totalMs": 15387,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured, multi-dimensional, and rich with owners, dates, and numbers drawn from the listed source titles; minor hallucination risk exists where the answer is cut off mid-sentence on pricing (Option B details unverifiable) and a few specific claims (e.g., '48h market standard,' 'only platform in India') cannot be confirmed as sourced vs. inferred, slightly reducing citationAccuracy and hallucination scores."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "generation_slow:14573ms",
+          "total_slow:15387ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "I searched Notion, Jira, Slack and could not find this in your connected sources.",
+        "sourceCount": 0,
+        "sourceTitles": [],
+        "isStale": false,
+        "retrievalMs": 560,
+        "generationMs": 0,
+        "totalMs": 561,
+        "llmScores": {
+          "relevance": 3,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 1,
+          "notes": "The answer honestly reports no findings across connected sources with no invented facts, but since no source titles were provided it cannot be penalized for missing citations; however, it completely fails the customer_request intent by not identifying any customer, request, or status."
+        },
+        "runAt": "2026-06-25T16:39:21.747Z",
+        "flags": [
+          "weak_intent_adherence:1"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 3.5,
+      "avgCitationAccuracy": 4.5,
+      "avgHallucination": 4.5,
+      "avgIntentAdherence": 1.9,
+      "avgRetrievalMs": 663,
+      "avgGenerationMs": 2637,
+      "avgTotalMs": 3363,
+      "passRelevance": true,
+      "passCitationAccuracy": true,
+      "passHallucination": true,
+      "passIntentAdherence": false,
+      "passLatency": true,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
+  },
+  {
+    "version": "v8",
+    "runAt": "2026-06-25T16:48:20.568Z",
+    "targets": {
+      "relevance": 3.5,
+      "citationAccuracy": 4,
+      "hallucination": 4,
+      "intentAdherence": 3.5,
+      "retrievalMs": 4000,
+      "generationMs": 6000,
+      "totalMs": 10000
+    },
+    "results": [
+      {
+        "id": 1,
+        "query": "Why did we choose in-house ML over Perspective API for moderation?",
+        "category": "A-single-intent",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "On **2026-03-22**, the team chose Option B (in-house ML) over Option C (Perspective API) primarily because **data privacy requirements from 3 BFSI clients prohibit sending review content to third parties** — which Perspective API would require. Additionally, the ML team confirmed a 10-week delivery timeline, making the build feasible, while Perspective API carried an ongoing cost of ~₹8L/month at current volume.\n\n**Decision owner**: Rahul Sharma (Decision Log owner)\n**Date decided**: 2026-03-22\n",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 7441,
+        "generationMs": 4881,
+        "totalMs": 12496,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses the decision with all three required elements (owner, date, rationale); citationAccuracy docked slightly because specific figures like ₹8L/month cannot be independently verified against the listed source titles, and hallucination docked one point for the same unverifiable cost figure that may be an inference or fabrication."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "total_slow:12496ms"
+        ]
+      },
+      {
+        "id": 2,
+        "query": "What are the user stories and success metrics in the Ratings & Reviews API v3.0 PRD?",
+        "category": "A-single-intent",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "## PRD — Ratings & Reviews API v3.0: User Stories & Success Metrics\n\n---\n\n### 👤 User Stories\n\n- As a **brand admin**, I can configure up to **8 custom rating attributes** per product category.\n- As an **end user**, I can rate a product on individual attributes during review submission.\n- As a **developer**, I can query attribute-level aggregates via **`GET /reviews/aggregate?attributes=true`**.\n\n---\n\n### 📊 Success Metrics\n\n- **Review submission rate**: **+15%** (attribute ratings increase enga",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4443,
+        "generationMs": 3729,
+        "totalMs": 8327,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "The answer directly addresses user stories and success metrics with specific details and cites the correct document title with owner and date, but the specific numbers (8 attributes, 15%, 80%, 60 days, 3 contracts, 90 days) and the endpoint path cannot be verified against the listed source titles, raising hallucination and citation accuracy concerns."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3"
+        ]
+      },
+      {
+        "id": 3,
+        "query": "What were the top enterprise customer complaints in Q1 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "The top three enterprise complaints in Q1 2026, compiled from 14 QBRs by Neha Gupta on 2026-04-05, were: (1) **slow moderation** — cited by 9 of 14 clients, with Mamaearth noting reviews submitted Monday didn't appear until Thursday, and Boat flagging same-day availability on competitor platforms; (2) **lack of analytics self-serve** — cited by 7 of 14 clients, with L'Oreal India manually emailing for weekly reports and Himalaya unable to track rating trends without calling the team; and (3) **A",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 3139,
+        "generationMs": 9454,
+        "totalMs": 12748,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer comprehensively addresses the query with strong intent adherence, but specific granular details (Neha Gupta's name, exact QBR count of 14, the 18h lag figure, Priya Mehta's OKR reference 'KR2.3', and the June start date for the technical writer) cannot be verified against the listed source titles and risk being hallucinated or cross-contaminated from the Q3 OKRs source, warranting a hallucination penalty."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9454ms",
+          "total_slow:12748ms"
+        ]
+      },
+      {
+        "id": 4,
+        "query": "What did the SMB customer discovery research find about willingness to pay?",
+        "category": "A-single-intent",
+        "intentExpected": "research_history",
+        "intentDetected": "research_history",
+        "intentCorrect": true,
+        "answer": "The SMB customer discovery research found that the median acceptable price was ₹8,000–12,000/month. Notably, 3 of 8 respondents said they would pay immediately at ₹8,000/month if setup took under 30 minutes. Additionally, 7 of 8 respondents cited cost as a pain point, specifically calling out current tools at ₹2L/month as unaffordable for the usage they get.\n\n**Research exists**: Yes\n**Conducted by**: Priya Mehta\n**Date**: May 2026\n**Key finding**: Median acceptable price for SMB segment is ₹8,0",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Discovery — SMB Segment",
+          "ML Portfolio — Gunjan Mahesh"
+        ],
+        "isStale": false,
+        "retrievalMs": 3888,
+        "generationMs": 4187,
+        "totalMs": 8230,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer directly addresses willingness to pay with specific figures and meets all research_history requirements (existence, author, date, key finding); citationAccuracy and hallucination docked slightly because the specific claim about '7 of 8 respondents citing ₹2L/month as unaffordable' cannot be verified against the listed source titles, introducing minor unconfirmable detail."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": []
+      },
+      {
+        "id": 5,
+        "query": "Why was the mobile SDK deprioritised in H2 2026?",
+        "category": "A-single-intent",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "The Mobile SDK for iOS/Android was deprioritised for H2 2026 because only 2 clients had requested it, indicating insufficient demand to justify the investment. It has been moved to H1 2027 rather than being permanently cancelled.\n\n**Decision maker**: Priya Mehta (Roadmap owner, last updated 2026-06-01)\n**Rationale**: Low client demand — only 2 clients requested the Mobile SDK, making it difficult to justify prioritisation over higher-demand items this half\n**Trade-off**: Engineering capacity was",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Sprint Retro — Q3 Sprint 6",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 5960,
+        "generationMs": 4768,
+        "totalMs": 10897,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the rationale, decision-maker, and trade-off (intentAdherence: 5), but specific claims like '2 clients requested it,' 'Priya Mehta,' the '2026-06-01' date, 'ML team capacity,' and the Theme labels cannot be verified against the listed source titles, raising citation accuracy and hallucination concerns."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:10897ms"
+        ]
+      },
+      {
+        "id": 6,
+        "query": "What did the CEO and VP Product commit to after the syndication launch update?",
+        "category": "A-single-intent",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "stakeholder_commitment",
+        "intentCorrect": true,
+        "answer": "Based on the stakeholder update prepared by **Priya Mehta** (dated **2026-06-10**), the following was asked of leadership following the Review Syndication launch. Note: the context frames these as **asks from leadership**, not confirmed commitments already made.\n\n---\n\n**CEO**\n- Asked to **approve the Flipkart syndication term sheet** — specifically, the **revenue share clause** requires exec sign-off\n- Deadline: **June 20**\n\n**VP Product**\n- Asked to **confirm image moderation priority versus Se",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 8742,
+        "generationMs": 7446,
+        "totalMs": 16349,
+        "llmScores": {
+          "relevance": 4,
+          "citationAccuracy": 4,
+          "hallucination": 5,
+          "intentAdherence": 4,
+          "notes": "Answer correctly identifies both stakeholders, their specific asks, and the June 20 deadline for the CEO; appropriately flags that these are 'asks' rather than confirmed commitments, which is precise but slightly reduces relevance to the exact query wording; all claims appear traceable to the stated source with no invented facts."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "generation_slow:7446ms",
+          "total_slow:16349ms"
+        ]
+      },
+      {
+        "id": 7,
+        "query": "Walk me through the enterprise client onboarding process and SLA commitments",
+        "category": "A-single-intent",
+        "intentExpected": "onboarding",
+        "intentDetected": "customer_request",
+        "intentCorrect": false,
+        "answer": "## Enterprise Client Onboarding Process\n\n**Owner:** Neha Gupta | Last updated: 2026-05-15 (v3.2)\n\n---\n\n### Onboarding Phases & Timelines\n\n- **Week 0 — Contract to Kickoff**\n  - Sales hands off signed contract + client info sheet to CS\n  - CS creates client workspace (admin account) in dashboard\n  - CS schedules kickoff call within 3 business days\n\n- **Week 1–2 — Technical Integration**\n  - API credentials + sandbox environment shared with client\n  - Developer docs at: `docs.bazaarvoice.in`\n  - 6",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Onboarding Guide — Enterprise Client Setup",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 9457,
+        "generationMs": 10330,
+        "totalMs": 19954,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured and directly addresses onboarding phases and SLA commitments, but several specific claims (HDFC Bank INC escalation, 6-day SLA miss in February, backup job misconfiguration, '9 of 14 QBR clients', '4 of 14 clients', RBI/SEBI audit compliance details, technical writer hired starting June 2026) are granular enough that their traceability to the listed source titles — particularly the synthetic BazaarVoice test data — is uncertain and risks hallucination from synthetic/test data being treated as factual operational record."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:10330ms",
+          "total_slow:19954ms",
+          "intent_mismatch:expected_onboarding_got_customer_request"
+        ]
+      },
+      {
+        "id": 8,
+        "query": "What are the Q3 2026 OKRs, how are they tracking, and what themes were agreed in the planning session?",
+        "category": "B-complex",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Q3 2026 OKRs, Tracking Status & Planning Themes\n\n---\n\n### 🎯 Objectives & Key Results\n\n**Owner: Priya Mehta | Review cadence: Bi-weekly**\n\n**Objective 1: Increase Enterprise Retention**\n- KR1.1: Renew **90%** of enterprise contracts due in Q3 (currently **3 at risk**)\n- KR1.2: Achieve **NPS >52** from enterprise segment (current: **44**)\n- KR1.3: Reduce time-to-value for new enterprise onboarding from **8 weeks → 4 weeks**\n\n**Objective 2: Expand Review Volume on Platform**\n- KR2.1: Reach **20",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Meeting Notes — Q3 Planning Session",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 5599,
+        "generationMs": 14914,
+        "totalMs": 20679,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 2,
+          "notes": "The answer comprehensively addresses all three parts of the query with plausible detail, but the specificity of numbers, names, dates, dependencies, and resource allocations cannot be verified against the vague source titles listed (especially 'Seam Test Data — BazaarVoice Synthetic'), raising significant hallucination risk; additionally, the intent requires roadmap rationale including WHY decisions were made and trade-offs considered, but the answer only describes what was decided without explaining business reasoning or opportunity costs."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:2",
+          "weak_intent_adherence:2",
+          "generation_slow:14914ms",
+          "total_slow:20679ms"
+        ]
+      },
+      {
+        "id": 9,
+        "query": "What caused the May 18 review display outage and what corrective actions were decided?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## May 18 Review Display Outage — Cause & Corrective Actions\n\n**Incident ID:** INC-2026-041 | **Severity:** P1 | **Date:** 2026-05-18\n\n---\n\n### Root Cause\n\n- A **CDN config change deployed at 14:18 IST** set **incorrect cache-control headers**\n- This introduced an **origin path mismatch** in the config diff\n- The widget JS file (**v2.4.x**) returned **404 errors** for **73 minutes** (14:22–15:35 IST)\n- Reviews displayed as **blank on product pages** for all Enterprise clients using the JS widget",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Incident Report — Review Display Outage",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 6191,
+        "generationMs": 9158,
+        "totalMs": 15500,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 3,
+          "hallucination": 2,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query and meets all decision_recall criteria (owner: Karan Singh, date: 2026-05-18, rationale provided), but specific figures like ₹4.2Cr GMV impact, 14 enterprise clients, the 73-minute window, and granular PagerDuty threshold values (5%→0.5%) are highly specific claims that cannot be verified against the listed source titles and risk being hallucinated or fabricated details dressed as retrieved facts."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:2",
+          "generation_slow:9158ms",
+          "total_slow:15500ms"
+        ]
+      },
+      {
+        "id": 10,
+        "query": "What enterprise customer feedback drove the analytics self-serve roadmap item and what was spec'd?",
+        "category": "B-complex",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "## Analytics Self-Serve: Customer Feedback → Roadmap\n\n### Customer Feedback That Drove the Item\n\n- **Theme 2: Lack of analytics self-serve** was raised by **7 of 14** enterprise clients in Q1 2026 QBRs (compiled by **Neha Gupta**, dated **2026-04-05**)\n- Specific client quotes:\n  - **L'Oreal India**: *\"I email your team every week for a report — this should be automatic\"*\n  - **Himalaya**: *\"I can't tell if our rating is improving without calling you\"*\n\n### What Was Spec'd / Committed\n\n- The res",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Meeting Notes — Q3 Planning Session"
+        ],
+        "isStale": false,
+        "retrievalMs": 5245,
+        "generationMs": 10349,
+        "totalMs": 15750,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 5,
+          "intentAdherence": 5,
+          "notes": "The answer directly addresses both parts of the query with specific client names, quotes, and spec details, all traceable to the three listed source titles, with no detectable invented facts, names, or dates."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "generation_slow:10349ms",
+          "total_slow:15750ms"
+        ]
+      },
+      {
+        "id": 11,
+        "query": "Compare the moderation pipeline and data isolation decisions — who made each and what was the rationale?",
+        "category": "B-complex",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Moderation Pipeline vs. Data Isolation — Decision Comparison\n\n---\n\n### 1. Moderation Pipeline Architecture\n\n- **Decision owner:** **Rahul Sharma**\n- **Date:** **2026-03-22**\n- **Decision made:** **Option B — in-house ML model**, with **Option C (Perspective API / Google)** as fallback during the build period\n- **Rationale:**\n  - **Data privacy requirements from 3 BFSI clients** contractually prohibit sending review content to third parties — ruling out Option C (Perspective API) as the primar",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Moderation Pipeline Architecture",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 4295,
+        "generationMs": 21867,
+        "totalMs": 26319,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer comprehensively addresses the comparison with owners, dates, and detailed rationale for both decisions; minor hallucination risk exists around Priya Mehta's reviewer role and the specific client names (HDFC, Axis, Bajaj Finance) which may not be explicitly stated in the listed source titles, but core claims are well-grounded in the decision log sources."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "generation_slow:21867ms",
+          "total_slow:26319ms"
+        ]
+      },
+      {
+        "id": 12,
+        "query": "pricing",
+        "category": "C-ambiguous",
+        "intentExpected": "decision_recall",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The pricing restructure decision, dated **2026-02-18**, moved away from a flat ₹1.5L/month enterprise rate to **Option B: tiered flat fees** (Tier 1: ₹1.5L/month up to 100K reviews; Tier 2: ₹2.5L/month up to 300K reviews; Tier 3: ₹4L/month unlimited). The migration plan set new clients on the new pricing from **April 1**, with existing clients grandfathered until renewal, and 3 high-volume clients proactively moved to Tier 3 in exchange for 2-year renewals.\n\n---\n\n**Decision owner**: Priya Mehta ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Project 9 — Dynamic Pricing",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 8347,
+        "generationMs": 4846,
+        "totalMs": 13407,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 5,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "Answer fully addresses the pricing decision with owner, date, and rationale from plausible sources; minor hallucination risk on granular details like the '3 high-volume clients' and '2-year renewals' which cannot be verified from titles alone but are internally consistent."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "total_slow:13407ms",
+          "intent_mismatch:expected_decision_recall_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 13,
+        "query": "api",
+        "category": "C-ambiguous",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "There are two relevant API documents in your connected sources. The **PRD — Ratings & Reviews API v3.0** covers extending the Reviews API to support multi-attribute ratings (up to 8 configurable attributes per product), with the endpoint `GET /reviews/aggregate?attributes=true`; GA is June 15, 2026. The **API Design Review — Insights API v1** covers the Insights API beta: no real-time endpoint (sentiment runs in batch/daily), rate limit of 100 calls/day per client, and a `/v1/` prefix with a 6-m",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "API Design Review — Insights API v1",
+          "PRD — Ratings & Reviews API v3.0",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7751,
+        "generationMs": 7442,
+        "totalMs": 15717,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 4,
+          "notes": "Both API documents are cited with specific details and owner/date for one, but several concrete claims (e.g., '8 configurable attributes,' 'June 15 2026 GA,' '100 calls/day,' '/v1/ prefix,' '6-month deprecation policy') cannot be verified against the source titles alone and risk being hallucinated specifics, reducing hallucination confidence; citation accuracy is slightly penalised because only one document includes owner/date metadata."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:7442ms",
+          "total_slow:15717ms"
+        ]
+      },
+      {
+        "id": 14,
+        "query": "syndication",
+        "category": "C-ambiguous",
+        "intentExpected": "stakeholder_commitment",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "Myntra syndication has a signed contract with technical integration starting June 20. Nykaa is live as the first syndication partner (launched June 5), with 12,400 reviews syndicated and an unconfirmed +8% conversion lift in their A/B test. The CEO was asked to approve the Flipkart syndication term sheet by June 20, pending exec sign-off on the revenue share clause. JioMart has a signed LOI, and Flipkart is listed as in negotiation for the October–December H2 window.\n\n**Stakeholder**: CEO\n**Comm",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Stakeholder Update — Review Syndication Launch",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 6505,
+        "generationMs": 4525,
+        "totalMs": 11193,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer precisely names the CEO as stakeholder, specifies the Flipkart term sheet approval as the commitment, and includes the June 20 deadline; minor hallucination risk on the '+8% conversion lift' qualifier ('unconfirmed') and the 'October–December H2 window' for Flipkart which may not be directly traceable to the listed source titles, preventing perfect scores on those dimensions."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "total_slow:11193ms",
+          "intent_mismatch:expected_stakeholder_commitment_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 15,
+        "query": "What is the current status of the H2 2026 roadmap?",
+        "category": "D-freshness",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": false,
+        "answer": "The H2 2026 roadmap is owned by **Priya Mehta** and was last updated **2026-06-01**, with a current status of **Draft for leadership review**. It is organised into three themes: Platform Reliability (July–August), Enterprise Depth (August–October), and Expand Network (October–December). Three items have been descoped to H1 2027: Mobile SDK for iOS/Android, Video Reviews, and SMB Self-Serve Tier. There are two open dependencies blocking progress: a Legal review of the review import feature (IT Ac",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Roadmap — H2 2026",
+          "Product Strategy — India Market 2026–2027",
+          "Q3 OKRs — Product Team"
+        ],
+        "isStale": false,
+        "retrievalMs": 10268,
+        "generationMs": 9240,
+        "totalMs": 19671,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer fully addresses the query and satisfies all roadmap_rationale intent criteria, but specific figures (INC-041, NPS 44 vs 52, '3 contracts at risk', July 30 ETA, JioMart LOI, Flipkart negotiation status, exact descope reasons) cannot be verified against the listed source titles and may be hallucinated or over-interpolated, dropping citationAccuracy and hallucination scores."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:9240ms",
+          "total_slow:19671ms",
+          "intent_mismatch:expected_roadmap_rationale_got_spec_lookup"
+        ]
+      },
+      {
+        "id": 16,
+        "query": "What is the latest on the Attribute Ratings GA launch?",
+        "category": "D-freshness",
+        "intentExpected": "spec_lookup",
+        "intentDetected": "spec_lookup",
+        "intentCorrect": true,
+        "answer": "The Attribute Ratings GA launch is on track for **June 15, 2026**. All engineering tasks are complete — API v3 endpoints (June 5), Widget v2.5 (June 8), and load test at 3x peak volume (June 9, passed) — with the only remaining documentation item being the help center article for brand admins (ETA June 12). On the client side, Nykaa has signed off from beta, Flipkart has an integration call June 11 and sandbox testing June 12–14, and Mamaearth is skipping v3 until Q4. Post-launch monitoring will",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Launch Plan — Attribute Ratings GA",
+          "PRD — Ratings & Reviews API v3.0"
+        ],
+        "isStale": false,
+        "retrievalMs": 5845,
+        "generationMs": 4942,
+        "totalMs": 10958,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly relevant and well-structured with precise spec details, owner, and last-updated date cited from the correct document title, but several specific facts (Nykaa, Flipkart, Mamaearth client names, exact dates like June 5/8/9/11/12, PagerDuty 1% threshold, 4-hour check-in cadence) cannot be verified against the listed source titles and risk being hallucinated, lowering the hallucination score."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "total_slow:10958ms"
+        ]
+      },
+      {
+        "id": 17,
+        "query": "What are our current enterprise pricing tiers and when do they take effect?",
+        "category": "D-freshness",
+        "intentExpected": "decision_recall",
+        "intentDetected": "decision_recall",
+        "intentCorrect": true,
+        "answer": "## Enterprise Pricing Tiers — Pricing Restructure 2026\n\n### Current Tiered Structure (Option B — Decided)\n\n- **Tier 1**: ₹1.5L/month — up to **100K reviews/month**\n- **Tier 2**: ₹2.5L/month — up to **300K reviews/month**\n- **Tier 3**: ₹4L/month — **unlimited reviews/month**\n\n---\n\n### Effective Dates\n\n- **New clients**: New pricing applies from **April 1** (year not explicitly stated, but in context of the 2026 restructure)\n- **Existing clients**: Grandfathered for the remainder of their current ",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Decision Log — Pricing Restructure 2026",
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic"
+        ],
+        "isStale": false,
+        "retrievalMs": 7802,
+        "generationMs": 6273,
+        "totalMs": 14236,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer comprehensively addresses pricing tiers and effective dates with all three decision_recall requirements met (owner: Priya Mehta + Head of Revenue, date: 2026-02-18, rationale: sales opposition and prospect feedback); minor uncertainty flagged on the year for new-client effective date slightly reduces citationAccuracy and hallucination scores, but no invented facts otherwise."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "generation_slow:6273ms",
+          "total_slow:14236ms"
+        ]
+      },
+      {
+        "id": 18,
+        "query": "How does the competitive landscape in India connect to the H2 roadmap priorities?",
+        "category": "E-nuanced",
+        "intentExpected": "roadmap_rationale",
+        "intentDetected": "roadmap_rationale",
+        "intentCorrect": true,
+        "answer": "## Competitive Landscape → H2 2026 Roadmap Connection\n\n### Threats Named in the Strategy\n\n- **Priya Mehta** (Author, *Product Strategy — India Market 2026–2027*, **2026-06-01**) identified two direct competitive risks:\n  - **Yotpo** entering India with aggressive pricing — probability: **medium**, impact: **high**\n  - **Google** launching product-level reviews on Search — probability: **low**, impact: **very high**\n\n---\n\n### How Those Risks Connect to H2 Priorities\n\n**Theme 1 — Platform Reliabil",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Product Strategy — India Market 2026–2027",
+          "Roadmap — H2 2026"
+        ],
+        "isStale": false,
+        "retrievalMs": 6364,
+        "generationMs": 14690,
+        "totalMs": 21614,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured and directly addresses the query with strong intentAdherence (why, who, trade-offs all present), but several specific claims — probability/impact ratings for Yotpo and Google, the '<2h vs 48h' moderation benchmark, '99.95% uptime SLA', 'INC-041', CDN '3 regions', 'only 2 clients' for Mobile SDK, Flipkart/JioMart syndication details, and SSO SAML 2.0 — cannot be verified against the named source titles and risk being hallucinated or over-specified beyond what the sources contain, lowering hallucination and citationAccuracy scores."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:14690ms",
+          "total_slow:21614ms"
+        ]
+      },
+      {
+        "id": 19,
+        "query": "As a new PM joining BazaarVoice, what are our products, strategy, and market position in India?",
+        "category": "E-nuanced",
+        "intentExpected": "onboarding",
+        "intentDetected": "onboarding",
+        "intentCorrect": true,
+        "answer": "## BazaarVoice India — New PM Orientation Overview\n\n---\n\n## 🧭 What We Do\n\n- We are a **review management platform** for brands in India\n- Core capabilities:\n  - **Review collection** via widgets and email campaigns\n  - **Review moderation** (current SLA: **<48h**; target: **<2h post-ML launch**)\n  - **Syndication** — reviews collected once, displayed across brand.com + marketplaces\n  - **Review Intelligence Dashboard** — self-serve sentiment analytics\n\n---\n\n## 🎯 Market Position & Strategy\n\n- *",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "AI PM Playbook",
+          "Seam Test Data — BazaarVoice Synthetic",
+          "Product Strategy — India Market 2026–2027"
+        ],
+        "isStale": false,
+        "retrievalMs": 7529,
+        "generationMs": 14096,
+        "totalMs": 21788,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 4,
+          "intentAdherence": 5,
+          "notes": "The answer is highly structured, multi-dimensional, and numbers-rich — ideal for onboarding — and claims trace well to the listed source titles; minor hallucination risk exists because the Insights API section is cut off mid-endpoint and specific names/dates (Karan Singh, Rahul Sharma) cannot be fully verified without seeing the raw source content, but nothing is overtly invented."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "generation_slow:14096ms",
+          "total_slow:21788ms"
+        ]
+      },
+      {
+        "id": 20,
+        "query": "What enterprise customer feedback is directly reflected in the Q3 OKRs?",
+        "category": "E-nuanced",
+        "intentExpected": "customer_request",
+        "intentDetected": "customer_request",
+        "intentCorrect": true,
+        "answer": "Three pieces of enterprise customer feedback from Q1 2026 QBRs are directly reflected in Q3 OKRs. Nine of 14 enterprise clients — including Mamaearth's PM (\"reviews submitted Monday appear Thursday\") and Boat's Head of E-comm — complained about slow moderation, which maps to KR2.3 (reduce queue lag from 48h to <2h). Seven of 14 clients, including L'Oreal India and Himalaya, flagged the lack of analytics self-serve, which maps to KR3.3 (first enterprise customer live on Review Intelligence dashbo",
+        "sourceCount": 5,
+        "sourceTitles": [
+          "Q3 OKRs — Product Team",
+          "Customer Feedback Summary — Enterprise Q1 2026",
+          "AI PM Playbook"
+        ],
+        "isStale": false,
+        "retrievalMs": 4375,
+        "generationMs": 7333,
+        "totalMs": 11861,
+        "llmScores": {
+          "relevance": 5,
+          "citationAccuracy": 4,
+          "hallucination": 3,
+          "intentAdherence": 5,
+          "notes": "The answer thoroughly maps feedback to OKR KRs and names customers, owners, and statuses, but specific details like 'Week 7', 'Week 9', '18h queue lag', 'Neha Gupta', and 'Priya Mehta' cannot be verified against the listed source titles, raising hallucination concerns despite strong structural completeness."
+        },
+        "runAt": "2026-06-25T16:48:20.568Z",
+        "flags": [
+          "hallucination_risk:3",
+          "generation_slow:7333ms",
+          "total_slow:11861ms"
+        ]
+      }
+    ],
+    "summary": {
+      "avgRelevance": 4.95,
+      "avgCitationAccuracy": 3.9,
+      "avgHallucination": 3.45,
+      "avgIntentAdherence": 4.7,
+      "avgRetrievalMs": 6459,
+      "avgGenerationMs": 8724,
+      "avgTotalMs": 15385,
+      "passRelevance": true,
+      "passCitationAccuracy": false,
+      "passHallucination": false,
+      "passIntentAdherence": true,
+      "passLatency": false,
+      "intentAccuracy": 80,
+      "overallPass": false
+    }
   }
 ]

@@ -608,7 +608,9 @@ Actions:
 
 // ── Chunker ───────────────────────────────────────────────────────────────────
 
-function chunkText(text: string, maxWords = 400, overlapWords = 50): string[] {
+// 150-word chunks keep each chunk semantically focused on one topic,
+// improving cosine similarity for specific sub-topic queries.
+function chunkText(text: string, maxWords = 150, overlapWords = 25): string[] {
   const words = text.split(/\s+/);
   const chunks: string[] = [];
   let start = 0;

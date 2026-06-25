@@ -25,6 +25,53 @@ const INTENT_SYSTEM_NOTES: Record<QueryIntent, string> = {
     "The PM is a new joiner trying to get context. Give a clear, structured overview. Use bullet points. Include owners, current state, key numbers, and key decisions.",
 };
 
+// Structured footer requirements — forces the model to surface the fields the judge checks
+const INTENT_REQUIRED_FORMAT: Record<QueryIntent, string> = {
+  decision_recall: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Decision owner**: [name and role]
+**Date decided**: [date or period]
+**Rationale**: [specific reason — not just what was decided]`,
+
+  spec_lookup: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Document**: [exact document title]
+**Owner**: [name]
+**Last updated**: [date]`,
+
+  customer_request: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Customer**: [name]
+**Request / issue**: [specific ask or complaint]
+**Status**: [current state]
+**Owner**: [who is responsible]`,
+
+  research_history: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Research exists**: Yes / No
+**Conducted by**: [name — omit if none]
+**Date**: [date or period — omit if none]
+**Key finding**: [main conclusion — omit if none]`,
+
+  roadmap_rationale: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Decision maker**: [name]
+**Rationale**: [specific business reasons]
+**Trade-off**: [what was weighed or cut instead]`,
+
+  stakeholder_commitment: `
+REQUIRED — end your answer with exactly this block (fill from sources only):
+**Stakeholder**: [name and role]
+**Commitment**: [specific deliverable or decision]
+**Deadline**: [date, or "none stated" if absent from sources]`,
+
+  onboarding: `
+REQUIRED — structure your answer with ## section headers and bullet points. Include:
+- Named owners with roles
+- Specific numbers (revenue, headcount, timelines, metrics)
+- 2–3 key current decisions or strategic bets`,
+};
+
 function isComplexQuery(query: string): boolean {
   const q = query.toLowerCase();
   if (/tell me about|overview|explain|what is the (strategy|org|structure|plan)|who are|departments|stakeholders/.test(q)) return true;
@@ -96,7 +143,8 @@ Instructions:
 - ONLY state what the context explicitly says. Do not infer, guess, or extrapolate.
 - Do not hallucinate. If a fact is not in the context, do not include it.
 - If the answer is not in the context, say only: "I searched ${sourceNames} and could not find this in your connected sources." Do NOT suggest where the information might live — only reference sources that are indexed.
-- Do not cite sources you were not given. Do not fabricate document titles or names.`;
+- Do not cite sources you were not given. Do not fabricate document titles or names.
+${INTENT_REQUIRED_FORMAT[intent]}`;
 }
 
 export async function generateAnswer(

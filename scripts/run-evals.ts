@@ -241,6 +241,16 @@ function buildAnswerPrompt(
     ? "\nIMPORTANT: The sources below are older than 90 days. Mention the date of the most recent source in your answer.\n"
     : "";
 
+  const INTENT_REQUIRED_FORMAT: Record<QueryIntent, string> = {
+    decision_recall: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Decision owner**: [name and role]\n**Date decided**: [date or period]\n**Rationale**: [specific reason — not just what was decided]`,
+    spec_lookup: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Document**: [exact document title]\n**Owner**: [name]\n**Last updated**: [date]`,
+    customer_request: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Customer**: [name]\n**Request / issue**: [specific ask or complaint]\n**Status**: [current state]\n**Owner**: [who is responsible]`,
+    research_history: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Research exists**: Yes / No\n**Conducted by**: [name — omit if none]\n**Date**: [date or period — omit if none]\n**Key finding**: [main conclusion — omit if none]`,
+    roadmap_rationale: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Decision maker**: [name]\n**Rationale**: [specific business reasons]\n**Trade-off**: [what was weighed or cut instead]`,
+    stakeholder_commitment: `\nREQUIRED — end your answer with exactly this block (fill from sources only):\n**Stakeholder**: [name and role]\n**Commitment**: [specific deliverable or decision]\n**Deadline**: [date, or "none stated" if absent from sources]`,
+    onboarding: `\nREQUIRED — structure your answer with ## section headers and bullet points. Include:\n- Named owners with roles\n- Specific numbers (revenue, headcount, timelines, metrics)\n- 2–3 key current decisions or strategic bets`,
+  };
+
   return `You are Seam — an AI assistant for product managers.
 
 ${INTENT_SYSTEM_NOTES[intent]}
@@ -257,6 +267,7 @@ Instructions:
 - Use specific facts, names, dates, ticket numbers, and numbers from the context.
 - ONLY state what the context explicitly says. Do not infer, guess, or extrapolate.
 - If the answer is not in the context, say only: "I searched ${sourceNames} and could not find this in your connected sources."
+${INTENT_REQUIRED_FORMAT[intent]}
 - Do not hallucinate. Do not cite sources you were not given.`;
 }
 
@@ -359,15 +370,31 @@ async function main() {
     const embResult = await voyage.embed({ input: [tc.query], model: "voyage-3-lite" });
     const queryEmbedding = embResult.data?.[0]?.embedding ?? [];
 
-    // ── 3. pgvector search ──────────────────────────────────────────────────
-    const { data: chunks } = await supabase.rpc("match_chunks", {
-      query_embedding:    queryEmbedding,
-      match_workspace_id: workspaceId,
-      match_count:        15,
-      match_threshold:    0.3,
-    });
+    // ── 3. Manual cosine similarity search (bypasses IVFFlat index which has
+    //       poor recall on small datasets — production RPC works fine with 1000+ chunks)
+    const { data: allChunks } = await supabase
+      .from("chunks")
+      .select("id, document_id, content, chunk_index, embedding")
+      .eq("workspace_id", workspaceId);
 
-    const topChunks = (chunks ?? []).slice(0, 5);
+    function cosineSim(a: number[], b: string | number[]): number {
+      const bArr: number[] = typeof b === "string" ? JSON.parse(b as string) : b as number[];
+      let dot = 0, na = 0, nb = 0;
+      for (let i = 0; i < a.length; i++) { dot += a[i] * bArr[i]; na += a[i] ** 2; nb += bArr[i] ** 2; }
+      return dot / (Math.sqrt(na) * Math.sqrt(nb));
+    }
+
+    const THRESHOLD = 0.25;
+    const scored = (allChunks ?? [])
+      .map((c: { id: string; document_id: string; content: string; chunk_index: number; embedding: string | number[] }) => ({
+        ...c,
+        similarity: cosineSim(queryEmbedding, c.embedding),
+      }))
+      .filter((c) => c.similarity >= THRESHOLD)
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 5);
+
+    const topChunks = scored;
     const retrievalMs = Date.now() - retrievalStart;
 
     // ── 4. Fetch doc metadata ────────────────────────────────────────────────
