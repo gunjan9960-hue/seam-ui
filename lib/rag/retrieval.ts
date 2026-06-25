@@ -47,13 +47,13 @@ export type QueryIntent =
   | "onboarding";
 
 const INTENT_SIGNALS: Record<QueryIntent, string[]> = {
-  decision_recall:        ["why","decision","decide","decided","chose","choose","rationale","reason","moved","changed","switched"],
-  spec_lookup:            ["spec","specification","prd","acceptance criteria","requirements","latest","current","final","what is the","edge case","api contract"],
-  customer_request:       ["customer","walmart","target","homedepot","pg","loreal","samsung","requested","feature request","cfr","commit","committed","promised","waiting","blocker"],
-  research_history:       ["research","analysis","study","was there","did we","have we","prior","before","discovery","interview","benchmark","feasibility"],
-  roadmap_rationale:      ["roadmap","priority","deprioritised","cut","deferred","shelved","icebox","backlog","why was","what was on","h1","h2","q1","q2","q3","q4"],
-  stakeholder_commitment: ["agreed","sign off","signed off","committed","approved","what did","who owns","ceo","cto","vp","outcome","leadership","cross-functional"],
-  onboarding:             ["overview","strategy","what is","history","full history","how does","what does","onboarding","new pm","who owns","current state","tell me about","organisation","org","departments","stakeholders","revenue"],
+  decision_recall:        ["why","decision","decide","decided","chose","choose","rationale","reason","moved","changed","switched","outage","incident","root cause","corrective","tiered","pricing tiers"],
+  spec_lookup:            ["spec","specification","prd","acceptance criteria","requirements","latest","current","final","what is the","edge case","api contract","user stories","success metrics","scope","flow"],
+  customer_request:       ["customer","walmart","target","homedepot","pg","loreal","samsung","mamaearth","hdfc","nykaa","flipkart","boat","himalaya","myntra","requested","feature request","cfr","commit","committed","promised","waiting","blocker","escalation","complaint","feedback","nps"],
+  research_history:       ["research","analysis","study","was there","did we","have we","prior","before","discovery","interview","benchmark","feasibility","competitive","survey"],
+  roadmap_rationale:      ["roadmap","priority","deprioritised","cut","deferred","shelved","icebox","backlog","why was","what was on","h1","h2","q1","q2","q3","q4","descoped","theme"],
+  stakeholder_commitment: ["agreed","sign off","signed off","committed","approved","what did","who owns","ceo","cto","vp","outcome","leadership","cross-functional","ask from","committed to"],
+  onboarding:             ["overview","strategy","what is","history","full history","how does","what does","onboarding","new pm","who owns","current state","tell me about","organisation","org","departments","stakeholders","revenue","walk me through","guide"],
 };
 
 export function detectIntent(query: string): QueryIntent {
@@ -70,6 +70,20 @@ export function detectIntent(query: string): QueryIntent {
 
   const best = (Object.entries(scores) as [QueryIntent, number][]).sort((a, b) => b[1] - a[1])[0];
   return best[1] > 0 ? best[0] : "spec_lookup";
+}
+
+// Returns the top signal match count — 0 means no intent could be inferred (ambiguous query)
+export function detectIntentConfidence(query: string): number {
+  const q = query.toLowerCase();
+  let max = 0;
+  for (const signals of Object.values(INTENT_SIGNALS)) {
+    let count = 0;
+    for (const signal of signals) {
+      if (q.includes(signal)) count++;
+    }
+    if (count > max) max = count;
+  }
+  return max;
 }
 
 // ── Complex query helpers ──────────────────────────────────────────────────────

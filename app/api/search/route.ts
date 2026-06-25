@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { detectIntent, buildCitations, allResultsStale, type SearchFilters } from "@/lib/rag/retrieval";
+import { detectIntent, detectIntentConfidence, buildCitations, allResultsStale, type SearchFilters } from "@/lib/rag/retrieval";
 import { retrieveFromPgvector } from "@/lib/rag/retrievePgvector";
 import { generateAnswer } from "@/lib/rag/generate";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
@@ -58,7 +58,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const intent = detectIntent(query);
+    const intent           = detectIntent(query);
+    const intentConfidence = detectIntentConfidence(query);
+    const wordCount        = query.trim().split(/\s+/).length;
+
+    // Ambiguous gate: single/short query with no intent signal → ask for clarification
+    if (intentConfidence === 0 && wordCount <= 3) {
+      const encoder = new TextEncoder();
+      const clarification = `I found your query a bit broad. Could you add more context? For example:\n- "Why did we decide on [topic]?"\n- "What's the spec for [feature]?"\n- "What did [customer] request about [topic]?"\n\nThe more specific you are, the better I can search your connected sources.\n\n__SOURCES__${JSON.stringify({ intent, sources: [], suggestions: [], isDemo: false })}`;
+      return new Response(encoder.encode(clarification), {
+        headers: { "Content-Type": "text/plain; charset=utf-8" },
+      });
+    }
 
     // Fetch MCP tokens in parallel, then run all retrievals in parallel
     const [slackToken, notionToken] = await Promise.all([

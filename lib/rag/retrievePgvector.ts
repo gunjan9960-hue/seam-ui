@@ -36,11 +36,12 @@ export async function retrieveFromPgvector(
     if (!queryEmbedding.length) return null;
 
     // Vector similarity search via Supabase RPC
+    // Threshold 0.45: permissive enough to find relevant docs, strict enough to reject weak matches
     const { data: chunks } = await supabase.rpc("match_chunks", {
       query_embedding: queryEmbedding,
       match_workspace_id: userData.workspace_id,
       match_count: topK * 3,
-      match_threshold: 0.3,
+      match_threshold: 0.45,
     });
 
     if (!chunks?.length) return null;
