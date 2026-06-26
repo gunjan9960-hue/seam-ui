@@ -9,9 +9,8 @@ import { createClient } from "@/lib/supabase/client";
 // ── Auth Card (right side of hero) ────────────────────────────────────────────
 
 const TRUST_ITEMS = [
-  { icon: "🔒", text: "Read-only OAuth — never writes to your tools" },
-  { icon: "🇮🇳", text: "Data processed in India (Mumbai)" },
-  { icon: "✦",  text: "Private workspace — no sharing" },
+  { icon: "🇮🇳", text: "Data stored in Mumbai — never leaves India" },
+  { icon: "🔐", text: "Your data is yours. We never read, use, or train on it." },
 ];
 
 function AuthCard({ loggedIn }: { loggedIn: boolean }) {
@@ -59,8 +58,7 @@ function AuthCard({ loggedIn }: { loggedIn: boolean }) {
         </>
       ) : (
         <>
-          <p style={{ fontSize: "17px", fontWeight: 800, color: "#111827", letterSpacing: "-0.4px", marginBottom: "4px" }}>Start your free trial</p>
-          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "20px" }}>14-day free · ₹800/user/month after</p>
+          <p style={{ fontSize: "17px", fontWeight: 800, color: "#111827", letterSpacing: "-0.4px", marginBottom: "20px" }}>Start your free trial</p>
 
           {/* Google button */}
           <button
@@ -285,14 +283,14 @@ const FEATURES = [
   { icon: "📄", title: "PRD Creator", body: "Brief → full structured PRD in under 2 minutes. Exports to Notion or Google Docs.", color: "rgba(249,115,22,0.12)", badge: "P1" },
   { icon: "💡", title: "Insight Generator", body: "Turn interviews, support tickets, and Mixpanel data into ranked, actionable insights.", color: "rgba(234,179,8,0.12)", badge: "P1" },
   { icon: "🗺️", title: "Roadmap Builder", body: "AI-scored RICE and MoSCoW prioritisation pulled from Jira, feedback, and usage data.", color: "rgba(236,72,153,0.12)", badge: "Coming" },
-  { icon: "🔒", title: "Read-only. Always.", body: "OAuth read permissions only. Your data never leaves India. Seam never writes to your tools.", color: "rgba(99,102,241,0.12)", badge: null },
+  { icon: "🔐", title: "Your data, full stop.", body: "Seam never reads, stores, or trains on your content. Read-only OAuth. Data stays in India.", color: "rgba(99,102,241,0.12)", badge: null },
 ];
 
 const STATS = [
   { n: "66%", label: "of PM time lost to manual work" },
   { n: "25 min", label: "lost per context switch" },
-  { n: "3–6 wk", label: "onboarding time just for context" },
-  { n: "₹800", label: "per user/month — all sources" },
+  { n: "3–6 wk", label: "of context, indexed in minutes" },
+  { n: "< 2 min", label: "to connect your first tool" },
 ];
 
 export default function LandingPage() {
@@ -312,7 +310,7 @@ export default function LandingPage() {
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
           <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
           <Link href={loggedIn ? "/app" : "/login"} style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
-            {loggedIn ? "Go to app →" : "Get early access →"}
+            {loggedIn ? "Go to app →" : "Start free →"}
           </Link>
         </div>
       </nav>
@@ -325,7 +323,7 @@ export default function LandingPage() {
           {/* Eyebrow pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "100px", marginBottom: "28px", background: "rgba(79,107,245,0.1)", border: "1px solid rgba(79,107,245,0.22)" }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4F6BF5", flexShrink: 0 }} />
-            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI search for B2B SaaS PMs · India</span>
+            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI workspace for PMs · India-first</span>
           </div>
 
           {/* Logo headline */}
@@ -424,10 +422,9 @@ export default function LandingPage() {
         <h2 style={{ fontSize: "clamp(28px,5vw,44px)", fontWeight: 900, color: "white", letterSpacing: "-2px", lineHeight: 1.1, margin: "0 0 12px" }}>
           Stop switching tabs.<br /><span style={{ color: "#4F6BF5" }}>Pull the thread.</span>
         </h2>
-        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.38)", marginBottom: "28px" }}>14-day free trial · ₹800/user/month · Cancel anytime</p>
         <Link href={loggedIn ? "/app" : "/login"}
           style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "15px 28px", borderRadius: "14px", background: "#4F6BF5", color: "white", textDecoration: "none", fontSize: "15px", fontWeight: 700, boxShadow: "0 4px 32px rgba(79,107,245,0.45)" }}>
-          {loggedIn ? "Go to your workspace" : "Get early access — it's free"}
+          {loggedIn ? "Go to your workspace" : "Start free — no credit card needed"}
           <ArrowRight size={17} strokeWidth={2.5} />
         </Link>
       </section>
