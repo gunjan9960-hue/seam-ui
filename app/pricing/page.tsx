@@ -184,7 +184,7 @@ export default function PricingPage() {
                 (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.7)";
               }}
             >
-              Start free
+              Continue with Google
             </Link>
 
             <div className="flex flex-col gap-3">
@@ -248,7 +248,7 @@ export default function PricingPage() {
               onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.opacity = "0.9"}
               onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.opacity = "1"}
             >
-              Start 14-day trial
+              Continue with Google
               <ArrowRight size={14} strokeWidth={2.5} />
             </Link>
 

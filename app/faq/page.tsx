@@ -346,7 +346,7 @@ export default function FaqPage() {
               boxShadow: "0 4px 20px rgba(79,107,245,0.35)", fontFamily: "Inter, sans-serif",
             }}
           >
-            Start free trial
+            Continue with Google
             <ArrowRight size={15} strokeWidth={2.5} />
           </Link>
         </div>

@@ -58,8 +58,6 @@ function AuthCard({ loggedIn }: { loggedIn: boolean }) {
         </>
       ) : (
         <>
-          <p style={{ fontSize: "17px", fontWeight: 800, color: "#111827", letterSpacing: "-0.4px", marginBottom: "20px" }}>Start your free trial</p>
-
           {/* Google button */}
           <button
             onClick={handleGoogleLogin}
@@ -309,9 +307,11 @@ export default function LandingPage() {
       <nav style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", padding: "16px 40px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
           <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
-          <Link href={loggedIn ? "/app" : "/login"} style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
-            {loggedIn ? "Go to app →" : "Start free →"}
-          </Link>
+          {loggedIn && (
+            <Link href="/app" style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
+              Go to app →
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -323,7 +323,7 @@ export default function LandingPage() {
           {/* Eyebrow pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "100px", marginBottom: "28px", background: "rgba(79,107,245,0.1)", border: "1px solid rgba(79,107,245,0.22)" }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4F6BF5", flexShrink: 0 }} />
-            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI workspace for PMs · India-first</span>
+            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI workspace for product managers · India-first</span>
           </div>
 
           {/* Logo headline */}
@@ -411,22 +411,6 @@ export default function LandingPage() {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* ── Final CTA ── */}
-      <section style={{ textAlign: "center", padding: "64px 48px", borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(79,107,245,0.04)" }}>
-        <div style={{ display: "inline-flex", alignItems: "baseline", gap: "3px", marginBottom: "16px" }}>
-          <span style={{ fontWeight: 900, fontSize: "22px", color: "white", letterSpacing: "-1.2px" }}>seam</span>
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "3px" }} />
-        </div>
-        <h2 style={{ fontSize: "clamp(28px,5vw,44px)", fontWeight: 900, color: "white", letterSpacing: "-2px", lineHeight: 1.1, margin: "0 0 12px" }}>
-          Stop switching tabs.<br /><span style={{ color: "#4F6BF5" }}>Pull the thread.</span>
-        </h2>
-        <Link href={loggedIn ? "/app" : "/login"}
-          style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "15px 28px", borderRadius: "14px", background: "#4F6BF5", color: "white", textDecoration: "none", fontSize: "15px", fontWeight: 700, boxShadow: "0 4px 32px rgba(79,107,245,0.45)" }}>
-          {loggedIn ? "Go to your workspace" : "Start free — no credit card needed"}
-          <ArrowRight size={17} strokeWidth={2.5} />
-        </Link>
       </section>
 
       {/* Footer */}
