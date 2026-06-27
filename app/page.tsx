@@ -425,6 +425,5 @@ export default function LandingPage() {
         <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
-    </div>
   );
 }
