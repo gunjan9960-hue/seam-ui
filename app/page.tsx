@@ -276,12 +276,12 @@ function ThreadViz() {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 const FEATURES = [
-  { icon: "🔍", title: "Knowledge Search", body: "Ask anything. Seam searches Notion and Slack live — one cited answer, every source linked.", color: "rgba(79,107,245,0.14)", badge: "Live" },
-  { icon: "📅", title: "PM Morning Briefing", body: "Meetings, @mentions, Jira blockers, and docs needing review — one screen, every CTA.", color: "rgba(52,168,83,0.12)", badge: "Live" },
-  { icon: "📄", title: "PRD Creator", body: "Brief → full structured PRD in under 2 minutes. Exports to Notion or Google Docs.", color: "rgba(249,115,22,0.12)", badge: "P1" },
-  { icon: "💡", title: "Insight Generator", body: "Turn interviews, support tickets, and Mixpanel data into ranked, actionable insights.", color: "rgba(234,179,8,0.12)", badge: "P1" },
-  { icon: "🗺️", title: "Roadmap Builder", body: "AI-scored RICE and MoSCoW prioritisation pulled from Jira, feedback, and usage data.", color: "rgba(236,72,153,0.12)", badge: "Coming" },
-  { icon: "🔐", title: "Your data, full stop.", body: "Seam never reads, stores, or trains on your content. Read-only OAuth. Data stays in India.", color: "rgba(99,102,241,0.12)", badge: null },
+  { icon: "🔍", title: "Knowledge Search", body: "Ask anything across Notion and Slack. Get one cited answer — every source linked, nothing hallucinated.", color: "rgba(79,107,245,0.14)", badge: "Live" },
+  { icon: "⚖️", title: "Decision Recall", body: "\"Why did we deprioritise X?\" Seam finds the decision, the owner, the date, and the rationale — directly from your docs.", color: "rgba(52,168,83,0.12)", badge: "Live" },
+  { icon: "📋", title: "Spec Lookup", body: "Pull any PRD, acceptance criteria, or feature spec in seconds. No more digging through 40 Notion pages.", color: "rgba(249,115,22,0.12)", badge: "Live" },
+  { icon: "🤝", title: "Stakeholder Commitments", body: "What did we promise the enterprise pilot? What's committed for Q3? Seam finds it and cites the exact source.", color: "rgba(234,179,8,0.12)", badge: "Live" },
+  { icon: "🚀", title: "Instant Onboarding", body: "New PM joining? Get 6 months of product context in one conversation — not 3 weeks of 1:1s.", color: "rgba(236,72,153,0.12)", badge: "Live" },
+  { icon: "🔐", title: "Your data, full stop.", body: "Seam never stores or trains on your content. Read-only OAuth. Every answer links to the original source.", color: "rgba(99,102,241,0.12)", badge: null },
 ];
 
 const STATS = [
