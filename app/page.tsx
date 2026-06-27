@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 // ── Auth Card (right side of hero) ────────────────────────────────────────────
 
 const TRUST_ITEMS = [
-  { icon: "🇮🇳", text: "Data stored in Mumbai — never leaves India" },
+  { icon: "🔒", text: "Read-only access — we never write to your tools" },
   { icon: "🔐", text: "Your data is yours. We never read, use, or train on it." },
 ];
 
@@ -321,7 +321,7 @@ export default function LandingPage() {
           {/* Eyebrow pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "100px", marginBottom: "28px", background: "rgba(79,107,245,0.1)", border: "1px solid rgba(79,107,245,0.22)" }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4F6BF5", flexShrink: 0 }} />
-            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI workspace for product managers · India-first</span>
+            <span style={{ fontSize: "12px", color: "#818CF8", fontWeight: 600, letterSpacing: "0.04em" }}>AI workspace for product managers</span>
           </div>
 
           {/* Logo headline */}
@@ -329,13 +329,13 @@ export default function LandingPage() {
             seam<span style={{ color: "#4F6BF5" }}>.</span>
           </h1>
 
-          <p style={{ fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "20px" }}>
+          <p style={{ fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 700, color: "rgba(255,255,255,0.78)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "20px" }}>
             Pull any thread.
           </p>
 
-          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.52)", lineHeight: 1.75, marginBottom: "36px", maxWidth: "400px" }}>
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.68)", lineHeight: 1.75, marginBottom: "36px", maxWidth: "400px" }}>
             The AI search layer for PMs — cited answers across every tool your team uses.
-            <strong style={{ color: "rgba(255,255,255,0.8)" }}> One question. All your tools. One answer.</strong>
+            <strong style={{ color: "#FFFFFF" }}> One question. All your tools. One answer.</strong>
           </p>
 
         </div>
@@ -350,7 +350,7 @@ export default function LandingPage() {
           {STATS.map((s, i) => (
             <div key={i} style={{ textAlign: "center", padding: "0 20px", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
               <p style={{ fontSize: "28px", fontWeight: 900, color: "#4F6BF5", letterSpacing: "-1px", lineHeight: 1, marginBottom: "5px" }}>{s.n}</p>
-              <p style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.36)", lineHeight: 1.5 }}>{s.label}</p>
+              <p style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.58)", lineHeight: 1.5 }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -372,7 +372,7 @@ export default function LandingPage() {
               <div style={{ width: "52px", height: "52px", borderRadius: "16px", background: "rgba(79,107,245,0.1)", border: "1px solid rgba(79,107,245,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", marginBottom: "14px" }}>{item.icon}</div>
               <p style={{ fontSize: "10px", fontWeight: 800, color: "#4F6BF5", letterSpacing: "0.12em", marginBottom: "6px" }}>STEP {item.step}</p>
               <h3 style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "8px" }}>{item.title}</h3>
-              <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.4)", lineHeight: 1.65 }}>{item.body}</p>
+              <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.62)", lineHeight: 1.65 }}>{item.body}</p>
             </div>
           ))}
         </div>
@@ -405,7 +405,7 @@ export default function LandingPage() {
               )}
               <div style={{ width: "44px", height: "44px", borderRadius: "12px", background: f.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", marginBottom: "12px" }}>{f.icon}</div>
               <h3 style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "7px", letterSpacing: "-0.2px" }}>{f.title}</h3>
-              <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.42)", lineHeight: 1.65 }}>{f.body}</p>
+              <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.62)", lineHeight: 1.65 }}>{f.body}</p>
             </div>
           ))}
         </div>
@@ -413,16 +413,16 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 48px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "baseline", gap: "3px", textDecoration: "none" }}>
           <span style={{ fontWeight: 900, fontSize: "16px", color: "white", letterSpacing: "-0.8px" }}>seam</span>
           <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "2px" }} />
-        </div>
+        </Link>
         <div style={{ display: "flex", gap: "24px" }}>
-          {[["Pricing", "/pricing"], ["Roadmap", "/roadmap"], ["FAQ", "/faq"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
-            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", textDecoration: "none" }}>{label}</Link>
+          {[["About", "/about"], ["Privacy", "/privacy"], ["FAQ", "/faq"]].map(([label, href]) => (
+            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>
-        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>© 2026 Seam. Made for PMs.</p>
+        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
   );

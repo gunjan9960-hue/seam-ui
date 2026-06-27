@@ -244,7 +244,7 @@ export default function SettingsPage() {
           {/* Privacy */}
           <div className="mb-6" style={{ background: "white", border: "1px solid var(--border)", borderRadius: "12px", padding: "20px 20px 4px" }}>
             <SectionHeader icon={Shield} title="Data & Privacy" />
-            <InfoRow label="Local-only processing" description="AI summarisation runs in India (Mumbai region), data never leaves" />
+            <InfoRow label="Ephemeral processing" description="Your content is fetched live at query time and never stored by Seam" />
             <ToggleRow label="Save search history" description="Store recent threads so you can resume them from Dashboard" storageKey="save_history" defaultOn />
             <div
               className="flex items-center justify-between py-3 cursor-pointer"

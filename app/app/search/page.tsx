@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import {
   Search, ExternalLink, Sparkles,
   ThumbsUp, ThumbsDown, AlertCircle,
-  Clock, Scale, FileText, User, FlaskConical, Map, Handshake, Compass, Plus,
+  Clock, Scale, FileText, User, FlaskConical, Map, Handshake, Compass,
   Copy, Check, RefreshCw,
 } from "lucide-react";
 import AppShell from "@/app/components/AppShell";
@@ -618,36 +618,6 @@ function SearchContent() {
           <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>AI search layer for PMs</span>
 
           <div style={{ flex: 1 }} />
-
-          {/* New search */}
-          <button
-            onClick={() => router.push("/app")}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-              fontSize: "11.5px",
-              fontWeight: 600,
-              color: "rgba(255,255,255,0.45)",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              borderRadius: "8px",
-              padding: "5px 11px",
-              cursor: "pointer",
-              transition: "all 0.15s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)";
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)";
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
-            }}
-          >
-            <Plus size={11} />
-            New search
-          </button>
         </div>
 
         {/* ── Scrollable content ── */}

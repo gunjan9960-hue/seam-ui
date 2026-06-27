@@ -27,19 +27,19 @@ const FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         q: "Is my company's internal data safe?",
-        a: "Yes. Seam is read-only — we never write to your tools. Your documents are fetched during sync, chunked into small segments, converted into numerical embeddings (vectors), and stored in your own Supabase instance. The raw text of your documents is never stored by Seam — only the embeddings needed for search. Your data is processed in India (Mumbai region) and never leaves.",
+        a: "Yes. Seam is read-only — we never write to your tools. When you ask a question, Seam fetches only the relevant content from your connected sources in real time. Raw document text is never stored by Seam. Your content is processed ephemerally and discarded after each response.",
       },
       {
         q: "Do you train your AI on my company's data?",
-        a: "No, never. Seam uses Anthropic's Claude API to generate answers. Anthropic's API does not train on your inputs by default. Each query sends only the relevant retrieved context to Claude — not your entire workspace. Seam itself stores no query history unless you opt in via Settings.",
+        a: "No, never. Seam uses Anthropic's Claude API to generate answers. Anthropic does not train on API inputs by default. Each query sends only the relevant retrieved context to Claude for that moment — your workspace content is never retained or used to train any model.",
       },
       {
         q: "Who can see what? Can a junior PM accidentally access confidential docs?",
-        a: "Access is tied to each user's Google OAuth login. Every user's connected sources are scoped to their own accounts — a junior PM can only search documents their own connected accounts have access to. Row-level security (RLS) in Supabase ensures strict data isolation between users. Team-level RBAC (role-based access control) is on the v2 roadmap.",
+        a: "Access is tied to each user's Google OAuth login. Every user's connected sources are scoped to their own accounts — a junior PM can only search documents their own connected accounts have access to. Row-level security (RLS) in Supabase ensures strict data isolation between users.",
       },
       {
-        q: "Is Seam SOC 2 or GDPR compliant?",
-        a: "Seam is an early-stage product. The underlying data layer (Supabase) is SOC 2 Type II certified. Full SOC 2 compliance for Seam itself is planned post-Series A. For GDPR: your data is stored in the region you configure your Supabase project — EU users can choose an EU region. We don't transfer data outside your configured region.",
+        q: "Is Seam SOC 2 compliant?",
+        a: "Seam is an early-stage product. The underlying data layer (Supabase) is SOC 2 Type II certified. Full SOC 2 compliance for Seam itself is on the roadmap. Your document content is never stored by Seam — only OAuth tokens (encrypted) and your profile are retained.",
       },
     ],
   },
@@ -50,16 +50,20 @@ const FAQ_GROUPS: FaqGroup[] = [
     color: "#60A5FA",
     items: [
       {
-        q: "We use Confluence or Jira — will Seam work for us?",
-        a: "Jira and Confluence are on the near-term roadmap (P1). The v1 MVP connects Notion and Slack via live MCP — meaning every search queries your sources in real time with no indexing lag. If you're blocked on Jira or Confluence, reach out — they're the most-requested integrations.",
+        q: "What does Seam connect to today?",
+        a: "Seam currently connects to Notion and Slack via live MCP (Model Context Protocol) — meaning every search queries your sources in real time with no indexing lag. Your content is never copied into a Seam-owned database; it stays in your tools and is read live on every search.",
       },
       {
         q: "How does live MCP search work?",
-        a: "Instead of batch-indexing your content and searching a local copy, Seam queries Notion and Slack directly at the moment you ask a question via their official MCP (Model Context Protocol) servers. Your data never sits in a Seam-owned index — it stays in your tools and is read live on every search.",
+        a: "Instead of batch-indexing your content and searching a cached copy, Seam queries Notion and Slack directly at the moment you ask a question, via their official hosted MCP servers. The benefit: answers always reflect the latest state of your workspace. No sync delays, no stale results.",
+      },
+      {
+        q: "We use Jira or Confluence — will Seam support those?",
+        a: "Jira and Confluence are on the near-term roadmap. Today, Seam works with Notion and Slack — where most PM decisions live for the teams we built this for. If you're blocked on Jira, reach out — it's the most-requested integration.",
       },
       {
         q: "What happens when a source goes offline or an OAuth token expires?",
-        a: "Seam detects the failure at query time and gracefully falls back to any available sources. You'll see a reconnect prompt in Integrations. Reconnecting takes under 30 seconds and restores full live search immediately.",
+        a: "Seam detects the failure at query time and falls back to any remaining available sources. You'll see a reconnect prompt in Integrations. Reconnecting takes under 30 seconds and restores full live search immediately.",
       },
     ],
   },
@@ -70,16 +74,16 @@ const FAQ_GROUPS: FaqGroup[] = [
     color: "#A78BFA",
     items: [
       {
-        q: "How do I know the AI isn't hallucinating a decision that was never made?",
-        a: "Every answer includes source cards — the actual documents Claude used to generate the answer. If a source card doesn't exist, a yellow warning banner tells you the answer is based on general knowledge, not your indexed docs. Phase 4 evals scored hallucination resistance at 4.68/5 across 20 realistic PM queries. The rule of thumb: if the source card doesn't back the claim, don't share the answer.",
+        q: "How do I know the AI isn't making up a decision that was never made?",
+        a: "Every answer includes source cards — the actual documents and threads Claude used to generate the answer. If the source card doesn't exist for a claim, don't share the answer. Our internal evals scored hallucination resistance at 4.68/5 across 20 realistic PM queries. The system is designed to say nothing rather than invent.",
       },
       {
-        q: "If a document was updated, will the answer reflect the latest version?",
-        a: "Yes — after the next sync. Source cards show \"synced Xh ago\" so you always know how fresh the data is. For time-sensitive information (e.g. a decision made yesterday), check the sync recency badge. Manual re-sync is available from Integrations at any time.",
+        q: "Will answers reflect the latest version of a document?",
+        a: "Yes — Seam queries your sources live at the time of every search. There is no batch-sync delay. If you updated a Notion page 5 minutes ago, the next query will read the updated version.",
       },
       {
-        q: "Can I trust citations enough to share the answer with a stakeholder?",
-        a: "Seam is designed exactly for that. Every answer has a \"Copy with citations\" button that formats the answer and all source cards (title, source, URL) for pasting into Slack or email. The source links are direct deep-links to the original documents — stakeholders can verify in one click.",
+        q: "Can I share the answer with a stakeholder?",
+        a: "Yes. Every answer shows which sources were used — the document or Slack thread title and the name of the connected workspace. Source links go directly back to the original content so stakeholders can verify in one click.",
       },
     ],
   },
@@ -90,56 +94,44 @@ const FAQ_GROUPS: FaqGroup[] = [
     color: "#FB923C",
     items: [
       {
-        q: "I already have Confluence search and Slack search — why add Seam?",
-        a: "Native search is keyword-only and siloed per tool — you search Notion, then Slack, then compare results manually. Seam runs a single query across all your connected sources simultaneously and returns one synthesised, cited answer. The difference is between \"find documents about X\" (native search) and \"tell me what was actually decided about X\" (Seam). For context switches that require synthesising across multiple tools, Seam saves 20–30 minutes per query.",
+        q: "I already have Notion search and Slack search — why add Seam?",
+        a: "Native search is keyword-only and siloed per tool — you search Notion, then Slack, then manually compare. Seam runs a single natural language query across all your connected sources simultaneously and returns one synthesised, cited answer. The difference is between \"find documents about X\" and \"tell me what was actually decided about X.\" For any question that spans multiple tools, Seam saves 20–30 minutes per query.",
       },
       {
-        q: "What's the measurable time saved per week?",
-        a: "The internal target is eliminating the 25-minute average context-switch cost per PM knowledge query (sourced from McKinsey PM productivity research). For a PM doing 3–5 of these queries per day, that's 75–125 minutes recovered daily — roughly 6–10 hours per week. At ₹800/month (~₹10/day), the ROI breaks even after recovering about 20 minutes of a PM's time per month.",
+        q: "What's the measurable time saved?",
+        a: "PMs lose an average of 25 minutes per context switch when hunting across tools for past decisions. For a PM doing 3–5 of these queries per day, that's 75–125 minutes recovered daily — roughly 6–10 hours per week. Seam is designed to close that gap.",
       },
       {
-        q: "₹800/user/month — how do I justify this to my manager?",
-        a: "Frame it as recovered decision speed, not tool cost. If a PM earns ₹15L/year, each hour is worth ~₹720. Seam recovering 1 hour/day = ₹15,000/month recovered per PM. At ₹800/month, that's an 18x ROI on day one. The harder number to ignore: a single missed stakeholder commitment or duplicated engineering effort from context loss costs orders of magnitude more than ₹800.",
-      },
-      {
-        q: "Will my team actually use this or forget about it in a week?",
-        a: "Retention depends on how quickly Seam answers a question that would otherwise have taken 20 minutes. The onboarding flow is designed to get you to your first useful answer within 5 minutes of connecting a source. Suggested queries on the home screen are pre-loaded with realistic PM questions to lower the activation energy. If your team doesn't find a genuine use in the first two weeks of the trial, we'll help you debug why — reach out.",
+        q: "What kind of questions is Seam best at?",
+        a: "Seam is built for PM-native queries: Decision Recall (\"Why did we descope SSO?\"), Spec Lookup (\"What are the billing specs?\"), Stakeholder Commitments (\"What did we promise Acme Corp?\"), and Onboarding (\"Walk me through the auth flow decisions\"). It's optimised for the questions PMs actually ask — not general-purpose chat.",
       },
     ],
   },
   {
-    id: "pricing",
-    label: "Pricing & Plans",
+    id: "beta",
+    label: "Beta & Pricing",
     icon: DollarSign,
     color: "#FCD34D",
     items: [
       {
-        q: "Is the 14-day trial actually free with no credit card?",
-        a: "Yes — sign up with Google, get full Pro access for 14 days, no card required. After 14 days you move to the free plan (1 source, 50 searches/month) automatically. No charges unless you explicitly upgrade.",
-      },
-      {
-        q: "Is there a team plan for a 10-person PM org?",
-        a: "Yes — the Team plan at ₹600/user/month (min 3 users, billed annually) includes shared workspace access, team search history, and admin connector management. Contact us to set up a team trial.",
+        q: "Is Seam free right now?",
+        a: "Yes — Seam is in beta. Sign in with Google and connect Notion or Slack for free. No credit card required. Pricing will be introduced later; early users will receive advance notice before anything changes.",
       },
       {
         q: "What if Seam shuts down — can I export my data?",
-        a: "Your documents live in Notion and Slack — Seam searches them live and never stores copies. If Seam shuts down, your underlying tools are completely unaffected. You own your data; we only ever read it.",
+        a: "Your documents live in Notion and Slack — Seam searches them live and never stores copies. If Seam shuts down tomorrow, your underlying tools are completely unaffected. You own your data; we only ever read it.",
       },
     ],
   },
   {
     id: "support",
-    label: "Support & SLA",
+    label: "Support",
     icon: HelpCircle,
     color: "#818CF8",
     items: [
       {
-        q: "How do I get support if something breaks?",
-        a: "Email hello@seam.so for any issue. Pro users get a response within 24 hours on business days. Team plan users get a dedicated Slack channel and same-day response. For urgent issues (sync failures, auth errors), the Settings page surfaces the specific error and a one-click fix for most common cases.",
-      },
-      {
-        q: "Is there an uptime SLA?",
-        a: "Seam is deployed on Vercel (99.9% uptime SLA) with Supabase as the database layer (99.9% uptime). Contractual SLAs for Seam itself are available on the Team plan. A public status page is coming in v2.",
+        q: "How do I get help if something breaks?",
+        a: "Email hello@seam.so for any issue. We reply to every email. For common issues — sync failures, auth errors, reconnecting a source — the Integrations and Settings pages surface the error and a one-click fix for most cases.",
       },
     ],
   },
@@ -256,8 +248,7 @@ export default function FaqPage() {
           <SeamLogo />
         </Link>
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          <Link href="/pricing" style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", fontWeight: 500 }}>Pricing</Link>
-          <Link href="/roadmap" style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", fontWeight: 500 }}>Roadmap</Link>
+          <Link href="/about" style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", fontWeight: 500 }}>About</Link>
           <Link href="/login" style={{ fontSize: "13px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "8px 16px", borderRadius: "9px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
             Get started free
           </Link>
@@ -273,7 +264,7 @@ export default function FaqPage() {
           Honest answers<br /><span style={{ color: "#4F6BF5" }}>to hard questions.</span>
         </h1>
         <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, maxWidth: "480px", margin: "0 auto" }}>
-          {totalQuestions} questions PM teams ask before buying — answered straight, no marketing speak.
+          {totalQuestions} questions PM teams ask — answered straight, no marketing speak.
         </p>
 
         {/* Category pill nav */}
@@ -352,7 +343,7 @@ export default function FaqPage() {
       <footer style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 40px", borderTop: "1px solid rgba(255,255,255,0.06)", flexWrap: "wrap", gap: "12px" }}>
         <SeamLogo />
         <div style={{ display: "flex", gap: "24px" }}>
-          {[["Pricing", "/pricing"], ["Roadmap", "/roadmap"], ["FAQ", "/faq"], ["Privacy", "#"], ["Terms", "#"]].map(([label, href]) => (
+          {[["About", "/about"], ["Privacy", "/privacy"], ["FAQ", "/faq"]].map(([label, href]) => (
             <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>

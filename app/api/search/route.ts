@@ -92,7 +92,12 @@ export async function POST(req: NextRequest) {
 
     if (retrieved.length === 0) {
       const encoder = new TextEncoder();
-      const sourceNames = filters?.sources?.join(", ") ?? "Notion, Jira, Slack";
+      const connectedNames: string[] = [];
+      if (notionToken) connectedNames.push("Notion");
+      if (slackToken) connectedNames.push("Slack");
+      const sourceNames = connectedNames.length > 0
+        ? connectedNames.join(" and ")
+        : "your connected sources";
       const noResults = `I searched ${sourceNames} and could not find this in your connected sources. Try rephrasing or check that your sources are synced.\n\n__SOURCES__${JSON.stringify({ intent, sources: [], suggestions: [], isDemo: false })}`;
       return new Response(encoder.encode(noResults), {
         headers: { "Content-Type": "text/plain; charset=utf-8" },

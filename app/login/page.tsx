@@ -37,7 +37,7 @@ function SeamLogo() {
 
 const TRUST_ITEMS = [
   { icon: "🔒", text: "Read-only OAuth — Seam never writes to your tools" },
-  { icon: "🇮🇳", text: "Data processed in India (Mumbai region)" },
+  { icon: "🛡️", text: "Your content is never stored or used to train AI" },
   { icon: "✦", text: "No sharing. Your workspace is private to you." },
 ];
 
