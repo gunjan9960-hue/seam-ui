@@ -117,6 +117,9 @@ function SourcePill({ id }: { id: string }) {
   );
 }
 
+// ── Supported providers ───────────────────────────────────────────────────────
+const SUPPORTED_PROVIDERS = ["notion", "slack"];
+
 // ── States ────────────────────────────────────────────────────────────────────
 type ReadyState = "loading" | "no-sources" | "syncing" | "ready";
 
@@ -158,7 +161,9 @@ export default function HomePage() {
       }
 
       const active = (sourcesData ?? []).filter(
-        (s: SourceMeta) => s.status === "connected" || s.status === "syncing"
+        (s: SourceMeta) =>
+          SUPPORTED_PROVIDERS.includes(s.provider) &&
+          (s.status === "connected" || s.status === "syncing")
       ) as SourceMeta[];
 
       if (active.length === 0) {

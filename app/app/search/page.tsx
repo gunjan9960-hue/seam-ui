@@ -494,8 +494,9 @@ function SearchContent() {
       if (!data) return;
       const map: Record<string, string> = {};
       const providers: string[] = [];
+      const supported = ["notion", "slack"];
       for (const s of data) {
-        if (s.status === "connected" || s.status === "syncing") {
+        if (supported.includes(s.provider as string) && (s.status === "connected" || s.status === "syncing")) {
           providers.push(s.provider as string);
           if (s.last_synced_at) map[s.provider as string] = s.last_synced_at as string;
         }
