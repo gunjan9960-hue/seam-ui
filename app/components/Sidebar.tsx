@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, LayoutDashboard, Plug, Settings, LogOut } from "lucide-react";
+import { Search, Plug, Settings, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 const NAV_ITEMS = [
   { icon: Search, label: "Search", href: "/app" },
-  { icon: LayoutDashboard, label: "Dashboard", href: "/app/dashboard" },
 ];
 
 const BOTTOM_NAV = [
