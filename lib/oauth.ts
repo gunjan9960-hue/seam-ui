@@ -1,4 +1,4 @@
-export const PROVIDERS = ["notion", "jira", "slack", "google-docs"] as const;
+export const PROVIDERS = ["notion", "slack"] as const;
 export type ProviderId = (typeof PROVIDERS)[number];
 
 interface OAuthConfig {
@@ -30,35 +30,16 @@ export const OAUTH_CONFIGS: Record<ProviderId, OAuthConfig> = {
     tokenBodyFormat: "json",
     extraAuthParams: { owner: "user" },
   },
-  jira: {
-    authUrl: "https://auth.atlassian.com/authorize",
-    tokenUrl: "https://auth.atlassian.com/oauth/token",
-    scopes: ["read:jira-user", "read:jira-work", "offline_access"],
-    clientId: () => env("JIRA_CLIENT_ID"),
-    clientSecret: () => env("JIRA_CLIENT_SECRET"),
-    tokenAuthMethod: "body",
-    extraAuthParams: { audience: "api.atlassian.com", prompt: "consent" },
-  },
   slack: {
     authUrl: "https://slack.com/oauth/v2/authorize",
     tokenUrl: "https://slack.com/api/oauth.v2.access",
-    scopes: [], // must be empty — bot scope param triggers "no bot user" error
+    scopes: [],
     clientId: () => env("SLACK_CLIENT_ID"),
     clientSecret: () => env("SLACK_CLIENT_SECRET"),
     tokenAuthMethod: "basic",
     extraAuthParams: {
-      // MCP search tools need granular search scopes (search:read.public etc not search:read)
       user_scope: "channels:history,channels:read,groups:history,groups:read,pins:read,reactions:read,search:read,search:read.public,search:read.private,search:read.mpim,search:read.im,files:read,users:read",
     },
-  },
-  "google-docs": {
-    authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-    tokenUrl: "https://oauth2.googleapis.com/token",
-    scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-    clientId: () => env("GOOGLE_CLIENT_ID"),
-    clientSecret: () => env("GOOGLE_CLIENT_SECRET"),
-    tokenAuthMethod: "body",
-    extraAuthParams: { access_type: "offline", prompt: "consent" },
   },
 };
 

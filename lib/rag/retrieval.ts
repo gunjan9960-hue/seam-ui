@@ -140,9 +140,8 @@ export function buildCitations(retrieved: RetrievedChunk[]): Citation[] {
     .map((r) => ({
       id: r.chunk.docId,
       source: r.chunk.doc.source === "notion" ? "Notion"
-            : r.chunk.doc.source === "jira"   ? "Jira"
             : r.chunk.doc.source === "slack"  ? "Slack"
-            : "Google Docs",
+            : r.chunk.doc.source,
       title:   r.chunk.doc.title,
       excerpt: r.chunk.text.slice(0, 220).trim() + (r.chunk.text.length > 220 ? "…" : ""),
       author:  r.chunk.doc.author,

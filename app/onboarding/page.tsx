@@ -20,7 +20,7 @@ const STAGES = [
   { id: "scale", label: "Scale", sub: "Series D+ · 500+" },
 ];
 
-const SOURCE_IDS: ConnectorId[] = ["notion", "jira", "slack"];
+const SOURCE_IDS: ConnectorId[] = ["notion", "slack"];
 
 const TOTAL_STEPS = 3;
 
@@ -32,13 +32,9 @@ const STEP_META = [
 
 // ── Seam Transition Overlay ───────────────────────────────────────────────────
 
-// 6 icons arranged in a perfect hexagon around center (250, 250), radius 180
 const TRANSITION_ICONS = [
-  { id: "notion",      cx: 250, cy: 70  },   // top
-  { id: "jira",        cx: 406, cy: 160 },   // top-right
-  { id: "slack",       cx: 406, cy: 340 },   // bottom-right
-  { id: "google-docs", cx: 250, cy: 430 },   // bottom
-  { id: "confluence",  cx: 94,  cy: 160 },   // top-left
+  { id: "notion", cx: 160, cy: 120 },
+  { id: "slack",  cx: 340, cy: 120 },
 ];
 const TCX = 250, TCY = 250;
 

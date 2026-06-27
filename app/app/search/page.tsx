@@ -57,24 +57,18 @@ function relativeTime(iso: string): string {
 
 const SOURCE_TO_PROVIDER: Record<string, string> = {
   "Notion": "notion",
-  "Jira": "jira",
   "Slack": "slack",
-  "Google Docs": "google-docs",
 };
 
 // ── Source colours ────────────────────────────────────────────────────────────
 const SOURCE_COLORS: Record<string, string> = {
-  Notion:        "#888888",
-  Jira:          "#4C9AFF",
-  Slack:         "#E01E5A",
-  "Google Docs": "#4285F4",
+  Notion: "#888888",
+  Slack:  "#E01E5A",
 };
 
 const SOURCE_ICONS: Record<string, string> = {
-  Notion:        "N",
-  Jira:          "J",
-  Slack:         "#",
-  "Google Docs": "G",
+  Notion: "N",
+  Slack:  "#",
 };
 
 // ── Intent config ─────────────────────────────────────────────────────────────

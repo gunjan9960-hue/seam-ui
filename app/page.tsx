@@ -276,7 +276,7 @@ function ThreadViz() {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 const FEATURES = [
-  { icon: "🔍", title: "Knowledge Search", body: "Ask anything. Seam searches Notion, Jira, Docs, and Slack — one cited answer, every source linked.", color: "rgba(79,107,245,0.14)", badge: "Live" },
+  { icon: "🔍", title: "Knowledge Search", body: "Ask anything. Seam searches Notion and Slack live — one cited answer, every source linked.", color: "rgba(79,107,245,0.14)", badge: "Live" },
   { icon: "📅", title: "PM Morning Briefing", body: "Meetings, @mentions, Jira blockers, and docs needing review — one screen, every CTA.", color: "rgba(52,168,83,0.12)", badge: "Live" },
   { icon: "📄", title: "PRD Creator", body: "Brief → full structured PRD in under 2 minutes. Exports to Notion or Google Docs.", color: "rgba(249,115,22,0.12)", badge: "P1" },
   { icon: "💡", title: "Insight Generator", body: "Turn interviews, support tickets, and Mixpanel data into ranked, actionable insights.", color: "rgba(234,179,8,0.12)", badge: "P1" },
@@ -366,7 +366,7 @@ export default function LandingPage() {
         </h2>
         <div style={{ display: "flex", gap: "0" }}>
           {[
-            { icon: "🔗", step: "01", title: "Connect your tools", body: "Link Notion, Jira, Google Docs, Slack via OAuth. Read-only. 2 minutes." },
+            { icon: "🔗", step: "01", title: "Connect your tools", body: "Link Notion and Slack via OAuth. Read-only. Under 2 minutes." },
             { icon: "🧠", step: "02", title: "Seam stitches the seam", body: "Seam reads, chunks, and indexes your workspace. Searchable in 15 min." },
             { icon: "✦",  step: "03", title: "Pull any thread",     body: "Type a question. Get a cited answer with every source card linked." },
           ].map((item, i) => (

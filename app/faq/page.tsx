@@ -50,20 +50,16 @@ const FAQ_GROUPS: FaqGroup[] = [
     color: "#60A5FA",
     items: [
       {
-        q: "We use Confluence, not Notion — will Seam work for us?",
-        a: "Confluence is on the integrations roadmap and uses the same OAuth 2.0 pattern as Notion, so the implementation is straightforward. The current v1 supports Notion, Jira, Slack, and Google Docs. If you're blocked on Confluence, reach out — it's the most-requested integration and will be prioritised.",
+        q: "We use Confluence or Jira — will Seam work for us?",
+        a: "Jira and Confluence are on the near-term roadmap (P1). The v1 MVP connects Notion and Slack via live MCP — meaning every search queries your sources in real time with no indexing lag. If you're blocked on Jira or Confluence, reach out — they're the most-requested integrations.",
       },
       {
-        q: "Our Jira is self-hosted (Data Center) — does OAuth support that?",
-        a: "Not yet in v1. Current Jira OAuth assumes Jira Cloud. Self-hosted Jira Data Center uses a different OAuth 2.0 flow with a per-organisation base URL. This is a known gap — if your team is on Data Center, reach out and we'll prioritise it.",
-      },
-      {
-        q: "How long does the initial sync take across thousands of documents?",
-        a: "For most PM workspaces (a few hundred Notion pages, a few thousand Jira issues), sync completes in 10–20 minutes. Larger workspaces (5,000+ documents) can take up to an hour on first sync. Incremental syncs (after the first) are much faster — only new or updated documents are re-indexed. You'll see sync status in Integrations.",
+        q: "How does live MCP search work?",
+        a: "Instead of batch-indexing your content and searching a local copy, Seam queries Notion and Slack directly at the moment you ask a question via their official MCP (Model Context Protocol) servers. Your data never sits in a Seam-owned index — it stays in your tools and is read live on every search.",
       },
       {
         q: "What happens when a source goes offline or an OAuth token expires?",
-        a: "Seam detects the failure at the next sync attempt and marks the source as errored. You'll see a banner in Settings with a one-click reconnect button. Your existing indexed documents remain searchable — the index doesn't get wiped when a token expires. Once you reconnect, a fresh incremental sync picks up any missed changes.",
+        a: "Seam detects the failure at query time and gracefully falls back to any available sources. You'll see a reconnect prompt in Integrations. Reconnecting takes under 30 seconds and restores full live search immediately.",
       },
     ],
   },
@@ -95,7 +91,7 @@ const FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         q: "I already have Confluence search and Slack search — why add Seam?",
-        a: "Native search is keyword-only and siloed per tool — you search Confluence, then Slack, then Jira, then compare results manually. Seam runs a single query across all your sources simultaneously and returns one synthesised, cited answer. The difference is between \"find documents about X\" (native search) and \"tell me what was actually decided about X\" (Seam). For context switches that require synthesising across 3+ tools, Seam saves 20–30 minutes per query.",
+        a: "Native search is keyword-only and siloed per tool — you search Notion, then Slack, then compare results manually. Seam runs a single query across all your connected sources simultaneously and returns one synthesised, cited answer. The difference is between \"find documents about X\" (native search) and \"tell me what was actually decided about X\" (Seam). For context switches that require synthesising across multiple tools, Seam saves 20–30 minutes per query.",
       },
       {
         q: "What's the measurable time saved per week?",
@@ -123,11 +119,11 @@ const FAQ_GROUPS: FaqGroup[] = [
       },
       {
         q: "Is there a team plan for a 10-person PM org?",
-        a: "Yes — the Team plan at ₹600/user/month (min 3 users, billed annually) includes shared workspace indexing, team search history, and admin connector management. A team of 10 PMs sharing one Notion and one Jira workspace indexes once and everyone searches the same index. Contact us to set up a team trial.",
+        a: "Yes — the Team plan at ₹600/user/month (min 3 users, billed annually) includes shared workspace access, team search history, and admin connector management. Contact us to set up a team trial.",
       },
       {
         q: "What if Seam shuts down — can I export my data?",
-        a: "Your source documents live in your own tools (Notion, Jira, etc.) — Seam never owns them. The indexed chunks and embeddings in Supabase can be exported as a standard Postgres dump at any time. You own your data completely. If Seam shuts down, your underlying tools are unaffected.",
+        a: "Your documents live in Notion and Slack — Seam searches them live and never stores copies. If Seam shuts down, your underlying tools are completely unaffected. You own your data; we only ever read it.",
       },
     ],
   },

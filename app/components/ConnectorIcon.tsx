@@ -2,10 +2,6 @@
 
 type ConnectorId =
   | "notion"
-  | "jira"
-  | "google-docs"
-  | "google-sheets"
-  | "google-slides"
   | "slack"
   | "confluence"
   | "mixpanel";
@@ -26,33 +22,6 @@ const NotionIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-const JiraIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="4" fill="#0052CC"/>
-    <path d="M12 4.5L7 9.5l3 3 2-2 2 2 3-3L12 4.5z" fill="#DEEBFF"/>
-    <path d="M12 19.5L17 14.5l-3-3-2 2-2-2-3 3L12 19.5z" fill="#DEEBFF"/>
-    <path d="M7 9.5l5 5 5-5" stroke="#0052CC" strokeWidth="0.5"/>
-  </svg>
-);
-
-const GoogleDocsIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="4" fill="#4285F4"/>
-    <rect x="6" y="5" width="12" height="15" rx="1.5" fill="white"/>
-    <path d="M8.5 10h7M8.5 12.5h7M8.5 15h5" stroke="#4285F4" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M14 5v3.5H18" fill="#B0C9FF"/>
-  </svg>
-);
-
-const GoogleSheetsIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="4" fill="#34A853"/>
-    <rect x="6" y="5" width="12" height="15" rx="1.5" fill="white"/>
-    <line x1="6" y1="11" x2="18" y2="11" stroke="#34A853" strokeWidth="1"/>
-    <line x1="6" y1="14.5" x2="18" y2="14.5" stroke="#34A853" strokeWidth="1"/>
-    <line x1="11" y1="5" x2="11" y2="20" stroke="#34A853" strokeWidth="1"/>
-  </svg>
-);
 
 const SlackIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -73,14 +42,6 @@ const ConfluenceIcon: React.FC<{ size: number }> = ({ size }) => (
 );
 
 
-const GoogleSlidesIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect width="24" height="24" rx="4" fill="#FBBC04"/>
-    <rect x="5" y="6" width="14" height="12" rx="1.5" fill="white"/>
-    <rect x="8" y="9" width="5" height="4" rx="0.5" fill="#FBBC04" opacity="0.5"/>
-    <path d="M8 15h8M8 13h3" stroke="#FBBC04" strokeWidth="1" strokeLinecap="round"/>
-  </svg>
-);
 
 const MixpanelIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -99,24 +60,6 @@ export const CONNECTORS: Record<ConnectorId, ConnectorMeta> = {
     bg: "#F5F5F5",
     Icon: NotionIcon,
   },
-  jira: {
-    label: "Jira",
-    color: "#0052CC",
-    bg: "#EBF2FF",
-    Icon: JiraIcon,
-  },
-  "google-docs": {
-    label: "Google Docs",
-    color: "#4285F4",
-    bg: "#EBF3FF",
-    Icon: GoogleDocsIcon,
-  },
-  "google-sheets": {
-    label: "Google Sheets",
-    color: "#34A853",
-    bg: "#E8F5E9",
-    Icon: GoogleSheetsIcon,
-  },
   slack: {
     label: "Slack",
     color: "#4A154B",
@@ -128,12 +71,6 @@ export const CONNECTORS: Record<ConnectorId, ConnectorMeta> = {
     color: "#1868DB",
     bg: "#EBF2FF",
     Icon: ConfluenceIcon,
-  },
-  "google-slides": {
-    label: "Google Slides",
-    color: "#FBBC04",
-    bg: "#FFFBEA",
-    Icon: GoogleSlidesIcon,
   },
   mixpanel: {
     label: "Mixpanel",

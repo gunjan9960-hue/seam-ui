@@ -96,10 +96,10 @@ const MODULES: RoadmapItem[] = [
 ];
 
 const CONNECTORS: RoadmapItem[] = [
-  { title: "Notion",         description: "Pages, databases, comments",                            phase: "live",     tag: "P0" },
-  { title: "Jira",           description: "Tickets, sprints, comments, custom fields",             phase: "live",     tag: "P0" },
-  { title: "Google Docs",    description: "Docs, Sheets, Slides — full content + comments",       phase: "live",     tag: "P0" },
-  { title: "Slack",          description: "Public channels, threads, @mentions",                   phase: "live",     tag: "P0" },
+  { title: "Notion",         description: "Pages, databases, comments — live via MCP",            phase: "live",     tag: "P0" },
+  { title: "Slack",          description: "Public channels, threads, @mentions — live via MCP",   phase: "live",     tag: "P0" },
+  { title: "Jira",           description: "Tickets, sprints, comments, custom fields",             phase: "next",     tag: "P1" },
+  { title: "Google Docs",    description: "Docs, Sheets, Slides — full content + comments",       phase: "next",     tag: "P1" },
   { title: "Mixpanel",       description: "Event trends, funnels, retention",                      phase: "building", tag: "P0" },
   { title: "Confluence",     description: "Spaces, pages, inline comments",                        phase: "next",     tag: "P1" },
   { title: "Amplitude",      description: "Behavioral cohorts, DAU/MAU",                           phase: "planned",  tag: "P1" },

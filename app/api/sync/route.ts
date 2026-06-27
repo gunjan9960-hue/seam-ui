@@ -3,9 +3,7 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { OAUTH_CONFIGS, refreshAccessToken, type ProviderId } from "@/lib/oauth";
 import { ingestDocuments } from "@/lib/sync/ingest";
 import { fetchNotionDocs } from "@/lib/sync/fetchers/notion";
-import { fetchJiraDocs, getJiraSite } from "@/lib/sync/fetchers/jira";
 import { fetchSlackDocs } from "@/lib/sync/fetchers/slack";
-import { fetchGoogleDocs } from "@/lib/sync/fetchers/google";
 
 export const maxDuration = 300;
 
@@ -62,22 +60,8 @@ export async function POST(req: NextRequest) {
     let docs: import("@/lib/sync/ingest").IngestDoc[];
     if (provider === "notion") {
       docs = await fetchNotionDocs(accessToken);
-    } else if (provider === "jira") {
-      let cloudId: string = source.metadata?.cloud_id ?? "";
-      let siteUrl: string = source.metadata?.jira_site_url ?? "";
-      if (!cloudId) {
-        const site = await getJiraSite(accessToken);
-        if (site) {
-          cloudId = site.id;
-          siteUrl = site.url;
-          await serviceClient.from("sources").update({ metadata: { ...source.metadata, cloud_id: cloudId, jira_site_url: siteUrl } }).eq("id", source.id);
-        }
-      }
-      docs = await fetchJiraDocs(accessToken, cloudId, siteUrl, source.last_synced_at ?? undefined);
     } else if (provider === "slack") {
       docs = await fetchSlackDocs(accessToken);
-    } else if (provider === "google-docs") {
-      docs = await fetchGoogleDocs(accessToken);
     } else {
       docs = [];
     }

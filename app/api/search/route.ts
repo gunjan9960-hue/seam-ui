@@ -73,8 +73,8 @@ export async function POST(req: NextRequest) {
 
     // Fetch MCP tokens in parallel, then run all retrievals in parallel
     const [slackToken, notionToken] = await Promise.all([
-      process.env.SLACK_MCP_SERVER_URL ? getProviderToken(user.id, "slack") : Promise.resolve(null),
-      process.env.NOTION_MCP_SERVER_URL ? getProviderToken(user.id, "notion") : Promise.resolve(null),
+      getProviderToken(user.id, "slack"),
+      getProviderToken(user.id, "notion"),
     ]);
 
     const [realRetrieved, slackMcpResults, notionMcpResults] = await Promise.all([
