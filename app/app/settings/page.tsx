@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Bell, Shield, LogOut, Check, ChevronRight, Loader, AlertTriangle } from "lucide-react";
+import { User, Shield, LogOut, Check, ChevronRight, Loader, AlertTriangle } from "lucide-react";
 import AppShell from "@/app/components/AppShell";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -238,15 +238,6 @@ export default function SettingsPage() {
                 <FieldRow label="Email"      value={profile.email} />
               </>
             )}
-            <div style={{ height: "12px" }} />
-          </div>
-
-          {/* Notifications */}
-          <div className="mb-6" style={{ background: "white", border: "1px solid var(--border)", borderRadius: "12px", padding: "20px 20px 4px" }}>
-            <SectionHeader icon={Bell} title="Notifications" />
-            <ToggleRow label="Weekly digest" description="Summary of new items across connected sources every Monday" storageKey="notify_weekly_digest" defaultOn />
-            <ToggleRow label="Connector sync errors" description="Alert when an integration fails to sync" storageKey="notify_sync_errors" defaultOn />
-            <ToggleRow label="New source suggestions" description="Notify when Seam detects a new tool in your workspace" storageKey="notify_new_sources" defaultOn={false} />
             <div style={{ height: "12px" }} />
           </div>
 
