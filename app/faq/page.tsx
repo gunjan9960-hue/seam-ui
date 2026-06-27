@@ -166,7 +166,7 @@ function AccordionItem({ item, isLast }: { item: FaqItem; isLast: boolean }) {
         <ChevronDown
           size={16}
           style={{
-            color: "rgba(255,255,255,0.35)",
+            color: "rgba(255,255,255,0.6)",
             flexShrink: 0,
             marginTop: "2px",
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
@@ -248,7 +248,7 @@ export default function FaqPage() {
           <SeamLogo />
         </Link>
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          <Link href="/about" style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", fontWeight: 500 }}>About</Link>
+          <Link href="/about" style={{ fontSize: "13px", color: "rgba(255,255,255,0.72)", textDecoration: "none", fontWeight: 500 }}>About</Link>
           <Link href="/login" style={{ fontSize: "13px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "8px 16px", borderRadius: "9px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
             Get started free
           </Link>
@@ -263,7 +263,7 @@ export default function FaqPage() {
         <h1 style={{ fontSize: "clamp(28px, 5vw, 44px)", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-2px", lineHeight: 1.1, marginBottom: "14px" }}>
           Honest answers<br /><span style={{ color: "#4F6BF5" }}>to hard questions.</span>
         </h1>
-        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, maxWidth: "480px", margin: "0 auto" }}>
+        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.68)", lineHeight: 1.65, maxWidth: "480px", margin: "0 auto" }}>
           {totalQuestions} questions PM teams ask — answered straight, no marketing speak.
         </p>
 
@@ -307,7 +307,7 @@ export default function FaqPage() {
         <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#FFFFFF", letterSpacing: "-0.8px", marginBottom: "10px" }}>
           Still have a question?
         </h2>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.38)", marginBottom: "24px", lineHeight: 1.6 }}>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.68)", marginBottom: "24px", lineHeight: 1.6 }}>
           We reply to every email. For anything not covered here, reach out directly.
         </p>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -344,10 +344,10 @@ export default function FaqPage() {
         <SeamLogo />
         <div style={{ display: "flex", gap: "24px" }}>
           {[["About", "/about"], ["Privacy", "/privacy"], ["FAQ", "/faq"]].map(([label, href]) => (
-            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", textDecoration: "none" }}>{label}</Link>
+            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>
-        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>© 2026 Seam. Made for PMs.</p>
+        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
   );

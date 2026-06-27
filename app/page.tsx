@@ -259,7 +259,7 @@ function ThreadViz() {
               top: `${icon.cy + 30}px`,
               fontSize: "10px",
               fontWeight: 600,
-              color: "rgba(255,255,255,0.3)",
+              color: "rgba(255,255,255,0.58)",
               fontFamily: "Inter, sans-serif",
               whiteSpace: "nowrap",
               textAlign: isLeft ? "left" : isRight ? "right" : "center",
@@ -304,7 +304,7 @@ export default function LandingPage() {
       {/* ── Navbar ── */}
       <nav style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", padding: "16px 40px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
-          <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
+          <Link href="#features" style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.72)", textDecoration: "none", fontWeight: 500 }}>Features</Link>
           {loggedIn && (
             <Link href="/app" style={{ fontSize: "13.5px", background: "#4F6BF5", color: "white", textDecoration: "none", padding: "9px 18px", borderRadius: "10px", fontWeight: 600, boxShadow: "0 2px 12px rgba(79,107,245,0.35)" }}>
               Go to app →
@@ -419,10 +419,10 @@ export default function LandingPage() {
         </Link>
         <div style={{ display: "flex", gap: "24px" }}>
           {[["About", "/about"], ["Privacy", "/privacy"], ["FAQ", "/faq"]].map(([label, href]) => (
-            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>{label}</Link>
+            <Link key={label} href={href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)", textDecoration: "none" }}>{label}</Link>
           ))}
         </div>
-        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}>© 2026 Seam. Made for PMs.</p>
+        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
   );

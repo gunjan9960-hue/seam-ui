@@ -35,10 +35,10 @@ function getDayQueries(): string[] {
 
 // ── Query type chips ──────────────────────────────────────────────────────────
 const QUERY_CHIPS = [
-  { label: "Decision Recall",        starter: "Why did we decide to " },
-  { label: "Spec Lookup",            starter: "What are the specs for " },
-  { label: "Stakeholder Commitment", starter: "What did we commit to " },
-  { label: "Onboarding",             starter: "Walk me through " },
+  { label: "Decision Recall",        starter: "Why did we decide to ",   color: "#60A5FA" },
+  { label: "Spec Lookup",            starter: "What are the specs for ",  color: "#A78BFA" },
+  { label: "Stakeholder Commitment", starter: "What did we commit to ",   color: "#34D399" },
+  { label: "Onboarding",             starter: "Walk me through ",         color: "#FB923C" },
 ];
 
 const PREVIEW_QUERIES = [
@@ -105,10 +105,10 @@ function SourcePill({ id }: { id: string }) {
       <div style={{ width: "20px", height: "20px", borderRadius: "5px", overflow: "hidden", flexShrink: 0 }}>
         <BrandIcon id={id} size={20} />
       </div>
-      <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.65)", fontFamily: "Inter, sans-serif" }}>
+      <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif" }}>
         {label}
       </span>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "10.5px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif" }}>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "10.5px", color: "rgba(255,255,255,0.5)", fontFamily: "Inter, sans-serif" }}>
         ·
         <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#34D399", display: "inline-block", flexShrink: 0 }} />
         live
@@ -209,7 +209,7 @@ export default function HomePage() {
           <p
             style={{
               fontSize: "13px",
-              color: "rgba(255,255,255,0.35)",
+              color: "rgba(255,255,255,0.72)",
               fontWeight: 500,
               fontFamily: "Inter, sans-serif",
               marginBottom: "18px",
@@ -228,7 +228,7 @@ export default function HomePage() {
             </span>
             <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4F6BF5", display: "inline-block", marginBottom: "5px", flexShrink: 0 }} />
           </div>
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.14em", fontWeight: 600, textTransform: "uppercase" }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)", letterSpacing: "0.14em", fontWeight: 600, textTransform: "uppercase" }}>
             Pull any thread.
           </p>
         </div>
@@ -252,7 +252,7 @@ export default function HomePage() {
               <h2 style={{ fontSize: "17px", fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "-0.4px", margin: "0 0 8px", fontFamily: "Inter, sans-serif" }}>
                 Connect a source to unlock search
               </h2>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, margin: "0 0 24px" }}>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, margin: "0 0 24px" }}>
                 Seam searches your real Notion pages and Slack threads — but needs at least one source connected first.
               </p>
               <button
@@ -265,7 +265,7 @@ export default function HomePage() {
 
             {/* Preview: what you'll be able to ask */}
             <div style={{ marginTop: "20px", width: "100%", textAlign: "left" }}>
-              <p style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.2)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
+              <p style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.48)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
                 What you&apos;ll be able to ask
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -275,7 +275,7 @@ export default function HomePage() {
                     style={{ display: "flex", alignItems: "center", gap: "10px", padding: "9px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "9px" }}
                   >
                     <ArrowUpRight size={11} color="rgba(79,107,245,0.4)" strokeWidth={2} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)", fontFamily: "Inter, sans-serif", lineHeight: 1.4 }}>{q}</span>
+                    <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)", fontFamily: "Inter, sans-serif", lineHeight: 1.4 }}>{q}</span>
                   </div>
                 ))}
               </div>
@@ -302,7 +302,7 @@ export default function HomePage() {
               <h2 style={{ fontSize: "17px", fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "-0.4px", margin: "0 0 8px", fontFamily: "Inter, sans-serif" }}>
                 Indexing your sources…
               </h2>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, margin: "0 0 20px" }}>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, margin: "0 0 20px" }}>
                 Your connected sources are being indexed. Search will be ready in a few minutes once content is available.
               </p>
               <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
@@ -333,7 +333,7 @@ export default function HomePage() {
                   transition: "border-color 0.15s, box-shadow 0.15s",
                 }}
               >
-                <Search size={15} color="rgba(255,255,255,0.3)" strokeWidth={2} />
+                <Search size={15} color="rgba(255,255,255,0.5)" strokeWidth={2} />
                 <input
                   ref={inputRef}
                   type="text"
@@ -364,9 +364,19 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* Query type chips */}
+              {/* Query type chips — animated with per-chip accent colours */}
+              <style>{`
+                @keyframes chipShimmer {
+                  0% { background-position: -300% center; }
+                  100% { background-position: 300% center; }
+                }
+                @keyframes chipEntrance {
+                  from { opacity: 0; transform: translateY(6px); }
+                  to   { opacity: 1; transform: translateY(0); }
+                }
+              `}</style>
               <div style={{ marginTop: "14px", display: "flex", gap: "7px", flexWrap: "wrap" }}>
-                {QUERY_CHIPS.map((chip) => (
+                {QUERY_CHIPS.map((chip, i) => (
                   <button
                     key={chip.label}
                     onClick={() => {
@@ -380,31 +390,31 @@ export default function HomePage() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "5px",
-                      fontSize: "11.5px",
-                      fontWeight: 500,
-                      color: "rgba(255,255,255,0.4)",
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      color: chip.color,
+                      background: `linear-gradient(90deg, ${chip.color}12, ${chip.color}22, ${chip.color}12)`,
+                      backgroundSize: "300% auto",
+                      border: `1px solid ${chip.color}40`,
                       borderRadius: "20px",
-                      padding: "5px 12px",
+                      padding: "6px 13px",
                       cursor: "pointer",
                       fontFamily: "Inter, sans-serif",
-                      transition: "all 0.15s",
+                      transition: "box-shadow 0.2s, border-color 0.2s",
+                      animation: `chipShimmer 3s linear infinite, chipEntrance 0.4s ease ${i * 0.07}s both`,
                     }}
                     onMouseEnter={(e) => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = "rgba(255,255,255,0.8)";
-                      el.style.background = "rgba(79,107,245,0.1)";
-                      el.style.borderColor = "rgba(79,107,245,0.3)";
+                      el.style.boxShadow = `0 0 14px ${chip.color}50`;
+                      el.style.borderColor = `${chip.color}80`;
                     }}
                     onMouseLeave={(e) => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = "rgba(255,255,255,0.4)";
-                      el.style.background = "rgba(255,255,255,0.04)";
-                      el.style.borderColor = "rgba(255,255,255,0.08)";
+                      el.style.boxShadow = "none";
+                      el.style.borderColor = `${chip.color}40`;
                     }}
                   >
-                    <Zap size={10} strokeWidth={2} />
+                    <Zap size={10} strokeWidth={2.5} />
                     {chip.label}
                   </button>
                 ))}
@@ -424,7 +434,7 @@ export default function HomePage() {
                 )}
 
                 <div className="flex items-center gap-3">
-                  <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500, flexShrink: 0 }}>
+                  <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.58)", fontWeight: 500, flexShrink: 0 }}>
                     Searching across
                   </span>
                   <div style={{ display: "flex", gap: "7px", flexWrap: "wrap" }}>
@@ -442,7 +452,7 @@ export default function HomePage() {
                     gap: "6px",
                     fontSize: "11.5px",
                     fontWeight: 500,
-                    color: "rgba(255,255,255,0.45)",
+                    color: "rgba(255,255,255,0.68)",
                     fontFamily: "Inter, sans-serif",
                     background: "rgba(255,255,255,0.05)",
                     border: "1px solid rgba(255,255,255,0.09)",
@@ -458,7 +468,7 @@ export default function HomePage() {
 
             {/* Suggested queries */}
             <div className="mt-8 w-full" style={{ maxWidth: "600px", padding: "0 24px" }}>
-              <p className="mb-3" style={{ fontSize: "10.5px", fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <p className="mb-3" style={{ fontSize: "10.5px", fontWeight: 700, color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 Suggested
               </p>
               <div className="flex flex-col gap-1.5">
@@ -467,9 +477,9 @@ export default function HomePage() {
                     key={q}
                     onClick={() => handleSearch(q)}
                     className="flex items-center gap-3 text-left px-4 py-3 rounded-lg transition-all"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", fontSize: "13px", color: "rgba(255,255,255,0.55)", cursor: "pointer", fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,0.07)"; el.style.borderColor = "rgba(79,107,245,0.25)"; el.style.color = "rgba(255,255,255,0.85)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,0.04)"; el.style.borderColor = "rgba(255,255,255,0.07)"; el.style.color = "rgba(255,255,255,0.55)"; }}
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", fontSize: "13px", color: "rgba(255,255,255,0.78)", cursor: "pointer", fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,0.08)"; el.style.borderColor = "rgba(79,107,245,0.3)"; el.style.color = "rgba(255,255,255,0.95)"; }}
+                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,0.04)"; el.style.borderColor = "rgba(255,255,255,0.09)"; el.style.color = "rgba(255,255,255,0.78)"; }}
                   >
                     <ArrowUpRight size={13} color="#4F6BF5" strokeWidth={2} style={{ flexShrink: 0 }} />
                     <span style={{ lineHeight: 1.4 }}>{q}</span>

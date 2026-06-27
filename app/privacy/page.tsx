@@ -65,10 +65,10 @@ export default function PrivacyPage() {
         <h1 style={{ fontSize: "clamp(28px, 5vw, 44px)", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-2px", lineHeight: 1.1, marginBottom: "16px" }}>
           Your data is yours.<br /><span style={{ color: "#34D399" }}>Always.</span>
         </h1>
-        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.38)", lineHeight: 1.7, maxWidth: "460px", margin: "0 auto" }}>
+        <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.68)", lineHeight: 1.7, maxWidth: "460px", margin: "0 auto" }}>
           Seam is a read-only search tool. We access your Notion and Slack workspaces to answer your questions — and nothing else.
         </p>
-        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)", marginTop: "16px" }}>
+        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", marginTop: "16px" }}>
           Last updated: June 2026
         </p>
       </section>
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
                 </div>
                 <div>
                   <div style={{ fontSize: "14px", fontWeight: 700, color: "rgba(255,255,255,0.9)", marginBottom: "8px" }}>{title}</div>
-                  <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>{body}</div>
+                  <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.72)", lineHeight: 1.7 }}>{body}</div>
                 </div>
               </div>
             </div>
@@ -107,8 +107,8 @@ export default function PrivacyPage() {
                   {stored ? "Stored" : "Not stored"}
                 </span>
                 <div>
-                  <div style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.75)" }}>{item}</div>
-                  <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginTop: "2px" }}>{note}</div>
+                  <div style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.85)" }}>{item}</div>
+                  <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)", marginTop: "2px" }}>{note}</div>
                 </div>
               </div>
             ))}

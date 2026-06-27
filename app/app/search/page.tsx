@@ -148,7 +148,7 @@ function AnswerText({ text }: { text: string }) {
             </code>
           ),
           blockquote: ({ children }) => (
-            <blockquote style={{ borderLeft: "2px solid rgba(255,255,255,0.15)", paddingLeft: "14px", margin: "0 0 14px", color: "rgba(255,255,255,0.55)" }}>
+            <blockquote style={{ borderLeft: "2px solid rgba(255,255,255,0.2)", paddingLeft: "14px", margin: "0 0 14px", color: "rgba(255,255,255,0.72)" }}>
               {children}
             </blockquote>
           ),
@@ -218,10 +218,10 @@ function SourceGridCard({ s, index, syncedAt }: { s: SourceCard; index: number; 
             <span style={{ fontSize: "9px", fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.07em" }}>
               {s.source}
             </span>
-            <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.18)", marginLeft: "auto" }}>
+            <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.38)", marginLeft: "auto" }}>
               {index + 1}
             </span>
-            <ExternalLink size={8} style={{ color: "rgba(255,255,255,0.18)", flexShrink: 0 }} />
+            <ExternalLink size={8} style={{ color: "rgba(255,255,255,0.38)", flexShrink: 0 }} />
           </div>
           <div
             style={{
@@ -237,13 +237,13 @@ function SourceGridCard({ s, index, syncedAt }: { s: SourceCard; index: number; 
           >
             {s.title}
           </div>
-          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", marginTop: "4px" }}>
+          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", marginTop: "4px" }}>
             {s.author} · {s.date}
           </div>
           {syncedAt && (
             <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "3px" }}>
-              <RefreshCw size={7} style={{ color: "rgba(255,255,255,0.18)" }} />
-              <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.18)" }}>synced {relativeTime(syncedAt)}</span>
+              <RefreshCw size={7} style={{ color: "rgba(255,255,255,0.38)" }} />
+              <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.38)" }}>synced {relativeTime(syncedAt)}</span>
             </div>
           )}
         </div>
@@ -273,9 +273,9 @@ function CopyButton({ answer, sources }: { answer: string; sources: SourceCard[]
   return (
     <button
       onClick={copy}
-      style={{ background: "none", border: "none", cursor: "pointer", color: copied ? "#34D399" : "rgba(255,255,255,0.22)", padding: 0, display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", transition: "color 0.15s" }}
-      onMouseEnter={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
-      onMouseLeave={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)"; }}
+      style={{ background: "none", border: "none", cursor: "pointer", color: copied ? "#34D399" : "rgba(255,255,255,0.45)", padding: 0, display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", transition: "color 0.15s" }}
+      onMouseEnter={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.78)"; }}
+      onMouseLeave={(e) => { if (!copied) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)"; }}
     >
       {copied ? <><Check size={13} /><span>Copied</span></> : <Copy size={13} />}
     </button>
@@ -291,17 +291,17 @@ function InlineFeedback() {
     <span style={{ display: "inline-flex", gap: "8px" }}>
       <button
         onClick={() => setVal("up")}
-        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.22)", padding: 0, display: "flex", transition: "color 0.15s" }}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)")}
+        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.45)", padding: 0, display: "flex", transition: "color 0.15s" }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.78)")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)")}
       >
         <ThumbsUp size={13} />
       </button>
       <button
         onClick={() => setVal("down")}
-        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.22)", padding: 0, display: "flex", transition: "color 0.15s" }}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.22)")}
+        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.45)", padding: 0, display: "flex", transition: "color 0.15s" }}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.78)")}
+        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.45)")}
       >
         <ThumbsDown size={13} />
       </button>
@@ -354,7 +354,7 @@ function CompletedExchange({ exchange, syncMap }: { exchange: Exchange; syncMap:
           </span>
         )}
         {exchange.sources.length > 0 && (
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", display: "flex", alignItems: "center", gap: "4px" }}>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.58)", display: "flex", alignItems: "center", gap: "4px" }}>
             <Sparkles size={9} style={{ color: "#4F6BF5" }} />
             {exchange.sources.length} source{exchange.sources.length !== 1 ? "s" : ""}
           </span>
@@ -374,7 +374,7 @@ function CompletedExchange({ exchange, syncMap }: { exchange: Exchange; syncMap:
       {exchange.sources.length === 0 && !exchange.isDemo && (
         <div style={{ display: "flex", alignItems: "flex-start", gap: "9px", background: "rgba(251,191,36,0.07)", border: "1px solid rgba(251,191,36,0.18)", borderRadius: "10px", padding: "10px 14px", marginBottom: "16px" }}>
           <AlertCircle size={13} style={{ color: "#FCD34D", flexShrink: 0, marginTop: "1px" }} />
-          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.55 }}>
+          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.72)", lineHeight: 1.55 }}>
             No matching documents found in your indexed sources. This answer is based on general knowledge — verify before sharing with a stakeholder.
           </span>
         </div>
@@ -386,7 +386,7 @@ function CompletedExchange({ exchange, syncMap }: { exchange: Exchange; syncMap:
       {/* Ambiguity suggestions */}
       {exchange.suggestions && exchange.suggestions.length > 0 && (
         <div style={{ marginTop: "4px", marginBottom: "20px" }}>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", marginBottom: "7px" }}>Did you mean:</div>
+          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.55)", marginBottom: "7px" }}>Did you mean:</div>
           <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
             {exchange.suggestions.map((s) => (
               <span
@@ -415,7 +415,7 @@ function CompletedExchange({ exchange, syncMap }: { exchange: Exchange; syncMap:
             style={{
               fontSize: "10px",
               fontWeight: 700,
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.5)",
               textTransform: "uppercase",
               letterSpacing: "0.1em",
               marginBottom: "10px",
@@ -615,7 +615,7 @@ function SearchContent() {
           </button>
 
           <div style={{ width: "1px", height: "13px", background: "rgba(255,255,255,0.08)", margin: "0 4px" }} />
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>AI search layer for PMs</span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.58)", fontWeight: 500 }}>AI search layer for PMs</span>
 
           <div style={{ flex: 1 }} />
         </div>
@@ -683,7 +683,7 @@ function SearchContent() {
                   <>
                     {connectedProviders.length > 0 && (
                       <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "18px", flexWrap: "wrap" }}>
-                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>Searching across</span>
+                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.58)", fontWeight: 500 }}>Searching across</span>
                         {connectedProviders.map((p) => (
                           <span
                             key={p}
@@ -693,9 +693,9 @@ function SearchContent() {
                               gap: "5px",
                               fontSize: "11px",
                               fontWeight: 600,
-                              color: "rgba(255,255,255,0.5)",
-                              background: "rgba(255,255,255,0.05)",
-                              border: "1px solid rgba(255,255,255,0.08)",
+                              color: "rgba(255,255,255,0.78)",
+                              background: "rgba(255,255,255,0.06)",
+                              border: "1px solid rgba(255,255,255,0.12)",
                               borderRadius: "20px",
                               padding: "3px 9px",
                             }}
@@ -703,7 +703,7 @@ function SearchContent() {
                             {p.charAt(0).toUpperCase() + p.slice(1)}
                           </span>
                         ))}
-                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.18)" }}>· live via MCP</span>
+                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>· live via MCP</span>
                       </div>
                     )}
                     <Skeleton />
@@ -758,9 +758,9 @@ function SearchContent() {
                       onClick={() => { setFollowUp(s); setTimeout(() => followUpRef.current?.focus(), 0); }}
                       style={{
                         fontSize: "11.5px",
-                        color: "rgba(255,255,255,0.42)",
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.09)",
+                        color: "rgba(255,255,255,0.68)",
+                        background: "rgba(255,255,255,0.05)",
+                        border: "1px solid rgba(255,255,255,0.10)",
                         borderRadius: "20px",
                         padding: "4px 12px",
                         cursor: "pointer",
@@ -768,14 +768,14 @@ function SearchContent() {
                         fontFamily: "Inter, sans-serif",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.14)";
+                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.92)";
+                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.18)";
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.42)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.09)";
+                        (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.68)";
+                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.10)";
                       }}
                     >
                       {s}
@@ -798,7 +798,7 @@ function SearchContent() {
                   }}
                   onClick={() => followUpRef.current?.focus()}
                 >
-                  <Search size={14} style={{ color: inputFocused ? "rgba(79,107,245,0.7)" : "rgba(255,255,255,0.22)", flexShrink: 0, transition: "color 0.2s" }} />
+                  <Search size={14} style={{ color: inputFocused ? "rgba(79,107,245,0.8)" : "rgba(255,255,255,0.48)", flexShrink: 0, transition: "color 0.2s" }} />
                   <input
                     ref={followUpRef}
                     value={followUp}

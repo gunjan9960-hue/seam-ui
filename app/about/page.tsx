@@ -133,7 +133,7 @@ function SearchDemo() {
         gap: "10px",
         marginBottom: "20px",
       }}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2.5" strokeLinecap="round">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="2.5" strokeLinecap="round">
           <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
         </svg>
         <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.82)", flex: 1, minHeight: "20px", lineHeight: "20px" }}>
@@ -143,7 +143,7 @@ function SearchDemo() {
           )}
         </span>
         {phase === "answer" && (
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.2)" }}>live via MCP</span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.52)" }}>live via MCP</span>
         )}
       </div>
 
@@ -160,7 +160,7 @@ function SearchDemo() {
               }} />
             ))}
           </div>
-          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)" }}>Searching Notion and Slack</span>
+          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)" }}>Searching Notion and Slack</span>
         </div>
       )}
 
@@ -171,7 +171,7 @@ function SearchDemo() {
             {answer.text}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <span style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.2)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>Sources</span>
+            <span style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.52)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>Sources</span>
             {answer.sources.map((s, i) => (
               <div key={i} style={{
                 display: "flex", alignItems: "center", gap: "8px",
@@ -179,8 +179,8 @@ function SearchDemo() {
                 borderRadius: "8px", padding: "7px 12px",
               }}>
                 <span style={{ fontSize: "10px", fontWeight: 700, color: "#4F6BF5", background: "rgba(79,107,245,0.12)", borderRadius: "4px", padding: "1px 5px" }}>{i + 1}</span>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)" }}>{s}</span>
-                <ArrowRight size={11} style={{ color: "rgba(255,255,255,0.2)", marginLeft: "auto" }} />
+                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)" }}>{s}</span>
+                <ArrowRight size={11} style={{ color: "rgba(255,255,255,0.48)", marginLeft: "auto" }} />
               </div>
             ))}
           </div>
@@ -442,7 +442,7 @@ export default function AboutPage() {
           <h2 style={{ fontSize: "clamp(24px, 3.5vw, 36px)", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-1.2px", lineHeight: 1.15, marginBottom: "12px" }}>
             Built for individual product managers.
           </h2>
-          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, marginBottom: "36px", maxWidth: "540px" }}>
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.68)", lineHeight: 1.7, marginBottom: "36px", maxWidth: "540px" }}>
             Seam is for any PM who has ever spent 30 minutes hunting for a decision that was made six months ago. If your product history lives across Notion pages, Slack threads, and call notes — Seam is for you.
           </p>
         </div>
@@ -454,7 +454,7 @@ export default function AboutPage() {
             { label: "Access", value: "Any PM, anywhere" },
           ].map((row, i) => (
             <div key={i} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", animation: `fadeInUp 0.4s ease ${i * 0.07}s both` }}>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}>{row.label}</span>
+              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.62)" }}>{row.label}</span>
               <span style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{row.value}</span>
             </div>
           ))}
@@ -469,7 +469,7 @@ export default function AboutPage() {
             <h2 style={{ fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-1px" }}>
               Knowledge Search is the foundation.
             </h2>
-            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", marginTop: "10px", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.65)", marginTop: "10px", lineHeight: 1.6 }}>
               The full Seam vision covers the complete PM lifecycle — from finding past decisions to writing PRDs to understanding adoption.
             </p>
           </div>
@@ -489,9 +489,9 @@ export default function AboutPage() {
           <p style={{ fontSize: "11px", fontWeight: 700, color: "#4F6BF5", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "20px" }}>Get started</p>
           <h2 style={{ fontSize: "clamp(28px, 5vw, 48px)", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-2px", lineHeight: 1.05, marginBottom: "16px" }}>
             Connect your first source.<br />
-            <span style={{ color: "rgba(255,255,255,0.3)" }}>Under 2 minutes.</span>
+            <span style={{ color: "rgba(255,255,255,0.65)" }}>Under 2 minutes.</span>
           </h2>
-          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.3)", marginBottom: "36px" }}>
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.68)", marginBottom: "36px" }}>
             Sign in with Google. Connect Notion or Slack. Ask your first question.
           </p>
           <Link href="/login" style={{
@@ -505,7 +505,7 @@ export default function AboutPage() {
             Pull your first thread
             <ArrowRight size={16} strokeWidth={2.5} />
           </Link>
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", marginTop: "16px" }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)", marginTop: "16px" }}>
             Free · No credit card · Read-only access to your tools
           </p>
         </div>
