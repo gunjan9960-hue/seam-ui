@@ -1,17 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Search, ArrowUpRight, Plug, RefreshCw } from "lucide-react";
+import { Search, ArrowUpRight, Plug, RefreshCw, Lock, Zap } from "lucide-react";
 import AppShell from "../components/AppShell";
 import { createClient } from "@/lib/supabase/client";
 
-// ── Suggested queries — tied to BazaarVoice synthetic data ───────────────────
-const SUGGESTED_QUERIES = [
+// ── Rotating suggestion pool ──────────────────────────────────────────────────
+// 16 queries across different PM intent types. 4 shown at a time, rotated by
+// day of week so returning users see fresh prompts each day.
+const QUERY_POOL = [
   "Why did we descope video reviews from the H2 roadmap?",
   "What was decided on the moderation pipeline — rule-based or ML?",
   "Which enterprise clients are at risk of churning and why?",
   "What are the open action items from the Q3 planning session?",
+  "What commitments did we make to enterprise clients this quarter?",
+  "Who owns the mobile roadmap and what's the current status?",
+  "What's the rationale behind deprioritising offline mode?",
+  "What did we promise the enterprise pilot team by end of Q3?",
+  "Why did we choose build over buy for the notification system?",
+  "What's the latest acceptance criteria for the search feature?",
+  "Which features were cut from the last release and why?",
+  "Who signed off on the new pricing structure?",
+  "What's blocking the API v2 launch?",
+  "What does the onboarding flow look like for new enterprise customers?",
+  "What were the findings from the last user research round?",
+  "What's been deferred the longest on the backlog and why?",
+];
+
+function getDayQueries(): string[] {
+  const offset = (new Date().getDay() * 3) % QUERY_POOL.length;
+  return Array.from({ length: 4 }, (_, i) => QUERY_POOL[(offset + i) % QUERY_POOL.length]);
+}
+
+// ── Query type chips ──────────────────────────────────────────────────────────
+const QUERY_CHIPS = [
+  { label: "Decision Recall",        starter: "Why did we decide to " },
+  { label: "Spec Lookup",            starter: "What are the specs for " },
+  { label: "Stakeholder Commitment", starter: "What did we commit to " },
+  { label: "Onboarding",             starter: "Walk me through " },
 ];
 
 const PREVIEW_QUERIES = [
@@ -20,12 +47,26 @@ const PREVIEW_QUERIES = [
   "What's the rationale behind deprioritising mobile this quarter?",
 ];
 
+// ── Greeting ──────────────────────────────────────────────────────────────────
+function getGreeting(name: string): string {
+  const h = new Date().getHours();
+  const salutation = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+  let first: string;
+  if (name.includes("@")) {
+    // Email fallback: strip domain, digits, and separators, then capitalise
+    const local = name.split("@")[0].replace(/[0-9._-]/g, " ").trim().split(/\s+/)[0] ?? "";
+    first = local.charAt(0).toUpperCase() + local.slice(1);
+  } else {
+    first = name.split(" ")[0];
+  }
+  return first ? `${salutation}, ${first}.` : `${salutation}.`;
+}
+
 // ── Brand icons ───────────────────────────────────────────────────────────────
-function BrandIcon({ id }: { id: string }) {
-  const s = 32;
+function BrandIcon({ id, size = 32 }: { id: string; size?: number }) {
   const icons: Record<string, React.ReactElement> = {
     notion: (
-      <svg width={s} height={s} viewBox="0 0 48 48" fill="none">
+      <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
         <rect width="48" height="48" rx="10" fill="#191919"/>
         <rect x="12" y="10" width="24" height="29" rx="3" fill="white"/>
         <line x1="16" y1="19" x2="32" y2="19" stroke="#191919" strokeWidth="2.5" strokeLinecap="round"/>
@@ -33,15 +74,8 @@ function BrandIcon({ id }: { id: string }) {
         <line x1="16" y1="31" x2="24" y2="31" stroke="#191919" strokeWidth="2.5" strokeLinecap="round"/>
       </svg>
     ),
-    jira: (
-      <svg width={s} height={s} viewBox="0 0 48 48" fill="none">
-        <rect width="48" height="48" rx="10" fill="#0052CC"/>
-        <path d="M24 10L14 20l5.5 5.5L24 21l4.5 4.5L34 20 24 10z" fill="#DEEBFF"/>
-        <path d="M24 38L34 28l-5.5-5.5L24 27l-4.5-4.5L14 28 24 38z" fill="#DEEBFF"/>
-      </svg>
-    ),
     slack: (
-      <svg width={s} height={s} viewBox="0 0 48 48" fill="none">
+      <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
         <rect width="48" height="48" rx="10" fill="#4A154B"/>
         <circle cx="17" cy="18" r="4" fill="#E01E5A"/>
         <circle cx="31" cy="18" r="4" fill="#36C5F0"/>
@@ -53,43 +87,94 @@ function BrandIcon({ id }: { id: string }) {
   return icons[id] ?? null;
 }
 
+// ── Source pill ───────────────────────────────────────────────────────────────
+function SourcePill({ id }: { id: string }) {
+  const label = id.charAt(0).toUpperCase() + id.slice(1);
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "7px",
+        padding: "5px 11px 5px 7px",
+        background: "rgba(255,255,255,0.05)",
+        border: "1px solid rgba(255,255,255,0.09)",
+        borderRadius: "20px",
+      }}
+    >
+      <div style={{ width: "20px", height: "20px", borderRadius: "5px", overflow: "hidden", flexShrink: 0 }}>
+        <BrandIcon id={id} size={20} />
+      </div>
+      <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.65)", fontFamily: "Inter, sans-serif" }}>
+        {label}
+      </span>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "10.5px", color: "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif" }}>
+        ·
+        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#34D399", display: "inline-block", flexShrink: 0 }} />
+        live
+      </span>
+    </div>
+  );
+}
+
 // ── States ────────────────────────────────────────────────────────────────────
 type ReadyState = "loading" | "no-sources" | "syncing" | "ready";
+
+interface SourceMeta {
+  provider: string;
+  status: string;
+  last_synced_at: string | null;
+}
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [readyState, setReadyState] = useState<ReadyState>("loading");
-  const [connectedProviders, setConnectedProviders] = useState<string[]>([]);
+  const [sources, setSources] = useState<SourceMeta[]>([]);
+  const [userName, setUserName] = useState<string>("");
+  const [lastSearch, setLastSearch] = useState<{ query: string; ts: string } | null>(null);
+
+  const suggestedQueries = useMemo(() => getDayQueries(), []);
+
+  useEffect(() => {
+    // Still read lastSearch to power the "updated since your last visit" comparison
+    const threads = JSON.parse(localStorage.getItem("seam_threads") ?? "[]");
+    if (threads.length > 0) setLastSearch(threads[0]);
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
-    async function check() {
-      const { data: sources } = await supabase
-        .from("sources")
-        .select("provider,status");
+    async function load() {
+      const [{ data: { user } }, { data: sourcesData }] = await Promise.all([
+        supabase.auth.getUser(),
+        supabase.from("sources").select("provider,status,last_synced_at"),
+      ]);
 
-      const active = (sources ?? []).filter(
-        (s) => s.status === "connected" || s.status === "syncing"
-      );
+      if (user) {
+        setUserName(user.user_metadata?.full_name ?? user.email ?? "");
+      }
+
+      const active = (sourcesData ?? []).filter(
+        (s: SourceMeta) => s.status === "connected" || s.status === "syncing"
+      ) as SourceMeta[];
 
       if (active.length === 0) {
         setReadyState("no-sources");
         return;
       }
 
-      setConnectedProviders(active.map((s) => s.provider));
+      setSources(active);
 
-      // Check if any chunks exist
       const { count } = await supabase
         .from("chunks")
         .select("id", { count: "exact", head: true });
 
       setReadyState(count && count > 0 ? "ready" : "syncing");
     }
-    check();
+    load();
   }, []);
 
   const handleSearch = (q?: string) => {
@@ -98,12 +183,38 @@ export default function HomePage() {
     router.push(`/app/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
+  const greeting = getGreeting(userName);
+
+  // Sources that synced after the user's last search
+  const updatedSources = useMemo(() => {
+    if (!lastSearch) return [];
+    return sources.filter(
+      (s) => s.last_synced_at && new Date(s.last_synced_at) > new Date(lastSearch.ts)
+    );
+  }, [sources, lastSearch]);
+
   return (
     <AppShell>
       <div
         className="flex flex-col items-center justify-center h-full"
         style={{ background: "#0F1117" }}
       >
+        {/* Greeting */}
+        {userName && (
+          <p
+            style={{
+              fontSize: "13px",
+              color: "rgba(255,255,255,0.35)",
+              fontWeight: 500,
+              fontFamily: "Inter, sans-serif",
+              marginBottom: "18px",
+              letterSpacing: "0.01em",
+            }}
+          >
+            {greeting}
+          </p>
+        )}
+
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">
           <div className="flex items-baseline gap-1 mb-2">
@@ -137,7 +248,7 @@ export default function HomePage() {
                 Connect a source to unlock search
               </h2>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, margin: "0 0 24px" }}>
-                Seam searches your real Notion pages, Jira issues, and Slack threads — but needs at least one source connected first.
+                Seam searches your real Notion pages and Slack threads — but needs at least one source connected first.
               </p>
               <button
                 onClick={() => router.push("/app/integrations")}
@@ -190,9 +301,9 @@ export default function HomePage() {
                 Your connected sources are being indexed. Search will be ready in a few minutes once content is available.
               </p>
               <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
-                {connectedProviders.map((p) => (
-                  <div key={p} style={{ width: "32px", height: "32px", borderRadius: "8px", overflow: "hidden", opacity: 0.7 }}>
-                    <BrandIcon id={p} />
+                {sources.map((s) => (
+                  <div key={s.provider} style={{ width: "32px", height: "32px", borderRadius: "8px", overflow: "hidden", opacity: 0.7 }}>
+                    <BrandIcon id={s.provider} />
                   </div>
                 ))}
               </div>
@@ -204,6 +315,8 @@ export default function HomePage() {
         {readyState === "ready" && (
           <>
             <div className="w-full flex flex-col" style={{ maxWidth: "600px", padding: "0 24px" }}>
+
+              {/* Search box */}
               <div
                 className="flex items-center gap-3 px-4"
                 style={{
@@ -217,8 +330,10 @@ export default function HomePage() {
               >
                 <Search size={15} color="rgba(255,255,255,0.3)" strokeWidth={2} />
                 <input
+                  ref={inputRef}
                   type="text"
                   value={query}
+                  maxLength={500}
                   onChange={(e) => setQuery(e.target.value)}
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
@@ -228,6 +343,11 @@ export default function HomePage() {
                   style={{ fontSize: "14px", color: "rgba(255,255,255,0.88)", fontFamily: "Inter, sans-serif", fontWeight: 400 }}
                   autoFocus
                 />
+                {query.length >= 400 && (
+                  <span style={{ fontSize: "11px", color: query.length >= 480 ? "#F87171" : "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>
+                    {query.length} / 500
+                  </span>
+                )}
                 {query && (
                   <button
                     onClick={() => handleSearch()}
@@ -239,23 +359,89 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* Connected app icons — only real connected sources */}
-              <div className="flex items-center gap-3 mt-4">
-                <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500, flexShrink: 0 }}>
-                  Searching across
-                </span>
-                <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                  {connectedProviders.map((id) => (
-                    <div
-                      key={id}
-                      title={id.charAt(0).toUpperCase() + id.slice(1)}
-                      style={{ width: "32px", height: "32px", borderRadius: "8px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.4)", opacity: 0.85, transition: "opacity 0.15s, transform 0.15s", cursor: "default" }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
-                    >
-                      <BrandIcon id={id} />
-                    </div>
-                  ))}
+              {/* Query type chips */}
+              <div style={{ marginTop: "14px", display: "flex", gap: "7px", flexWrap: "wrap" }}>
+                {QUERY_CHIPS.map((chip) => (
+                  <button
+                    key={chip.label}
+                    onClick={() => {
+                      setQuery(chip.starter);
+                      setTimeout(() => {
+                        const el = inputRef.current;
+                        if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+                      }, 0);
+                    }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      fontSize: "11.5px",
+                      fontWeight: 500,
+                      color: "rgba(255,255,255,0.4)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: "20px",
+                      padding: "5px 12px",
+                      cursor: "pointer",
+                      fontFamily: "Inter, sans-serif",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.color = "rgba(255,255,255,0.8)";
+                      el.style.background = "rgba(79,107,245,0.1)";
+                      el.style.borderColor = "rgba(79,107,245,0.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.color = "rgba(255,255,255,0.4)";
+                      el.style.background = "rgba(255,255,255,0.04)";
+                      el.style.borderColor = "rgba(255,255,255,0.08)";
+                    }}
+                  >
+                    <Zap size={10} strokeWidth={2} />
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Source pills + privacy line */}
+              <div style={{ marginTop: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
+
+                {/* New since last session */}
+                {updatedSources.length > 0 && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#34D399", flexShrink: 0, display: "inline-block" }} />
+                    <span style={{ fontSize: "11px", color: "rgba(52,211,153,0.75)", fontFamily: "Inter, sans-serif" }}>
+                      {updatedSources.map((s) => s.provider.charAt(0).toUpperCase() + s.provider.slice(1)).join(" and ")} updated since your last visit
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-3">
+                  <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500, flexShrink: 0 }}>
+                    Searching across
+                  </span>
+                  <div style={{ display: "flex", gap: "7px", flexWrap: "wrap" }}>
+                    {sources.map((s) => (
+                      <SourcePill key={s.provider} id={s.provider} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Privacy line */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    fontSize: "11px",
+                    color: "rgba(255,255,255,0.2)",
+                    fontFamily: "Inter, sans-serif",
+                  }}
+                >
+                  <Lock size={9} strokeWidth={2} style={{ color: "rgba(255,255,255,0.22)", flexShrink: 0 }} />
+                  Read-only · Every answer links to its source · Your data stays in your organisation
                 </div>
               </div>
             </div>
@@ -266,7 +452,7 @@ export default function HomePage() {
                 Suggested
               </p>
               <div className="flex flex-col gap-1.5">
-                {SUGGESTED_QUERIES.map((q) => (
+                {suggestedQueries.map((q) => (
                   <button
                     key={q}
                     onClick={() => handleSearch(q)}
@@ -280,6 +466,7 @@ export default function HomePage() {
                   </button>
                 ))}
               </div>
+
             </div>
           </>
         )}

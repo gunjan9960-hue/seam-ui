@@ -477,6 +477,7 @@ function SearchContent() {
   const [followUp, setFollowUp] = useState("");
   const [apiError, setApiError] = useState<string | null>(null);
   const [syncMap, setSyncMap] = useState<Record<string, string>>({});
+  const [connectedProviders, setConnectedProviders] = useState<string[]>([]);
 
   useEffect(() => {
     if (query && !hasRun.current) {
@@ -489,13 +490,18 @@ function SearchContent() {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.from("sources").select("provider,last_synced_at").then(({ data }) => {
+    supabase.from("sources").select("provider,status,last_synced_at").then(({ data }) => {
       if (!data) return;
       const map: Record<string, string> = {};
+      const providers: string[] = [];
       for (const s of data) {
-        if (s.last_synced_at) map[s.provider as string] = s.last_synced_at as string;
+        if (s.status === "connected" || s.status === "syncing") {
+          providers.push(s.provider as string);
+          if (s.last_synced_at) map[s.provider as string] = s.last_synced_at as string;
+        }
       }
       setSyncMap(map);
+      setConnectedProviders(providers);
     });
   }, []);
 
@@ -702,7 +708,36 @@ function SearchContent() {
                 <div style={{ height: "1px", background: "rgba(255,255,255,0.055)", marginBottom: "22px" }} />
 
                 {/* Skeleton while retrieving */}
-                {isLoading && streaming.length === 0 && <Skeleton />}
+                {isLoading && streaming.length === 0 && (
+                  <>
+                    {connectedProviders.length > 0 && (
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "18px", flexWrap: "wrap" }}>
+                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>Searching across</span>
+                        {connectedProviders.map((p) => (
+                          <span
+                            key={p}
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "5px",
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              color: "rgba(255,255,255,0.5)",
+                              background: "rgba(255,255,255,0.05)",
+                              border: "1px solid rgba(255,255,255,0.08)",
+                              borderRadius: "20px",
+                              padding: "3px 9px",
+                            }}
+                          >
+                            {p.charAt(0).toUpperCase() + p.slice(1)}
+                          </span>
+                        ))}
+                        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.18)" }}>· live via MCP</span>
+                      </div>
+                    )}
+                    <Skeleton />
+                  </>
+                )}
 
                 {/* Streaming answer */}
                 {streaming.length > 0 && (
@@ -796,6 +831,7 @@ function SearchContent() {
                   <input
                     ref={followUpRef}
                     value={followUp}
+                    maxLength={500}
                     onChange={(e) => setFollowUp(e.target.value)}
                     onFocus={() => setInputFocused(true)}
                     onBlur={() => setInputFocused(false)}
@@ -811,6 +847,11 @@ function SearchContent() {
                       fontFamily: "Inter, sans-serif",
                     }}
                   />
+                  {followUp.length >= 400 && (
+                    <span style={{ fontSize: "11px", color: followUp.length >= 480 ? "#F87171" : "rgba(255,255,255,0.25)", fontFamily: "Inter, sans-serif", flexShrink: 0 }}>
+                      {followUp.length} / 500
+                    </span>
+                  )}
                   {followUp.trim() && (
                     <button
                       type="submit"
