@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactElement } from "react";
 import { ArrowRight } from "lucide-react";
-import AppShell from "@/app/components/AppShell";
 import { createClient } from "@/lib/supabase/client";
 
 // ── Auth Card (right side of hero) ────────────────────────────────────────────
@@ -300,7 +299,6 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <AppShell>
     <div style={{ background: "#0F1117", minHeight: "100%", fontFamily: "Inter, -apple-system, sans-serif", color: "white", overflowY: "auto" }}>
 
       {/* ── Navbar ── */}
@@ -427,6 +425,6 @@ export default function LandingPage() {
         <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>© 2026 Seam. Made for PMs.</p>
       </footer>
     </div>
-    </AppShell>
+    </div>
   );
 }
