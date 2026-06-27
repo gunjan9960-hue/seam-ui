@@ -437,15 +437,20 @@ export default function HomePage() {
                 {/* Privacy line */}
                 <div
                   style={{
-                    display: "flex",
+                    display: "inline-flex",
                     alignItems: "center",
-                    gap: "5px",
-                    fontSize: "11px",
-                    color: "rgba(255,255,255,0.2)",
+                    gap: "6px",
+                    fontSize: "11.5px",
+                    fontWeight: 500,
+                    color: "rgba(255,255,255,0.45)",
                     fontFamily: "Inter, sans-serif",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.09)",
+                    borderRadius: "20px",
+                    padding: "5px 12px",
                   }}
                 >
-                  <Lock size={9} strokeWidth={2} style={{ color: "rgba(255,255,255,0.22)", flexShrink: 0 }} />
+                  <Lock size={10} strokeWidth={2.2} style={{ color: "#34D399", flexShrink: 0 }} />
                   Read-only · Every answer links to its source · Your data stays in your organisation
                 </div>
               </div>
