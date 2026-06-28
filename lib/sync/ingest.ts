@@ -18,8 +18,9 @@ export async function ingestDocuments(
   sourceId: string,
   provider: string,
   docs: IngestDoc[]
-) {
+): Promise<number> {
   const supabase = createServiceClient();
+  let indexed = 0;
 
   for (const doc of docs) {
     const contentHash = Buffer.from(doc.content).toString("base64").slice(0, 64);
@@ -64,5 +65,8 @@ export async function ingestDocuments(
 
     const { error: insertErr } = await supabase.from("chunks").insert(chunkRows);
     if (insertErr) throw new Error(`Chunk insert failed: ${insertErr.message}`);
+    indexed++;
   }
+
+  return indexed;
 }

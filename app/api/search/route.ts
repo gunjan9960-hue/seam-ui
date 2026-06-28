@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { detectIntent, detectIntentConfidence, buildCitations, allResultsStale, type SearchFilters } from "@/lib/rag/retrieval";
 import { retrieveFromPgvector } from "@/lib/rag/retrievePgvector";
-import { generateAnswer } from "@/lib/rag/generate";
+import { generateAnswer, generateFollowUps } from "@/lib/rag/generate";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { searchSlackViaMCP } from "@/lib/slack-mcp-client";
 import { searchNotionViaMCP } from "@/lib/notion-mcp-client";
@@ -104,7 +104,11 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const stream  = await generateAnswer(query, history, retrieved, intent, isStale, slackHeavyFlag);
+    const sourceTitles = retrieved.map((r) => r.chunk.doc.title).filter(Boolean);
+    const [stream, followUps] = await Promise.all([
+      generateAnswer(query, history, retrieved, intent, isStale, slackHeavyFlag),
+      generateFollowUps(query, intent, sourceTitles),
+    ]);
     const encoder = new TextEncoder();
 
     const readable = new ReadableStream({
@@ -122,7 +126,7 @@ export async function POST(req: NextRequest) {
             intent,
             sources: citations,
             isStale,
-            suggestions: [],
+            suggestions: followUps,
             isDemo: false,
           });
           controller.enqueue(encoder.encode(`\n\n__SOURCES__${meta}`));

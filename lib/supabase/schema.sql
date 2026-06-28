@@ -120,10 +120,12 @@ create policy "Users can read own workspace chunks"
   on chunks for select
   using (workspace_id = (select workspace_id from users where id = auth.uid()));
 
--- Index for fast cosine similarity search
-create index if not exists chunks_embedding_idx
-  on chunks using ivfflat (embedding vector_cosine_ops)
-  with (lists = 100);
+-- HNSW index for cosine similarity search.
+-- IVFFlat (the old index) requires probes tuning and performs poorly on small
+-- datasets (<10K vectors). HNSW gives exact ANN with no probes parameter.
+create index if not exists chunks_embedding_hnsw_idx
+  on chunks using hnsw (embedding vector_cosine_ops)
+  with (m = 16, ef_construction = 64);
 
 -- =============================================
 -- QUERIES (search history)

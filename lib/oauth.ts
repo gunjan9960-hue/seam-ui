@@ -38,7 +38,7 @@ export const OAUTH_CONFIGS: Record<ProviderId, OAuthConfig> = {
     clientSecret: () => env("SLACK_CLIENT_SECRET"),
     tokenAuthMethod: "basic",
     extraAuthParams: {
-      user_scope: "channels:history,channels:read,groups:history,groups:read,pins:read,reactions:read,search:read,search:read.public,search:read.private,search:read.mpim,search:read.im,files:read,users:read",
+      user_scope: "channels:history,channels:read,channels:write,groups:history,groups:read,pins:read,reactions:read,search:read,search:read.public,search:read.private,search:read.mpim,search:read.im,files:read,users:read,chat:write",
     },
   },
 };
@@ -115,7 +115,10 @@ export async function refreshAccessToken(
     refresh_token: refreshToken,
   };
 
-  const headers: Record<string, string> = { "Content-Type": "application/x-www-form-urlencoded" };
+  const useJson = cfg.tokenBodyFormat === "json";
+  const headers: Record<string, string> = {
+    "Content-Type": useJson ? "application/json" : "application/x-www-form-urlencoded",
+  };
 
   if (cfg.tokenAuthMethod === "basic") {
     const creds = Buffer.from(`${cfg.clientId()}:${cfg.clientSecret()}`).toString("base64");
@@ -128,7 +131,7 @@ export async function refreshAccessToken(
   const res = await fetch(cfg.tokenUrl, {
     method: "POST",
     headers,
-    body: new URLSearchParams(body).toString(),
+    body: useJson ? JSON.stringify(body) : new URLSearchParams(body).toString(),
   });
 
   const data = await res.json();

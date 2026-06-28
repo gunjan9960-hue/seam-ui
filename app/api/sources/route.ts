@@ -20,7 +20,13 @@ export async function GET() {
     .select("provider,status,last_synced_at,metadata")
     .eq("workspace_id", userData.workspace_id);
 
-  return NextResponse.json({ sources: sources ?? [] });
+  const safeSources = (sources ?? []).map(({ metadata, ...rest }) => {
+    const { access_token: _a, refresh_token: _r, token_expires_at: _e, ...safeMetadata } =
+      (metadata ?? {}) as Record<string, unknown>;
+    return { ...rest, metadata: safeMetadata };
+  });
+
+  return NextResponse.json({ sources: safeSources });
 }
 
 export async function DELETE(req: NextRequest) {

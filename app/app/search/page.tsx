@@ -751,7 +751,10 @@ function SearchContent() {
               >
                 {/* Suggestion chips */}
                 <div style={{ display: "flex", gap: "6px", marginBottom: "10px", flexWrap: "wrap" }}>
-                  {(FOLLOW_UPS[lastIntent] ?? DEFAULT_FOLLOW_UPS).map((s) => (
+                  {(exchanges[exchanges.length - 1]?.suggestions?.length
+                    ? exchanges[exchanges.length - 1].suggestions!
+                    : (FOLLOW_UPS[lastIntent] ?? DEFAULT_FOLLOW_UPS)
+                  ).map((s) => (
                     <button
                       key={s}
                       type="button"

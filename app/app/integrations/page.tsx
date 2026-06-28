@@ -357,10 +357,10 @@ function ConnectorCard({
           </p>
         </div>
 
-        {/* Docs indexed count */}
-        {connector.docsIndexed !== null && isConnected && (
+        {/* Docs indexed count — show during syncing too so prior count stays visible */}
+        {connector.docsIndexed !== null && (isConnected || isSyncing) && (
           <div style={{ textAlign: "right", flexShrink: 0, marginRight: "4px" }}>
-            <div style={{ fontSize: "16px", fontWeight: 800, color: "#FFFFFF", letterSpacing: "-0.5px", lineHeight: 1, fontFamily: "Inter, sans-serif" }}>
+            <div style={{ fontSize: "16px", fontWeight: 800, color: isSyncing ? "rgba(255,255,255,0.45)" : "#FFFFFF", letterSpacing: "-0.5px", lineHeight: 1, fontFamily: "Inter, sans-serif" }}>
               {connector.docsIndexed.toLocaleString()}
             </div>
             <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,0.42)", marginTop: "2px", fontFamily: "Inter, sans-serif" }}>docs indexed</div>

@@ -39,8 +39,12 @@ export async function POST(req: NextRequest) {
 
     if (!accessToken) throw new Error("Source not authorized — reconnect in Integrations");
 
-    // Proactively refresh if we have a refresh token (Google, Jira)
-    if (storedRefreshToken) {
+    // Only refresh if the token has a known expiry and is within 5 minutes of expiring.
+    // Long-lived tokens (Notion) have no token_expires_at — skip refresh to avoid
+    // unnecessary rotation that invalidates the current working token.
+    const expiresAt: string | undefined = source.metadata?.token_expires_at;
+    const tokenNearExpiry = expiresAt && new Date(expiresAt) < new Date(Date.now() + 5 * 60 * 1000);
+    if (storedRefreshToken && tokenNearExpiry) {
       try {
         const refreshed = await refreshAccessToken(provider as ProviderId, storedRefreshToken);
         accessToken = refreshed.access_token;
@@ -67,17 +71,17 @@ export async function POST(req: NextRequest) {
     }
 
     // Ingest: chunk → embed → pgvector
-    await ingestDocuments(userData.workspace_id, source.id, provider, docs);
+    const docsIndexed = await ingestDocuments(userData.workspace_id, source.id, provider, docs);
 
     // Mark connected + update sync time + store doc count
     await serviceClient.from("sources").update({
       status: "connected",
       last_synced_at: new Date().toISOString(),
       error_message: null,
-      metadata: { ...source.metadata, docs_indexed: docs.length },
+      metadata: { ...source.metadata, docs_indexed: docsIndexed },
     }).eq("id", source.id);
 
-    return NextResponse.json({ ok: true, docsIndexed: docs.length });
+    return NextResponse.json({ ok: true, docsIndexed });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Sync failed";
     console.error(`[sync] ${provider} failed:`, msg);

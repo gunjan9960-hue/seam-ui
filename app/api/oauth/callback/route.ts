@@ -43,6 +43,14 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(`${base}/app/integrations?error=no_workspace`);
     }
 
+    // Preserve existing metadata fields (e.g. docs_indexed) when reconnecting
+    const { data: existing } = await serviceClient
+      .from("sources")
+      .select("metadata")
+      .eq("workspace_id", userData.workspace_id)
+      .eq("provider", provider)
+      .single();
+
     await serviceClient.from("sources").upsert(
       {
         workspace_id: userData.workspace_id,
@@ -50,6 +58,7 @@ export async function GET(req: NextRequest) {
         provider,
         status: "connected",
         metadata: {
+          ...(existing?.metadata ?? {}),
           access_token: tokens.access_token,
           ...(tokens.refresh_token ? { refresh_token: tokens.refresh_token } : {}),
         },

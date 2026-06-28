@@ -50,6 +50,12 @@ function getPageTitle(page: { properties?: Record<string, { title?: { plain_text
   return "Untitled";
 }
 
+// Extracts a PM/owner name from page content (e.g. "PM: Ravi Krishnan ·")
+function extractAuthor(content: string): string {
+  const match = content.match(/\bPM:\s*([^·\n,]+)/);
+  return match ? match[1].trim() : "";
+}
+
 export async function fetchNotionDocs(accessToken: string): Promise<IngestDoc[]> {
   const docs: IngestDoc[] = [];
   const seenIds = new Set<string>();
@@ -79,7 +85,7 @@ export async function fetchNotionDocs(accessToken: string): Promise<IngestDoc[]>
         externalId: page.id,
         title,
         url: page.url ?? `https://notion.so/${page.id.replace(/-/g, "")}`,
-        author: "",
+        author: extractAuthor(content),
         docType: "page",
         content: `${title}\n\n${content}`,
         lastModified: page.last_edited_time ?? new Date().toISOString(),
@@ -130,7 +136,7 @@ export async function fetchNotionDocs(accessToken: string): Promise<IngestDoc[]>
             externalId: row.id,
             title,
             url: row.url ?? `https://notion.so/${row.id.replace(/-/g, "")}`,
-            author: "",
+            author: extractAuthor(content),
             docType: "database_row",
             content: `${title}\n\n${content}`,
             lastModified: row.last_edited_time ?? new Date().toISOString(),

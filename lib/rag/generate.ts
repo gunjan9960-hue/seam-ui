@@ -34,36 +34,36 @@ REQUIRED — end your answer with exactly this block (fill from sources only):
 **Rationale**: [specific reason — not just what was decided]`,
 
   spec_lookup: `
-REQUIRED — end your answer with exactly this block (fill from sources only):
+REQUIRED — end your answer with exactly this block (fill from sources only, omit any line whose value is not in the sources):
 **Document**: [exact document title]
-**Owner**: [name]
+**Owner**: [name — omit this line if not stated in source]
 **Last updated**: [date]`,
 
   customer_request: `
-REQUIRED — end your answer with exactly this block (fill from sources only):
+REQUIRED — end your answer with exactly this block (fill from sources only, omit any line whose value is not in the sources):
 **Customer**: [name]
 **Request / issue**: [specific ask or complaint]
 **Status**: [current state]
-**Owner**: [who is responsible]`,
+**Owner**: [who is responsible — omit this line if not stated in source]`,
 
   research_history: `
-REQUIRED — end your answer with exactly this block (fill from sources only):
+REQUIRED — end your answer with exactly this block (fill from sources only, omit any line whose value is not in the sources):
 **Research exists**: Yes / No
 **Conducted by**: [name — omit if none]
 **Date**: [date or period — omit if none]
 **Key finding**: [main conclusion — omit if none]`,
 
   roadmap_rationale: `
-REQUIRED — end your answer with exactly this block (fill from sources only):
-**Decision maker**: [name]
+REQUIRED — end your answer with exactly this block (fill from sources only, omit any line whose value is not in the sources):
+**Decision maker**: [name — omit this line if not stated in source]
 **Rationale**: [specific business reasons]
-**Trade-off**: [what was weighed or cut instead]`,
+**Trade-off**: [what was weighed or cut instead — omit if not stated]`,
 
   stakeholder_commitment: `
-REQUIRED — end your answer with exactly this block (fill from sources only):
+REQUIRED — end your answer with exactly this block (fill from sources only, omit any line whose value is not in the sources):
 **Stakeholder**: [name and role]
 **Commitment**: [specific deliverable or decision]
-**Deadline**: [date, or "none stated" if absent from sources]`,
+**Deadline**: [date, or omit this line if not stated in sources]`,
 
   onboarding: `
 REQUIRED — structure your answer with ## section headers and bullet points. Include:
@@ -146,6 +146,49 @@ Instructions:
 - If the answer is not in the sources, say only: "I searched ${sourceNames} and could not find this in your connected sources."
 - Do not fabricate source titles or attribute facts to sources that don't contain them.
 ${INTENT_REQUIRED_FORMAT[intent]}`;
+}
+
+// Generates 3 contextual follow-up questions based on the query + answer.
+// Uses Haiku for speed/cost — runs in parallel with the main answer stream.
+export async function generateFollowUps(
+  query: string,
+  intent: QueryIntent,
+  sourceTitles: string[],
+): Promise<string[]> {
+  try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) return [];
+    const client = new Anthropic({ apiKey });
+
+    const intentHint: Record<QueryIntent, string> = {
+      decision_recall:        "who made the decision, what changed since, or downstream impact",
+      spec_lookup:            "current status, open blockers, or related specs",
+      customer_request:       "which customers asked, priority, or roadmap status",
+      research_history:       "key findings, what was decided, or follow-on research",
+      roadmap_rationale:      "timeline, dependencies, or what was cut instead",
+      stakeholder_commitment: "who is accountable, deadline, or current progress",
+      onboarding:             "team structure, key decisions, or how to get started",
+    };
+
+    const res = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 120,
+      messages: [{
+        role: "user",
+        content: `A product manager asked: "${query}"
+Relevant sources found: ${sourceTitles.slice(0, 4).join(", ")}
+Intent type: ${intent} — good follow-ups explore ${intentHint[intent]}.
+
+Write exactly 3 short follow-up questions (4–8 words each) this PM would naturally ask next, grounded in the topic above. Return only a JSON array. Example format: ["Who approved this?", "What's the target date?", "Any open blockers?"]`,
+      }],
+    });
+
+    const text = res.content[0]?.type === "text" ? res.content[0].text.trim() : "[]";
+    const parsed = JSON.parse(text);
+    return Array.isArray(parsed) ? parsed.slice(0, 3) : [];
+  } catch {
+    return [];
+  }
 }
 
 export async function generateAnswer(
